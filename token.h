@@ -24,19 +24,32 @@ string spellS(Symbol);//prototype to spell the corresponding tokens
 
 class Token
 {
+   
   public:
    //default constructor
    Token():sname(NONAME),svalue(attval(-1, "")){}
-   //constructor
+
+//constructor
    Token (Symbol s, int v, string l) : sname(s), svalue(attval(v, l)) {}
+
    //Destructor
    ~Token(){}
-   //get the terminal symbol
-   Symbol getSymbol()const;
-   //get the attribute values
-   int getValue()const;
-   string getLexeme()const;
 
+//get the terminal symbol
+   Symbol getSymbol()const {return sname;}
+   
+//get the attribute values
+   int getValue()const {return svalue.value;}
+   string getLexeme()const {return svalue.lexeme;}
+
+//print function
+   void insert (ostream &os)
+   {
+      os << "Token: " << spellS(sname) << endl
+	 << "\tAttributes: " << endl
+	 << "\t\tLexeme: " << getLexeme() << endl
+	 << "\t\tValue: " << getValue() << endl;
+   }
   private:
    struct attval
    {
@@ -46,6 +59,9 @@ class Token
    };
    attval svalue;
    Symbol sname;
+
 };
+//overload operator
+ostream& operator<< (ostream&, Token&);
 
 #endif

@@ -6,16 +6,5 @@
 #include "token.h"
 #include <iostream>
 
-Symbol token::getSymbol()const
-{
-   return sname;
-}
+using namespace std;
 
-int token::getValue()const
-{
-   return svalue.value;
-}
-string token::getLexeme()const
-{
-   return svalue.lexeme;
-}

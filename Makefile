@@ -1,7 +1,3 @@
-# For Makefiles, lines preceded with # are comment lines
-# Remember, Makefiles are your friends. You do not want to be compiling
-# files individually.
-
 # use the gnu C++ compiler
 CCC= g++
 # list all warnings
@@ -16,7 +12,7 @@ all : test
 # Note: executable lines, ie. $(CCC) ..., always begin with a tab.
 # $^ = this target
 # $@ = this/these dependencies
-test: administration.o token.o scanner.o symbol.h
+test: administration.o token.o scanner.o symbol.h test.o
 	$(CCC) $(CCCFLAGS) $^ -o $@
 
 # if 2 or more problems in assignment, you can compile them all with extra 
