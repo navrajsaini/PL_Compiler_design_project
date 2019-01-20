@@ -1,0 +1,4 @@
+/*
+  enum symbol type for the symbols
+  symbol.h
+ */
