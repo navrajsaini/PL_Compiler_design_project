@@ -32,11 +32,29 @@ int main ()
 
    cout<<endl;
 
+   //create symbol table
+
+   /*remove comments for the symbol table creation*/
+   //Symtable table;
+   
    //creating a scanner
    
    /* remove comments for scanner when scanner complete */
-   //Scanner 
-   
-   
+   //Scanner scan(CodeFileIn, table)
+
+
+   //run the compiler
+
+   /*decomment for running*/
+   //Administration compiler(CodeInFile, TokenOutFile, scan);
+
+   /**/
+   //int stat = compiler.scan();
+   /*
+     if(stat == 1)
+     cout<< "Scan Complete" << endl;
+     else
+     cout << "Scan errors have occoured" <<endl;
+    */
    return 0;
 }
