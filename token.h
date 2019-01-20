@@ -24,7 +24,6 @@ string spellS(Symbol);//prototype to spell the corresponding tokens
 
 class Token
 {
-   
   public:
    //default constructor
    Token():sname(NONAME),svalue(attval(-1, "")){}
