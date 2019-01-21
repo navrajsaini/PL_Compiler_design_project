@@ -1,7 +1,8 @@
 # use the gnu C++ compiler
 CCC= g++
 # list all warnings
-CCCFLAGS = -Wall -g -std=c++11
+#CCCFLAGS = -Wall -g -std=c++11
+CCCFLAGS = -Wall -g -std=gnu++11 -lpthread -lX11
 
 # all is called a target, after the colon you have dependencies
 # ie. "the target all is dependent on the executables
@@ -12,7 +13,7 @@ all : test
 # Note: executable lines, ie. $(CCC) ..., always begin with a tab.
 # $^ = this target
 # $@ = this/these dependencies
-test: token.o symbol.h test.o #administration.o scanner.o
+test: test.o #symbol.h token.o administration.o scanner.o
 	$(CCC) $(CCCFLAGS) $^ -o $@
 
 # if 2 or more problems in assignment, you can compile them all with extra 
@@ -32,7 +33,7 @@ test: token.o symbol.h test.o #administration.o scanner.o
 # corresponding executable line
 
 #administration.o : administration.h
-token.o : token.cpp
+#token.o : token.cpp
 test.o : test.cpp
 #etc
 clean:
