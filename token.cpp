@@ -8,3 +8,18 @@
 
 using namespace std;
 
+string spellS(Symbol s)
+{
+   switch (s){
+      case NUM: return "Number"; break;
+      case DIV: return "/"; break;
+      case MOD: return "%"; break;
+      case SEMICOLON: return ";"; break;
+      case PLUS: return "+"; break;
+      case MINUS: return "-"; break;
+      case TIMES: return "*"; break;
+      case DIVIDE: return "/"; break;
+      case LEFTP: return "("; break;
+      case RIGHTP: return ")"; break;
+   }
+}

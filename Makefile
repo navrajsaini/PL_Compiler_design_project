@@ -32,7 +32,7 @@ test: administration.o token.o scanner.o symbol.h test.o
 # corresponding executable line
 
 administration.o : administration.h
-token.o : token.h
+token.o : token.cpp
 symbol.o : symbol.h
 test.o : test.cpp
 #etc
