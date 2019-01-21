@@ -1,17 +1,15 @@
-#include "token.h"
-#include "administration.h"
-#include "scanner.h"
-#include "symbol.h"
+/*
+  exe to test all the functions created...
+*/
 
-
+//#include "token.h"
+#include <iostream>
 using namespace std;
-
-int main ()
+int main()
 {
+   cout << "testing..." << endl;
+   
    //test the spellS function
-   cout << spellS(NUM) << endl;
-   //test the create a token function
-   Token a(NUM, 5, "five");
-   //create using the default contructor
-   Token b;   
+   //Token a (NUM, 5, "five");
+   //cout << spellS(NUM) << endl;
 }
