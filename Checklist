@@ -1,0 +1,10 @@
+0 Symbol.h
+0 token.h
+0 token.cc
+0 symboltable.h
+0 symboltable.cc
+0 scanner.h
+0 scanner.cc
+0 admin.h
+0 admin.cc
+1 plc.cc
