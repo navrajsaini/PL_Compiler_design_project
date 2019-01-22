@@ -13,7 +13,7 @@ all : test
 # Note: executable lines, ie. $(CCC) ..., always begin with a tab.
 # $^ = this target
 # $@ = this/these dependencies
-test: test.o #symbol.h token.o administration.o scanner.o
+test: test.o symbol.h token.o #administration.o scanner.o
 	$(CCC) $(CCCFLAGS) $^ -o $@
 
 # if 2 or more problems in assignment, you can compile them all with extra 
@@ -33,7 +33,7 @@ test: test.o #symbol.h token.o administration.o scanner.o
 # corresponding executable line
 
 #administration.o : administration.h
-#token.o : token.cpp
+token.o : token.cpp
 test.o : test.cpp
 #etc
 clean:
