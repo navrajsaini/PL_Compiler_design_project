@@ -12,8 +12,10 @@ int main ()
    cout << "a.getvalue: " << a.getValue() << endl;
    cout << "a.getSymbol: " << spellS(a.getSymbol()) << endl;
    cout << "a.getLexeme: " << a.getLexeme() << endl;
-
+   
    cout << "testing the insert fuction... " << endl;
    a.insert(cout);
-   return 0;
+   
+   cout << "testing the overloaded << funciton: " << endl << a;
+   
 }
