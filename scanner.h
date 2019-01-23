@@ -31,9 +31,13 @@ class Scanner
    chat laChar;//look ahead character
 
    bool isWhitespace (char a);
+   
    bool isAlpha (char a);
+   
    bool isNumeric (char a);
+   
    bool isSpecial (char a);
+   
    Token recognizeName();
    Token recognizeSpecial();
    Token recognizeNumeral();
