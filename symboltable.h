@@ -2,6 +2,8 @@
   By: Navraj Saini && Jordan Kolody
   implements a symbol table with linear probe hashing
 */
+#ifndef SYMBOLTABLE_H
+#define SYMBOLTABLE_H
 
 #include <string>
 #include <vector>
