@@ -17,5 +17,10 @@ enum Symbol {ID=256,                               //corosponding IDs
 	     NEWLINE, NONAME, ENDOFFILE, DIV,      //260-263
 	     MOD, SEMICOLON, PLUS, MINUS,          //264-267
 	     TIMES, DIVIDE, LEFTP, RIGHTP,         //268-271
-	     BADCHAR};                             //272
+	     BADCHAR,                              //272
+	     //----------------reserved words-----------------
+	     begin, end, const1,                   //273-275
+	     array, integer, Boolean, proc,        //276-279
+	     skip, read, write, call, if1,         //280-284
+	     fi, od, false1, true1};               //285-288
 #endif

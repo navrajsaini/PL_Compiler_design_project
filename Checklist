@@ -1,6 +1,6 @@
 1 Symbol.h
-0 token.h
-0 token.cc
+1 token.h
+1 token.cc
 0 symboltable.h
 0 symboltable.cc
 0 scanner.h
