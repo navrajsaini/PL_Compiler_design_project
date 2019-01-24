@@ -21,14 +21,14 @@ class Scanner
 {
   public:
    Scanner(){}//default constructor, doesn't do anything
-   Scanner(ifstream &in, Symtable &symt);
+   Scanner(ifstream &inCode, Symtable &symbolTable);
    ~Scanner();//destructor
    Token getToken();
 
   private:
    ifstream *infileptr;
    Symtable *symtableptr;
-   chat laChar;//look ahead character
+   char lookAheadChar;//look ahead character
 
    bool isWhitespace (char a);
    

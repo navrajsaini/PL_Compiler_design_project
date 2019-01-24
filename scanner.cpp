@@ -5,14 +5,16 @@
 #include <iostream>
 using namespace std;
 
+//Returns true if character is whitespace
 bool isWhitespace (char a)
 {
-   if(a==\0)
+   if(a==' ')
    {
       return true;
    }
+   return false;
 }
-
+//returns true if character is an alphabet, based on ascii value
 bool isAlpha (char a)
 {
    if(a>=65)
@@ -29,8 +31,9 @@ bool isAlpha (char a)
 	 }
       }
    }
+   return false;
 }
-
+//returns true if character is a numeric value via ascii
 bool isNumeric (char a)
 {
    if(a>=48)
@@ -40,9 +43,10 @@ bool isNumeric (char a)
 	 return true;
       }
    }
+   return false;
    
 }
-
+//returns true if character is special
 bool isSpecial (char a)
 {
    switch(a)
@@ -65,10 +69,28 @@ bool isSpecial (char a)
       case 92:
       case'(':
       case')':
-      case'$':
+	 //case'$':
       case':':
+	 break;
+      default:
+	 break;
    }
-   return false
-
-   
+   return false;
 }
+
+Token getToken()
+{
+//for self
+//Token (Symbol s, int v, string l) : sname(s), svalue(attval(v, l))
+
+
+   Symbol sym;
+   int in;
+   string strn;
+   
+   Token token(sym, in, strn);
+
+      
+   return token;
+}
+
