@@ -18,48 +18,51 @@ int Symtable::insert(string s)
    if(s == "begin")
    {
       Token begin(Symbol::begin, 273, s);
+      //------------------------------------test--------
+      begin.insert(cout);
+      //------------------------------------endtest-----
       htable.push_back(begin);
       occupied++;
    }
    else if(s == "end")
    {
-      Token end(Symbol::end, 273, s);
+      Token end(Symbol::end, 274, s);
       htable.push_back(end);
       occupied++;
    }
    else if(s == "const")
    {
-      Token const1(Symbol::const1, 273, s);
+      Token const1(Symbol::const1, 275, s);
       htable.push_back(const1);
       occupied++;
    }
    else if(s == "const")
    {
-      Token array(Symbol::array, 273, s);
+      Token array(Symbol::array, 276, s);
       htable.push_back(array);
       occupied++;
    }
    else if(s == "integer")
    {
-      Token integer(Symbol::integer, 273, s);
+      Token integer(Symbol::integer, 277, s);
       htable.push_back(integer);
       occupied++;
    }
    else if(s == "Boolean")
    {
-      Token Boolean(Symbol::Boolean, 273, s);
+      Token Boolean(Symbol::Boolean, 278, s);
       htable.push_back(Boolean);
       occupied++;
    }
    else if(s == "proc")
    {
-      Token proc(Symbol::proc, 273, s);
+      Token proc(Symbol::proc, 279, s);
       htable.push_back(proc);
       occupied++;
    }
    else if(s == "skip")
    {
-      Token skip(Symbol::skip, 273, s);
+      Token skip(Symbol::skip, 280, s);
       htable.push_back(skip);
       occupied++;
    }

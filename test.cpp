@@ -31,5 +31,5 @@ int main ()
    cout << "testing search function" << endl;
    symb = symtest.search("begin");
    cout << "location is: " << symb << endl;
-   
+   return 0;
 }
