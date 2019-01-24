@@ -1,3 +1,6 @@
+#ifndef TOKEN_H
+#define TOKEN_H
+
 /*
   BY: Navraj Saini & Jordan Kolody
 
@@ -9,10 +12,7 @@
   as well as other members as needed.
   
   token.h for token.cpp
- */
-
-#ifndef TOKEN_H
-#define TOKEN_H
+*/
 
 #include <iostream>
 #include <string>

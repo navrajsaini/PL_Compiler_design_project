@@ -1,9 +1,10 @@
+#ifndef SYMBOLTABLE_H
+#define SYMBOLTABLE_H
+
 /*
   By: Navraj Saini && Jordan Kolody
   implements a symbol table with linear probe hashing
 */
-#ifndef SYMBOLTABLE_H
-#define SYMBOLTABLE_H
 
 #include <string>
 #include <vector>
@@ -20,7 +21,7 @@ class Symtable
    //ini the table with reserved words
    void loadResvd();
    //destructor
-   ~Symtable();
+   ~Symtable(){ }
    //search the htable for lexeme s, return the position if found, else -1
    int search (string);
    //insert a token with lexeme s in the symbol table. if already in the table

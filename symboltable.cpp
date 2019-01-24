@@ -4,8 +4,7 @@
 */
 #include <iostream>
 #include "symboltable.h"
-#include "symbol.h"
-#include "token.h"
+
 using namespace std;
 
 void Symtable::loadResvd()
@@ -18,24 +17,77 @@ int Symtable::insert(string s)
 {
    if(s == "begin")
    {
-      Token beginT(begin, 273, s);
-      htable.push_back(beginT);
+      Token begin(Symbol::begin, 273, s);
+      htable.push_back(begin);
       occupied++;
    }
-	 /*
-	   case "end": Token end(end, 274, "end"); htable.insert(end);
-	   occupied++; break;
-	   case "const": Token const1(const1, 275, "const"); htable.insert(const1);
-	   occupied++; break;
-	   case "array": Token array(array, 276, "array"); htable.insert(array);
-	   occupied++; break;
-	   case "integer": Token integer(integer, 277, "integer");
-	   htable.insert(integer); occuped++; break;
-	   case "Boolean": Token Boolean(Boolean, 278, "Boolean");
-	   htable.insert(Boolean); occupied++; break;
-	   case "proc": Token proc(proc, 279, "proc"); htable.insert(proc);
-	   occupied++; break;
-	   case "skip": Token skip(skip, 280, "skip"); htable.insert(skip);
-	   occupied++; break;
-	 */
+   else if(s == "end")
+   {
+      Token end(Symbol::end, 273, s);
+      htable.push_back(end);
+      occupied++;
+   }
+   else if(s == "const")
+   {
+      Token const1(Symbol::const1, 273, s);
+      htable.push_back(const1);
+      occupied++;
+   }
+   else if(s == "const")
+   {
+      Token array(Symbol::array, 273, s);
+      htable.push_back(array);
+      occupied++;
+   }
+   else if(s == "integer")
+   {
+      Token integer(Symbol::integer, 273, s);
+      htable.push_back(integer);
+      occupied++;
+   }
+   else if(s == "Boolean")
+   {
+      Token Boolean(Symbol::Boolean, 273, s);
+      htable.push_back(Boolean);
+      occupied++;
+   }
+   else if(s == "proc")
+   {
+      Token proc(Symbol::proc, 273, s);
+      htable.push_back(proc);
+      occupied++;
+   }
+   else if(s == "skip")
+   {
+      Token skip(Symbol::skip, 273, s);
+      htable.push_back(skip);
+      occupied++;
+   }
+   else
+   {
+      //---------------------------need to do-------------------
+   }
+}
+
+int Symtable::search(string s)
+{
+   for (std::vector<int>::size_type i = 0; i != occupied; i++)
+   {
+      cout << "i is: " << i << "." << endl;
+      if (htable[i].getLexeme() == s)
+      {
+	 return i+1;
+      }
+      else
+	 return -1;
+   }
+}
+
+void Symtable::printTable()
+{
+   cout << "occupied is: " << occupied << endl;
+   for (std::vector<int>::size_type i = 0; i != occupied; i++)
+   {
+      htable[i].Token::insert(cout);
+   }
 }

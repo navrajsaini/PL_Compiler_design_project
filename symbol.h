@@ -1,3 +1,6 @@
+#ifndef SYMBOL_H
+#define SYMBOL_H
+
 /*
   BY: Navraj Saini && Jordan Kolody
   
@@ -5,10 +8,7 @@
   This will include the error handling and reporting symbols
   
   symbol.h
- */
-
-#ifndef SYMBOL_H
-#define SYMBOL_H
+*/
 
 using namespace std;
 

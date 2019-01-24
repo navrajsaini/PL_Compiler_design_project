@@ -1,6 +1,6 @@
 #include <iostream>
 #include "token.h"
-#include "symbol.h"
+#include "symboltable.h"
 
 using namespace std;
 
@@ -17,5 +17,19 @@ int main ()
    a.insert(cout);
    
    cout << "testing the overloaded << funciton: " << endl << a;
+
+   //---------------------------------------------------------
+   //TESTING THE SYMBOLTABLE
+   cout << "testing the insert function" << endl;
+   Symtable symtest;
+   int symb = symtest.insert("begin");
+   cout << symb << endl;
+
+   cout << "Printing the hash table..." << endl;
+   symtest.printTable();
+   
+   cout << "testing search function" << endl;
+   symb = symtest.search("begin");
+   cout << "location is: " << symb << endl;
    
 }
