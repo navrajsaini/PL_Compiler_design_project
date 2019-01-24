@@ -18,7 +18,7 @@ class Admin
 {
   public:
 //set up admin, input and output for the scanning
-   Admin(ifstream& codeOn, ofstream tokenOut, Scanner &scan);
+   Admin(ifstream& codeIn, ofstream tokenOut, Scanner &scan);
    ~Admin(){}
 
    //new line for input

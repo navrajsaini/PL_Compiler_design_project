@@ -3,3 +3,26 @@
   admininstration.cpp
  */
 #include "administration.h"
+
+Admin(ifstream& codeIn, ofstream tokenOut, Scanner &scan)
+{
+
+
+}
+
+
+
+int Scan()
+{
+
+   char now;
+
+
+   while(now!=eof)
+   {
+      
+   }
+   
+
+   
+}
