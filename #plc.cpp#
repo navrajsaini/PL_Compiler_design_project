@@ -44,13 +44,13 @@ int main ()
    //creating a scanner
    
    /* remove comments for scanner when scanner complete */
-   //Scanner scan(CodeFileIn, table)
+   Scanner scan(CodeFileIn)//, table)
 
 
    //run the compiler
 
    /*decomment for running*/
-   //Administration compiler(CodeInFile, TokenOutFile, scan);
+   Administration compiler(CodeInFile, TokenOutFile, scan);
 
    /**/
    //int stat = compiler.scan();

@@ -3,22 +3,27 @@
   admininstration.cpp
  */
 #include "administration.h"
+#include <fstream>
+#include <iostream>
 
-Admin(ifstream& codeIn, ofstream tokenOut, Scanner &scan)
+using namespace std;
+
+Admin::Admin(string inFile, string outFile, Scanner &scan)
 {
-
-
+   in = inFile;
+   out = outFile;
+   //scnr = &scan;
 }
 
 
 
-int Scan()
+int Admin::scan()
 {
 
    char now;
 
 
-   while(now!=eof)
+   while(now!=EOF)
    {
       
    }

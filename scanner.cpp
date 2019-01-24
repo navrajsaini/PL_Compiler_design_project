@@ -6,7 +6,14 @@
 using namespace std;
 
 //Returns true if character is whitespace
-bool isWhitespace (char a)
+
+Scanner::Scanner(string inCodeName)//, Symtable &symbolTable)
+{
+   codeFileName=inCodeName;
+   infileptr.open(inCodeName.c_str());
+}
+
+bool Scanner::isWhitespace (char a)
 {
    if(a==' ')
    {
@@ -15,7 +22,7 @@ bool isWhitespace (char a)
    return false;
 }
 //returns true if character is an alphabet, based on ascii value
-bool isAlpha (char a)
+bool Scanner::isAlpha (char a)
 {
    if(a>=65)
    {
@@ -34,7 +41,7 @@ bool isAlpha (char a)
    return false;
 }
 //returns true if character is a numeric value via ascii
-bool isNumeric (char a)
+bool Scanner::isNumeric (char a)
 {
    if(a>=48)
    {
@@ -47,7 +54,7 @@ bool isNumeric (char a)
    
 }
 //returns true if character is special
-bool isSpecial (char a)
+bool Scanner::isSpecial (char a)
 {
    switch(a)
    {
@@ -78,7 +85,7 @@ bool isSpecial (char a)
    return false;
 }
 
-Token getToken()
+Token Scanner::getToken()
 {
 //for self
 //Token (Symbol s, int v, string l) : sname(s), svalue(attval(v, l))

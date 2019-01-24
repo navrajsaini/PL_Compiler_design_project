@@ -9,6 +9,9 @@
 #include "scanner.h"
 
 #define MAXERRORS 10
+
+using namespace std;
+
 //error for stage of prodject
 enum errorType {ScanError, ParseError, ScopeError, TypeError};
 
@@ -18,7 +21,7 @@ class Admin
 {
   public:
 //set up admin, input and output for the scanning
-   Admin(ifstream& codeIn, ofstream tokenOut, Scanner &scan);
+   Admin(string inFile, string outFile, Scanner &scan);
    ~Admin(){}
 
    //new line for input
@@ -28,11 +31,16 @@ class Admin
    void error(string text);
 
    int scan();
+   
   private:
    //output file
-   ofstream *outputFilePtr;
+
+   ifstream input;
+   ofstream output;
+   string in;
+   string out;
    //scanner
-   Scanner &scnr;
+   Scanner scnr;
 
    //maintain current line number.
    int lineNo;

@@ -22,12 +22,14 @@ class Scanner
 {
   public:
    Scanner(){}//default constructor, doesn't do anything
-   Scanner(ifstream &inCode, Symtable &symbolTable);
+   Scanner(string inCodeName);//, Symtable &symbolTable);
    ~Scanner();//destructor
    Token getToken();
 
   private:
-   ifstream *infileptr;
+   
+   ifstream infileptr;
+   string codeFileName;
    Symtable *symtableptr;
    char lookAheadChar;//look ahead character
 
