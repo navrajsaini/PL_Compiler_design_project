@@ -20,16 +20,17 @@ int main ()
 
    //---------------------------------------------------------
    //TESTING THE SYMBOLTABLE
-   cout << "testing the insert function" << endl;
+   cout << "testing the insert symboltable function" << endl;
    Symtable symtest;
    int symb = symtest.insert("begin");
    cout << symb << endl;
 
    cout << "Printing the hash table..." << endl;
    symtest.printTable();
-   
+   /*
    cout << "testing search function" << endl;
    symb = symtest.search("begin");
    cout << "location is: " << symb << endl;
    return 0;
+   */
 }

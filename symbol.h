@@ -22,5 +22,5 @@ enum Symbol {ID=256,                               //corosponding IDs
 	     begin, end, const1,                   //273-275
 	     array, integer, Boolean, proc,        //276-279
 	     skip, read, write, call, if1,         //280-284
-	     fi, od, false1, true1};               //285-288
+	     do1, fi, od, false1, true1};          //285-288
 #endif
