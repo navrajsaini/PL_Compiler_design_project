@@ -39,7 +39,7 @@ class Symtable
 
   private:
    vector<Token> htable;//the hashtable
-   int occupied = 0;//number of cells occupied
+   int occupied;//number of cells occupied
    int hashfn(string);//hash function
 
 };

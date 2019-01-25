@@ -9,7 +9,24 @@ using namespace std;
 
 void Symtable::loadResvd()
 {
+   
    insert("begin");
+   insert("end");
+   insert("const");
+   insert("array");
+   insert("integer");
+   insert("Boolean");
+   insert("proc");
+   insert("skip");
+   insert("read");
+   insert("write");
+   insert("call");
+   insert("if");
+   insert("do");
+   insert("fi");
+   insert("od");
+   insert("false");
+   insert("true");
 }
 
 
@@ -20,16 +37,10 @@ int Symtable::insert(string s)
       || "do" || "fi" || "od" || "false" || "true")
    {
       int hashval;
-      //Token begin(Symbol::begin, 273, s);
-      //------------------------------------test--------
-      //begin.insert(cout);
-      //------------------------------------endtest-----
-      //htable.push_back(begin);
-      //call the hash function here....
-      if (Symtable::search(s) == -1)
+      int val = Symtable::search(s);
+      if (val == -1)
       {
 	 hashval = hashfn(s);
-
 	 if (s == "begin")
 	 {
 	    Token begin(Symbol::begin, hashval, s);
@@ -148,10 +159,17 @@ int Symtable::insert(string s)
 
 int Symtable::search(string s)
 {
+   Token a;
+   string comp;
+   cout << "in Search, occupied is: " << occupied << endl;
+   //this for loop doesn't work properly....
    for (std::size_t i = 0; i <= occupied; ++i)
    {
-      if (htable[i].getLexeme() == s)
+      a = htable[i];
+      comp = a.getLexeme();
+      if (comp == s)
       {
+	 cout << "i is: " << i << endl;
 	 return i+1;
       }
       else

@@ -23,13 +23,13 @@ int main ()
    cout << endl << endl << endl;
    cout << "--------testing the symboltable functions-----------" << endl;
    Symtable symtest;
-   int symb = symtest.insert("begin");
-   cout << "output from insert, the hashvalue: " << symb << endl;
-
+   cout << "loading the reserved words...." << endl;
+   symtest.loadResvd();
+   
    cout << "Printing the hash table..." << endl;
    symtest.printTable();
    cout << "testing search function" << endl;
-   symb = symtest.search("begin");
-   cout << "location for begin token is: " << symb << endl;
+   int symb = symtest.search("end");
+   cout << "location for end token is: " << symb << endl;
    return 0;
 }
