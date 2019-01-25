@@ -7,7 +7,7 @@ using namespace std;
 int main ()
 {
    //TEST THE TOKEN FUNCTIONS and SYMBOL FUNCTIONS
-   cout << "starting..." << endl;
+   cout << "---------testing the token and symbol functions----" << endl;
    Token a (NUM, 5, "five");
    cout << "a.getvalue: " << a.getValue() << endl;
    cout << "a.getSymbol: " << spellS(a.getSymbol()) << endl;
@@ -21,18 +21,14 @@ int main ()
    //---------------------------------------------------------
    //TESTING THE SYMBOLTABLE
    cout << endl << endl << endl;
-   cout << "testing the insert symboltable function" << endl;
+   cout << "--------testing the symboltable functions-----------" << endl;
    Symtable symtest;
    int symb = symtest.insert("begin");
-   cout << symb << endl << endl;
+   cout << "output from insert, the hashvalue: " << symb << endl;
 
-   cout << "Printing the hash table test... won't do anything" << endl
-	<< "because whenever we run the <Token>.insert(cout) or "
-	<< "cout << <Token>" << endl
-	<< "the program decides it doesn't like me..." << endl
-	<< "it's the spellS function." << endl;
+   cout << "Printing the hash table..." << endl;
    symtest.printTable();
-   cout << endl << endl << "testing search function" << endl;
+   cout << "testing search function" << endl;
    symb = symtest.search("begin");
    cout << "location for begin token is: " << symb << endl;
    return 0;

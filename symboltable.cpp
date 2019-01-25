@@ -167,13 +167,7 @@ void Symtable::printTable()
    for ( ; iter < htable.begin()+occupied; iter++)
    {
       Token a = *iter;
-      //both the print functions for token do not work properly...
-      cout << "Lexeme: " << a.getLexeme() << endl
-	   << "Value: " << a.getValue();
-      cout << endl << "getting the symbol and then printing it" << endl;
-      Symbol b = a.getSymbol();
-      cout << "got the symbol... " << endl;
-      //cout << spellS(b) << endl;
+      a.insert(cout);
    }
 }
 
