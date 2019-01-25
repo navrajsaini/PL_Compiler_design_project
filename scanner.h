@@ -23,15 +23,16 @@ class Scanner
   public:
    Scanner(){}//default constructor, doesn't do anything
    Scanner(string inCodeName);//, Symtable &symbolTable);
-   ~Scanner();//destructor
+   //~Scanner();//destructor
    Token getToken();
-
+   
+   char ahead;//look ahead character
   private:
    
-   ifstream infileptr;
+   //ifstream infileptr;
    string codeFileName;
    Symtable *symtableptr;
-   char lookAheadChar;//look ahead character
+   
 
    bool isWhitespace (char a);
    

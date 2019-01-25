@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Admin::Admin(string inFile, string outFile, Scanner &scan)
+Admin::Admin(string inFile, string outFile, Scanner &sn)
 {
    in = inFile;
    out = outFile;
@@ -20,14 +20,19 @@ Admin::Admin(string inFile, string outFile, Scanner &scan)
 int Admin::scan()
 {
 
-   char now;
-
-
-   while(now!=EOF)
+   char now[256] = " ";
+   int i=0;
+   input.open(in.c_str());
+   input.getline(now,256);
+   do
    {
-      
-   }
+   view.ahead=now[i+1];
+   cout<<now[i]<<" "<<view.ahead<<endl;
+   }while(view.ahead!='/n');
+   //while(view.aheadChar!=EOF)
+   //{   
+   //}
    
 
-   
+   return 1;
 }

@@ -14,8 +14,7 @@ int main ()
    // variables for file names
    
    /*remove testLang.txt when project complete*/
-   string CodeFileName = "testLang.txt";
-   //TokenFileName;
+   string codeFileName = "testLang.txt", tokenFileName = "tokenFile";
 
    //get the file name for input and then declare and open file
    cout<<"Welcome to compiler4600, please enter your code input file name: ";
@@ -23,8 +22,8 @@ int main ()
    /*fix the commented out cin when complete */
    //cin>>CodeFileName;
    
-   ifstream CodeFileIn;// TokenFileIn, 
-   CodeFileIn.open(CodeFileName.c_str());
+   ifstream codeFileIn;// TokenFileIn, 
+   codeFileIn.open(codeFileName.c_str());
 
    //get the file name for output and then declare and open file
    cout<<endl<< "Now, please enter your scanner output file: ";
@@ -32,7 +31,7 @@ int main ()
    /*fix the commented out cin when complete */
    //cin>>TokenFileName;
    
-   ofstream TokenFileOut;
+   ofstream tokenFileOut;
 
    cout<<endl;
 
@@ -44,16 +43,16 @@ int main ()
    //creating a scanner
    
    /* remove comments for scanner when scanner complete */
-   //Scanner scan(CodeFileIn, table)
+   Scanner scan(codeFileName);//, table);
 
 
    //run the compiler
 
    /*decomment for running*/
-   //Administration compiler(CodeInFile, TokenOutFile, scan);
+   Admin compiler(codeFileName, tokenFileName, scan);
 
    /**/
-   //int stat = compiler.scan();
+   int stat = compiler.scan();
    /*
      if(stat == 1)
      cout<< "Scan Complete" << endl;
@@ -62,6 +61,6 @@ int main ()
    */
 
 
-   CodeFileIn.close();
+   codeFileIn.close();
    return 0;
 }

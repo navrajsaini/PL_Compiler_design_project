@@ -10,7 +10,7 @@ using namespace std;
 Scanner::Scanner(string inCodeName)//, Symtable &symbolTable)
 {
    codeFileName=inCodeName;
-   infileptr.open(inCodeName.c_str());
+   //infileptr.open(inCodeName.c_str());
 }
 
 bool Scanner::isWhitespace (char a)

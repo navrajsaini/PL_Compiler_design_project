@@ -21,7 +21,7 @@ class Admin
 {
   public:
 //set up admin, input and output for the scanning
-   Admin(string inFile, string outFile, Scanner &scan);
+   Admin(string inFile, string outFile, Scanner &sn);
    ~Admin(){}
 
    //new line for input
@@ -40,7 +40,7 @@ class Admin
    string in;
    string out;
    //scanner
-   Scanner scnr;
+   Scanner view;
 
    //maintain current line number.
    int lineNo;
