@@ -30,6 +30,24 @@ string spellS(Symbol s)
       case NONAME: return "No Name error"; break;
       case ENDOFFILE: return "End of File"; break;
       case BADCHAR: return "Bad Character error"; break;
+	 //The reserved words
+	   case begin: return "begin"; break;
+	   case end: return "end"; break;
+	   case const1: return "const"; break;
+	   case array: return "array"; break;
+	   case integer: return "integer"; break;
+	   case Boolean: returb "Boolean"; break;
+	   case proc: return "proc"; break;
+	   case skip: return "skip"; break;
+	   case read: return "read"; break;
+	   case write: return "write"; break;
+	   case call: return "call"; break; 
+	   case if1: return "if"; break; 
+	   case do1: return "do"; break;
+	   case fi: return "fi"; break;
+	   case od: return "od"; break;
+	   case false1: return "false"; break;
+	   case true1: return "true"; break;
    }
 }
 
