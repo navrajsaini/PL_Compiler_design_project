@@ -1,8 +1,8 @@
 1 Symbol.h
 1 token.h
 1 token.cc
-0 symboltable.h
-0 symboltable.cc
+1 symboltable.h
+1 symboltable.cc
 0 scanner.h
 0 scanner.cc
 0 admin.h

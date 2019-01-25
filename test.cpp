@@ -20,17 +20,20 @@ int main ()
 
    //---------------------------------------------------------
    //TESTING THE SYMBOLTABLE
+   cout << endl << endl << endl;
    cout << "testing the insert symboltable function" << endl;
    Symtable symtest;
    int symb = symtest.insert("begin");
-   cout << symb << endl;
+   cout << symb << endl << endl;
 
-   cout << "Printing the hash table..." << endl;
+   cout << "Printing the hash table test... won't do anything" << endl
+	<< "because whenever we run the <Token>.insert(cout) or "
+	<< "cout << <Token>" << endl
+	<< "the program decides it doesn't like me..." << endl
+	<< "it's the spellS function." << endl;
    symtest.printTable();
-   /*
-   cout << "testing search function" << endl;
+   cout << endl << endl << "testing search function" << endl;
    symb = symtest.search("begin");
-   cout << "location is: " << symb << endl;
+   cout << "location for begin token is: " << symb << endl;
    return 0;
-   */
 }
