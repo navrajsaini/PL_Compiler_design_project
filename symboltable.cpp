@@ -161,22 +161,16 @@ int Symtable::search(string s)
 {
    Token a;
    string comp;
-   cout << "in Search, occupied is: " << occupied << endl;
-   //this for loop doesn't work properly....
-   for (std::size_t i = 0; i <= occupied; ++i)
+   for (std::size_t i = 0; i <= occupied; i++)
    {
       a = htable[i];
       comp = a.getLexeme();
       if (comp == s)
       {
-	 cout << "i is: " << i << endl;
 	 return i+1;
       }
-      else
-      {
-	 return -1;
-      }
    }
+   return -1;
 }
 
 void Symtable::printTable()
