@@ -101,3 +101,10 @@ Token Scanner::getToken()
    return token;
 }
 
+Token recognizeName()
+{
+   
+}
+Token recognizeSpecial();
+Token recognizeNumeral();
+Token recognizeComment();

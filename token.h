@@ -58,7 +58,7 @@ class Token
    };
    attval svalue;
    Symbol sname;
-
+   
 };
 //overload operator
 ostream& operator<< (ostream&, Token&);
