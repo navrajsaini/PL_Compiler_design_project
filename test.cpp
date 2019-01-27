@@ -37,6 +37,7 @@ int main ()
 
    //---------------------------------------------------------
    //TESTING SCANNER && ADMIN
+   /*
    bool space, alpha, num;
    
    cout << endl << endl << endl;
@@ -49,7 +50,7 @@ int main ()
    Scanner scanTest (codefile, tokenfile);
    
    cout << "the location of do is: " << scanTest.getToken("do") << endl;
-   
+   */
 /*
    space = scanTest.isSpace(' ');
    alpha = scanTest.isAlpha('A');

@@ -9,39 +9,22 @@ using namespace std;
 
 void Symtable::loadResvd()
 {
+   
+   string ins[37] =
+      {"begin", "end", "const", "array", "integer",
+       "Boolean", "proc", "skip", "read", "write", "call",
+       "if", "do", "fi", "od", "false", "true", ".",
+       ",", "[", "]", "&", "|", "~", ">", "<", "=", "[]", "->",
+       "(", ")", "/", "%", "*", ":=", "+", "-"
+      };
    int val;
-   insert("begin");
-   insert("end");
-   insert("const");
-   insert("array");
-   insert("integer");
-   insert("Boolean");
-   insert("proc");
-   insert("skip");
-   insert("read");
-   insert("write");
-   insert("call");
-   insert("if");
-   insert("do");
-   insert("fi");
-   insert("od");
-   insert("false");
-   insert("true");
-   insert(".");
-   insert(",");
-   insert("[");
-   insert("]");
-   insert("&");
-   insert("|");
-   insert("~");
-   insert(">");
-   insert("<");
-   insert("=");
-   insert("[]");
-   insert("->");
+   for (int i = 0; i < 37/*sizeof(ins)/sizeof(ins[0])*/; i++)
+   {
+      cout << ins[i] << endl;
+      val = insert(ins[i]);
+      cout << val << endl;
+   }
 }
-
-
 int Symtable::insert(string s)
 {
    int hashval;
@@ -245,23 +228,94 @@ int Symtable::insert(string s)
 	 occupied++;
 	 return hashval;
       }
-      else if(s == "->")
+      else if(s == ":=")
       {
 	 Token assign(Symbol::assign, hashval, s);
 	 htable.insert (htable.begin()+hashval, assign);
 	 occupied++;
 	 return hashval;
       }
-      else//if the reserved word is already in the table...
+      else if(s == ":")
       {
-	 val = search(s);
+	 Token colon(Symbol::colon, hashval, s);
+	 htable.insert (htable.begin()+hashval, colon);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == ";")
+      {
+	 Token semicolon(Symbol::SEMICOLON, hashval, s);
+	 htable.insert (htable.begin()+hashval, semicolon);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "/")
+      {
+	 Token div(Symbol::DIV, hashval, s);
+	 htable.insert (htable.begin()+hashval, div);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "%")
+      {
+	 Token mod(Symbol::MOD, hashval, s);
+	 htable.insert (htable.begin()+hashval, mod);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "+")
+      {
+	 Token plus(Symbol::PLUS, hashval, s);
+	 htable.insert (htable.begin()+hashval, plus);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "-")
+      {
+	 Token minus(Symbol::MINUS, hashval, s);
+	 htable.insert (htable.begin()+hashval, minus);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "*")
+      {
+	 Token times(Symbol::TIMES, hashval, s);
+	 htable.insert (htable.begin()+hashval, times);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "->")
+      {
+	 Token arrow(Symbol::arrow, hashval, s);
+	 htable.insert (htable.begin()+hashval, arrow);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "(")
+      {
+	 Token leftP(Symbol::LEFTP, hashval, s);
+	 htable.insert (htable.begin()+hashval, leftP);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == ")")
+      {
+	 Token rightP(Symbol::RIGHTP, hashval, s);
+	 htable.insert (htable.begin()+hashval, rightP);
+	 occupied++;
+	 return hashval;
+      }
+      else//if the reserved word isn't already in the table...
+      {
 	 hashval = hashfn(s);
+	 cout << "tha fuck,,, " << s << endl;
 	 if (val == -1)//if the id isn't in the symbol table already
 	 {
+	    cout << endl << endl << "wtf..." << s << endl;
 	    Token ID (Symbol::ID, hashval, s);
 	    htable.insert (htable.begin()+hashval, ID);
-	 occupied++;
-	 return hashval+1;
+	    occupied++;
+	    return hashval+1;
 	 }
       }
    }
