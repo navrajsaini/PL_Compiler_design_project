@@ -6,7 +6,9 @@
 #include "symboltable.h"
 
 using namespace std;
-
+/*
+  load the reserve words via the insert function to the symbol table
+ */
 void Symtable::loadResvd()
 {
    
@@ -25,14 +27,20 @@ void Symtable::loadResvd()
       cout << val << endl;
    }
 }
+/*
+  insert the words that are sent via the scanner
+ */
 int Symtable::insert(string s)
 {
    int hashval;
-   int val = Symtable::search(s);
-   cout << val << endl;
+   int val = Symtable::search(s);//check if the word is in the table already
+   //if not and the table is not full insert it based on if the word is a
+   //keyword or special char or a user input ID
    if (val == -1 && Symtable::full() != true)
    {
       hashval = hashfn(s);
+      //if and else if statements to create the token for the
+      //keywords or the special chars which are then inserted.
       if (s == "begin")
       {
 	 Token begin(Symbol::begin, hashval, s);
@@ -307,13 +315,12 @@ int Symtable::insert(string s)
 	 return hashval;
       }
       else//if the reserved word isn't already in the table...
+	 //create a token for it and insert it in
       {
 	 val = search(s);
 	 hashval = hashfn(s);
-	 cout << "tha fuck,,, " << s << endl;
 	 if (val == -1)//if the id isn't in the symbol table already
 	 {
-	    cout << endl << endl << "wtf..." << s << endl;
 	    Token ID (Symbol::ID, hashval, s);
 	    htable.insert (htable.begin()+hashval, ID);
 	    occupied++;
@@ -321,28 +328,31 @@ int Symtable::insert(string s)
 	 }
       }
    }
-   else//if it already exists
+   else//if it already exists return the location
    {
       val = Symtable::search(s);
       return val;
    }
 
 }
-
+/*
+  search function to make sure the word isn't already in the symbol table
+ */
 int Symtable::search(string s)
 {
    Token a;
    string comp;
-   for (std::size_t i = 0; i <= occupied; i++)
+   for (std::size_t i = 0; i <= occupied; i++)//check all the loctions that are
+                                              //occupied
    {
       a = htable[i];
       comp = a.getLexeme();
       if (comp == s)
       {
-	 return i+1;
+	 return i+1;//if found return it's location
       }
    }
-   return -1;
+   return -1;//return -1 if not found
 }
 
 void Symtable::printTable()
@@ -356,9 +366,10 @@ void Symtable::printTable()
 }
 
 int Symtable::hashfn(string s)
+//hash function. for now it's just a mod function
+//will edit it later for a more appropriate
+//hash func
 {
-   //it's the int value for string->>
-   //return s % SYMTABLESIZE
    int i = SYMTABLESIZE-occupied;
    i = SYMTABLESIZE-i;
    return i % SYMTABLESIZE;

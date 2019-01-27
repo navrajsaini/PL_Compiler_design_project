@@ -7,7 +7,9 @@
 #include <iostream>
 
 using namespace std;
-
+/*
+  spell the symbol passed based on switch cases
+ */
 string spellS(Symbol s)
 {
    switch (s)
