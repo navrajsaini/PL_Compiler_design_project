@@ -161,9 +161,19 @@ void Scanner::tokenLine(char now[], int y)
    }
 }
 
+<<<<<<< HEAD
 bool Scanner::isComment(char a)
 {
    if( a=='$')
       return true;
    return false;
 }
+=======
+Token recognizeName()
+{
+   
+}
+Token recognizeSpecial();
+Token recognizeNumeral();
+Token recognizeComment();
+>>>>>>> 9bd2a9cc595211f172757d31f00a5607b5eac00e

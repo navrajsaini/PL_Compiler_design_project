@@ -9,7 +9,7 @@ using namespace std;
 
 void Symtable::loadResvd()
 {
-   
+   int val;
    insert("begin");
    insert("end");
    insert("const");
@@ -32,129 +32,148 @@ void Symtable::loadResvd()
 
 int Symtable::insert(string s)
 {
-   if(s == "begin" || "end" || "const" || "array" || "integer" || "Boolean"
-      || "proc" || "skip" || "read" || "write" || "call" || "if" || "fi"
-      || "do" || "fi" || "od" || "false" || "true")
+   int hashval;
+   int val = Symtable::search(s);
+   if (val == -1)
    {
-      int hashval;
-      int val = Symtable::search(s);
-      if (val == -1)
+      hashval = hashfn(s);
+      if (s == "begin")
       {
-	 hashval = hashfn(s);
-	 if (s == "begin")
-	 {
-	    Token begin(Symbol::begin, hashval, s);
-	    htable.insert (htable.begin()+hashval, begin);
-	    occupied++;
-	 }
-	 else if(s == "end")
-	 {
-	    Token end(Symbol::end, hashval, s);
-	    htable.insert (htable.begin()+hashval, end);
-	    occupied++;
-	 }
-	 else if(s == "const")
-	 {
-	    Token const1(Symbol::const1, hashval, s);
-	    htable.insert (htable.begin()+hashval, const1);
-	    occupied++;
-	 }
-	 else if(s == "const")
-	 {
-	    Token array(Symbol::array, hashval, s);
-	    htable.insert (htable.begin()+hashval, array);
-	    occupied++;
-	 }
-	 else if(s == "integer")
-	 {
-	    Token integer(Symbol::integer, hashval, s);
-	    htable.insert (htable.begin()+hashval, integer);
-	    occupied++;
-	 }
-	 else if(s == "Boolean")
-	 {
-	    Token Boolean(Symbol::Boolean, hashval, s);
-	    htable.insert (htable.begin()+hashval, Boolean);
-	    occupied++;
-	 }
-	 else if(s == "proc")
-	 {
-	    Token proc(Symbol::proc, hashval, s);
-	    htable.insert (htable.begin()+hashval, proc);
-	    occupied++;
-	 }
-	 else if(s == "skip")
-	 {
-	    Token skip(Symbol::skip, hashval, s);
-	    htable.insert (htable.begin()+hashval, skip);
-	    occupied++;
-	 }
-	 else if(s == "read")
-	 {
-	    Token read(Symbol::read, hashval, s);
-	    htable.insert (htable.begin()+hashval, read);
-	    occupied++;
-	 }
-	 else if(s == "write")
-	 {
-	    Token write(Symbol::write, hashval, s);
-	    htable.insert (htable.begin()+hashval, write);
-	    occupied++;
-	 }
-	 else if(s == "call")
-	 {
-	    Token call(Symbol::call, hashval, s);
-	    htable.insert (htable.begin()+hashval, call);
-	    occupied++;
-	 }
-	 else if(s == "if")
-	 {
-	    Token if1(Symbol::if1, hashval, s);
-	    htable.insert (htable.begin()+hashval, if1);
-	    occupied++;
-	 }
-	 else if(s == "do")
-	 {
-	    Token do1(Symbol::do1, hashval, s);
-	    htable.insert (htable.begin()+hashval, do1);
-	    occupied++;
-	 }
-	 else if(s == "fi")
-	 {
-	    Token fi(Symbol::fi, hashval, s);
-	    htable.insert (htable.begin()+hashval, fi);
-	    occupied++;
-	 }
-	 else if(s == "od")
-	 {
-	    Token od(Symbol::od, hashval, s);
-	    htable.insert (htable.begin()+hashval, od);
-	    occupied++;
-	 }
-	 else if(s == "false")
-	 {
-	    Token false1(Symbol::false1, hashval, s);
-	    htable.insert (htable.begin()+hashval, false1);
-	    occupied++;
-	 }
-	 else if(s == "true")
-	 {
-	    Token true1(Symbol::true1, hashval, s);
-	    htable.insert (htable.begin()+hashval, true1);
-	    occupied++;
-	 }
-	 return hashval;
+	 Token begin(Symbol::begin, hashval, s);
+	 htable.insert (htable.begin()+hashval, begin);
+	 occupied++;
+	 return hashval+1;
       }
-      else
-      {}
+      else if(s == "end")
+      {
+	 Token end(Symbol::end, hashval, s);
+	 htable.insert (htable.begin()+hashval, end);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "const")
+      {
+	 Token const1(Symbol::const1, hashval, s);
+	 htable.insert (htable.begin()+hashval, const1);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "array")
+      {
+	 Token array(Symbol::array, hashval, s);
+	 htable.insert (htable.begin()+hashval, array);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "integer")
+      {
+	 Token integer(Symbol::integer, hashval, s);
+	 htable.insert (htable.begin()+hashval, integer);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "Boolean")
+      {
+	 Token Boolean(Symbol::Boolean, hashval, s);
+	 htable.insert (htable.begin()+hashval, Boolean);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "proc")
+      {
+	 Token proc(Symbol::proc, hashval, s);
+	 htable.insert (htable.begin()+hashval, proc);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "skip")
+      {
+	 Token skip(Symbol::skip, hashval, s);
+	 htable.insert (htable.begin()+hashval, skip);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "read")
+      {
+	 Token read(Symbol::read, hashval, s);
+	 htable.insert (htable.begin()+hashval, read);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "write")
+      {
+	 Token write(Symbol::write, hashval, s);
+	 htable.insert (htable.begin()+hashval, write);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "call")
+      {
+	 Token call(Symbol::call, hashval, s);
+	 htable.insert (htable.begin()+hashval, call);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "if")
+      {
+	 Token if1(Symbol::if1, hashval, s);
+	 htable.insert (htable.begin()+hashval, if1);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "do")
+      {
+	 Token do1(Symbol::do1, hashval, s);
+	 htable.insert (htable.begin()+hashval, do1);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "fi")
+      {
+	 Token fi(Symbol::fi, hashval, s);
+	 htable.insert (htable.begin()+hashval, fi);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "od")
+      {
+	 Token od(Symbol::od, hashval, s);
+	 htable.insert (htable.begin()+hashval, od);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "false")
+      {
+	 Token false1(Symbol::false1, hashval, s);
+	 htable.insert (htable.begin()+hashval, false1);
+	 occupied++;
+	 return hashval+1;
+      }
+      else if(s == "true")
+      {
+	 Token true1(Symbol::true1, hashval, s);
+	 htable.insert (htable.begin()+hashval, true1);
+	 occupied++;
+	 return hashval+1;
+      }
+      else//if the reserved word is already in the table...
+      {
+	 val = search(s);
+	 hashval = hashfn(s);
+	 if (val == -1)//if the id isn't in the symbol table already
+	 {
+	    Token ID (Symbol::ID, hashval, s);
+	    htable.insert (htable.begin()+hashval, ID);
+	 occupied++;
+	 return hashval;
+	 }
+      }
    }
-   else
+   else//if it already exists
    {
-      cout << "shouldn't be here... " << endl;
-      //---------------------------need to do-------------------
-      //hashfn(s);
-      //occupied++;
+      return val;
    }
+
 }
 
 int Symtable::search(string s)
@@ -175,10 +194,11 @@ int Symtable::search(string s)
 
 void Symtable::printTable()
 {
-   auto iter = htable.begin();
-   for ( ; iter < htable.begin()+occupied; iter++)
+   Token a;
+   for (std::size_t i = 0; i < occupied; i++)
    {
-      Token a = *iter;
+      a = htable[i];
+      cout << "a = htable[" << i << "]" << endl;
       a.insert(cout);
    }
 }

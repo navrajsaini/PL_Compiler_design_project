@@ -17,7 +17,9 @@ int main ()
    a.insert(cout);
    
    cout << "testing the overloaded << funciton: " << endl << a;
-
+   cout << "testing the overloaded = func: " << endl;
+   Token b = a;
+   b.insert(cout);
    //---------------------------------------------------------
    //TESTING THE SYMBOLTABLE
    cout << endl << endl << endl;
@@ -31,5 +33,7 @@ int main ()
    cout << "testing search function" << endl;
    int symb = symtest.search("end");
    cout << "location for end token is: " << symb << endl;
+   cout << "testing inserting a id that's already in it."
+	<< "the loc is: " << symtest.insert("od") << endl;
    return 0;
 }
