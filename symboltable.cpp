@@ -27,6 +27,18 @@ void Symtable::loadResvd()
    insert("od");
    insert("false");
    insert("true");
+   insert(".");
+   insert(",");
+   insert("[");
+   insert("]");
+   insert("&");
+   insert("|");
+   insert("~");
+   insert(">");
+   insert("<");
+   insert("=");
+   insert("[]");
+   insert("->");
 }
 
 
@@ -156,6 +168,90 @@ int Symtable::insert(string s)
 	 occupied++;
 	 return hashval;
       }
+      else if(s == ",")
+      {
+	 Token comma(Symbol::comma, hashval, s);
+	 htable.insert (htable.begin()+hashval, comma);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == ".")
+      {
+	 Token period(Symbol::period, hashval, s);
+	 htable.insert (htable.begin()+hashval, period);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "[")
+      {
+	 Token rightB(Symbol::rightB, hashval, s);
+	 htable.insert (htable.begin()+hashval, rightB);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "]")
+      {
+	 Token leftB(Symbol::leftB, hashval, s);
+	 htable.insert (htable.begin()+hashval, leftB);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "&")
+      {
+	 Token and1(Symbol::and1, hashval, s);
+	 htable.insert (htable.begin()+hashval, and1);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "|")
+      {
+	 Token or1(Symbol::or1, hashval, s);
+	 htable.insert (htable.begin()+hashval, or1);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "~")
+      {
+	 Token not1(Symbol::not1, hashval, s);
+	 htable.insert (htable.begin()+hashval, not1);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "<")
+      {
+	 Token less(Symbol::less, hashval, s);
+	 htable.insert (htable.begin()+hashval, less);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == ">")
+      {
+	 Token greater(Symbol::greater, hashval, s);
+	 htable.insert (htable.begin()+hashval, greater);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "=")
+      {
+	 Token equal(Symbol::equal, hashval, s);
+	 htable.insert (htable.begin()+hashval, equal);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "[]")
+      {
+	 Token closedS(Symbol::closedS, hashval, s);
+	 htable.insert (htable.begin()+hashval, closedS);
+	 occupied++;
+	 return hashval;
+      }
+      else if(s == "->")
+      {
+	 Token assign(Symbol::assign, hashval, s);
+	 htable.insert (htable.begin()+hashval, assign);
+	 occupied++;
+	 return hashval;
+      }
       else//if the reserved word is already in the table...
       {
 	 val = search(s);
@@ -165,7 +261,7 @@ int Symtable::insert(string s)
 	    Token ID (Symbol::ID, hashval, s);
 	    htable.insert (htable.begin()+hashval, ID);
 	 occupied++;
-	 return hashval;
+	 return hashval+1;
 	 }
       }
    }
