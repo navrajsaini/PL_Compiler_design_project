@@ -13,6 +13,7 @@ Admin::Admin(string inFile, string outFile, Scanner &sn)
    in = inFile;
    out = outFile;
    //scnr = &scan;
+   view.setName(in, out);
 }
 
 

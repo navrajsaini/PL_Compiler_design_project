@@ -8,6 +8,7 @@
 #include "administration.h"
 #include "symboltable.h"
 #include "token.h"
+#include <stdio.h>
 
 using namespace std;
 
@@ -24,8 +25,8 @@ int main ()
    /*fix the commented out cin when complete */
    //cin>>CodeFileName;
    
-   ifstream codeFileIn;// TokenFileIn, 
-   codeFileIn.open(codeFileName.c_str());
+   //ifstream codeFileIn;// TokenFileIn, 
+   //codeFileIn.open(codeFileName.c_str());
 
    //get the file name for output and then declare and open file
    cout<<endl<< "Now, please enter your scanner output file: ";
@@ -33,7 +34,12 @@ int main ()
    /*fix the commented out cin when complete */
    //cin>>TokenFileName;
    
-   ofstream tokenFileOut;
+   //ofstream tokenFileOut;
+   remove(tokenFileName.c_str());
+   //tokenFileOut.open(tokenFileName.c_str(), trunc);
+   
+   //tokenFileOut.close();
+   
 
    cout<<endl;
 
@@ -45,7 +51,7 @@ int main ()
    //creating a scanner
    
    /* remove comments for scanner when scanner complete */
-   Scanner scan(codeFileName);//, table);
+   Scanner scan(codeFileName, tokenFileName);//, table);
 
 
    //run the compiler
@@ -63,6 +69,6 @@ int main ()
    */
 
 
-   codeFileIn.close();
+   //codeFileIn.close();
    return 0;
 }

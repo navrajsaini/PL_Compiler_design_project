@@ -3,14 +3,16 @@
  */
 #include "scanner.h"
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 //Returns true if character is whitespace
 
-Scanner::Scanner(string inCodeName)//, Symtable &symbolTable)
+Scanner::Scanner(string inCodeName, string outCodeName)//, Symtable &symbolTable)
 {
    codeFileName=inCodeName;
    //infileptr.open(inCodeName.c_str());
+   tokenFileName=outCodeName;
 }
 
 bool Scanner::isSpace(char a)
@@ -20,6 +22,12 @@ bool Scanner::isSpace(char a)
       return true;
    }
    return false;
+}
+void Scanner::setName(string in, string ot)
+{
+   codeFileName = in;
+   tokenFileName = ot;
+
 }
 //returns true if character is an alphabet, based on ascii value
 bool Scanner::isAlpha (char a)
@@ -107,10 +115,10 @@ bool Scanner::isSpecial (char a)
 int Scanner::getToken(string token)
 {
    int storeVal;
-   Symtable symbolTable2;
+   //Symtable symbolTable2;
    
-   storeVal = symbolTable2.insert(token);
-   cout<<storeVal<<endl;
+   storeVal = symbolTable.insert(token);
+   //cout<<storeVal<<endl;
    return storeVal;
 }
 
@@ -119,6 +127,7 @@ void Scanner::tokenLine(char now[], int y)
 {
 //for self
 //Token (Symbol s, int v, string l) : sname(s), svalue(attval(v, l))
+   out.open(tokenFileName.c_str(), ios::app);
    string token;
    int a5a;
    for(int i=0;i<=255;i++)
@@ -126,7 +135,10 @@ void Scanner::tokenLine(char now[], int y)
       ahead=now[i+1];      
       //cout<<now[i]<<" "<<ahead;
       if(isComment(now[i])==true)
+      {
+	 out.close();
 	 return;
+      }
       while(isSpace(now[i])==true)
       {
 	 i++;
@@ -147,21 +159,18 @@ void Scanner::tokenLine(char now[], int y)
 	 }
 	 //call to store token and move to next token, in this case a special
 	 a5a = getToken(token);
+	 cout<<a5a<<" ";
+	 out<<a5a<<" ";
       }
       else if(isNumeric(now[i])==true)
       {
-	 while(isNumeric(now[i]==true)
-	 token.push_back(now[i]);
-	 i++;
-	 if(isSpecial(ahead)==true)
+	 while(isNumeric(now[i]==true))
 	 {
-	    	 token.push_back(now[i]);
-	 i++;
-	 }
-	 else if( isSpace(ahead)==true)
-	 {
+	    token.push_back(now[i]);
+	    i++;
 	    
 	 }
+	 a5a = getToken(token);
       }
       else if(isSpecial(now[i])==true)
       {
@@ -184,7 +193,10 @@ void Scanner::tokenLine(char now[], int y)
       
       
    }
+   out.close();
+   
 }
+
 
 bool Scanner::isComment(char a)
 {

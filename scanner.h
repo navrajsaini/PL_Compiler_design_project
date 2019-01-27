@@ -22,18 +22,20 @@ class Scanner
 {
   public:
    Scanner(){}//default constructor, doesn't do anything
-   Scanner(string inCodeName);//, Symtable &symbolTable);
+   Scanner(string inCodeName, string outFileName);//, Symtable &symbolTable);
    //~Scanner();//destructor
    int getToken(string token);
    void tokenLine(char now[], int y);
-   
+
+   void setName(string in, string out);
    char ahead;//look ahead character
   private:
    
    int luck;
    Symtable symbolTable;
-   
+   ofstream out;
    string codeFileName;
+   string tokenFileName;
 
    
 
