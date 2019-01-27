@@ -19,17 +19,21 @@ Admin::Admin(string inFile, string outFile, Scanner &sn)
 
 int Admin::scan()
 {
-
-   char now[256] = " ";
-   int i=0;
+   char now[256];
    input.open(in.c_str());
-   input.getline(now,256);
-   do
-   {
-   view.ahead=now[i+1];
-   cout<<now[i]<<" "<<view.ahead<<endl;
-   }while(view.ahead!='/n');
-   //while(view.aheadChar!=EOF)
+
+   //cout<<now[i]<<" "<<view.ahead<<endl;
+   do{
+      //clearing the array of characters
+      for(int j=0;j<255;j++)
+	 now[j]=' ';  
+      input.getline(now,256);
+      
+      view.tokenLine(now, 256);
+     
+      
+      
+   }while(!input.eof());
    //{   
    //}
    
