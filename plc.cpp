@@ -4,10 +4,10 @@
 
 #include <iostream>
 #include <fstream>
-#include "scanner.h"
+//#include "scanner.h"
 #include "administration.h"
-#include "symboltable.h"
-#include "token.h"
+//#include "symboltable.h"
+//#include "token.h"
 #include <stdio.h>
 
 using namespace std;
