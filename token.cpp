@@ -48,7 +48,8 @@ string spellS(Symbol s)
       case od: return "od"; break;
       case false1: return "false"; break;
       case true1: return "true"; break;
-      default: return spellS(s); break;
+	 //need to have it go from symbol to string...
+      default: return "ID"; break;
    }
 }
 

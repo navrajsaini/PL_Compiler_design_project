@@ -14,6 +14,7 @@ Admin::Admin(string inFile, string outFile, Scanner &sn)
    out = outFile;
    //scnr = &scan;
    view.setName(in, out);
+   view.symbolTable.loadResvd();
 }
 
 
@@ -37,7 +38,7 @@ int Admin::scan()
    }while(!input.eof());
    //{   
    //}
-   
+   view.symbolTable.printTable();
 
    return 1;
 }

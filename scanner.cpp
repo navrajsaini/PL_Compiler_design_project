@@ -13,6 +13,7 @@ Scanner::Scanner(string inCodeName, string outCodeName)//, Symtable &symbolTable
    codeFileName=inCodeName;
    //infileptr.open(inCodeName.c_str());
    tokenFileName=outCodeName;
+   symbolTable.loadResvd();
 }
 
 bool Scanner::isSpace(char a)

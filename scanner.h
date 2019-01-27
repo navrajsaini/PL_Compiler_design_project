@@ -29,10 +29,11 @@ class Scanner
 
    void setName(string in, string out);
    char ahead;//look ahead character
+   Symtable symbolTable;
   private:
    
    int luck;
-   Symtable symbolTable;
+
    ofstream out;
    string codeFileName;
    string tokenFileName;
