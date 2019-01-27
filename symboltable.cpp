@@ -10,15 +10,15 @@ using namespace std;
 void Symtable::loadResvd()
 {
    
-   string ins[37] =
+   string ins[39] =
       {"begin", "end", "const", "array", "integer",
        "Boolean", "proc", "skip", "read", "write", "call",
        "if", "do", "fi", "od", "false", "true", ".",
        ",", "[", "]", "&", "|", "~", ">", "<", "=", "[]", "->",
-       "(", ")", "/", "%", "*", ":=", "+", "-"
+       "(", ")", "/", "%", "*", ":=", "+", "-", ";", ":"
       };
    int val;
-   for (int i = 0; i < 37/*sizeof(ins)/sizeof(ins[0])*/; i++)
+   for (int i = 0; i < sizeof(ins)/sizeof(ins[0]); i++)
    {
       cout << ins[i] << endl;
       val = insert(ins[i]);
@@ -29,6 +29,7 @@ int Symtable::insert(string s)
 {
    int hashval;
    int val = Symtable::search(s);
+   cout << val << endl;
    if (val == -1 && Symtable::full() != true)
    {
       hashval = hashfn(s);
@@ -307,6 +308,7 @@ int Symtable::insert(string s)
       }
       else//if the reserved word isn't already in the table...
       {
+	 val = search(s);
 	 hashval = hashfn(s);
 	 cout << "tha fuck,,, " << s << endl;
 	 if (val == -1)//if the id isn't in the symbol table already
