@@ -22,9 +22,8 @@ void Symtable::loadResvd()
    int val;
    for (int i = 0; i < sizeof(ins)/sizeof(ins[0]); i++)
    {
-      cout << ins[i] << endl;
-      val = insert(ins[i]);
-      cout << val << endl;
+      insert(ins[i]);
+      
    }
 }
 /*
