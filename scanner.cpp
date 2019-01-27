@@ -6,16 +6,14 @@
 #include <fstream>
 using namespace std;
 
-//Returns true if character is whitespace
-
+//scanner constructor, it load reserve word and stores the name of the files
 Scanner::Scanner(string inCodeName, string outCodeName)//, Symtable &symbolTable)
 {
-   codeFileName=inCodeName;
-   //infileptr.open(inCodeName.c_str());
-   tokenFileName=outCodeName;
+   setName(inCodeName, outCodeName);
    symbolTable.loadResvd();
 }
 
+//this function determines if the caracter is white space, if it is it returns true
 bool Scanner::isSpace(char a)
 {
    if(a==' ')
@@ -24,11 +22,12 @@ bool Scanner::isSpace(char a)
    }
    return false;
 }
+
+//this sets the names in scanner
 void Scanner::setName(string in, string ot)
 {
    codeFileName = in;
    tokenFileName = ot;
-
 }
 //returns true if character is an alphabet, based on ascii value
 bool Scanner::isAlpha (char a)
@@ -47,14 +46,11 @@ bool Scanner::isAlpha (char a)
 	 }
       }
    }
-   //cout<<"not alpha: "<<a<<endl;
    return false;
 }
-//returns true if character is a numeric value via ascii
+//returns true if character is a numeric value
 bool Scanner::isNumeric (char a)
-{
-
-   
+{ 
    switch(a)
    {
       case '1':
@@ -79,12 +75,7 @@ bool Scanner::isNumeric (char a)
 	 return true;
       default:
 	 return false;
-	 //cout<<"not numeric:"<<a<<endl;
-   }
-
-   
-   
-   
+   } 
 }
 //returns true if character is special
 bool Scanner::isSpecial (char a)
@@ -120,8 +111,8 @@ bool Scanner::isSpecial (char a)
       case'*':
 	 return true;
       case'/':
-	 return true;
-      case 92:
+	 return true; 
+      case 92:// backslash is reserved so its being compared to casted ascii value
 	 return true;
       case'(':
 	 return true;
@@ -167,6 +158,7 @@ void Scanner::tokenLine(char now[], int y)
       while(isSpace(now[i])==true)
       {
 	 i++;
+	 ahead=now[i+1];
       }
       if(isAlpha(now[i])==true)
       {
@@ -175,20 +167,18 @@ void Scanner::tokenLine(char now[], int y)
 	    token.push_back(now[i]);
 	    i++;
 	    ahead=now[i+1];
-
 	    while(isNumeric(now[i])==true)
 	    {
 	       token.push_back(now[i]);
 	       i++;
 	       ahead=now[i+1];
-	    }
-	    
+	    }	    
 	 }
 	 //call to store token and move to next token, in this case a special
 	 a5a = getToken(token);
-	 //cout<<a5a<<" ";
 	 out<<a5a<<" ";
 	 i--;
+	 ahead=now[i+1];
       }
       else if(isNumeric(now[i])==true)
       {
@@ -196,55 +186,58 @@ void Scanner::tokenLine(char now[], int y)
 	 {
 	    token.push_back(now[i]);
 	    i++;
-	    ahead=now[i+1];
-	    
+	    ahead=now[i+1];	    
 	 }
 	 if(isAlpha(now[i]==true))
-	 {
-	    
+	 {	    
 	    cout<<endl<<spellS(BADNAME)<<" on line:" ;
 	    return;
 	 }
 	 a5a = getToken(token);
-	 //cout<<a5a<<" ";
 	 out<<a5a<<" ";
 	 i--;
+	 ahead=now[i+1];
       }
       else if(isSpecial(now[i])==true)
       {
 	 token.push_back(now[i]);
 	 if(now[i]==':'&&ahead=='=')
 	 {
-	    token.push_back(now[i]);
+	    token.push_back(ahead);
 	    i++;
+	    ahead=now[i+1];	    
 	 }
 	 else if(now[i]=='-'&&ahead=='>')
 	 {
-	    token.push_back(now[i]);
+	    token.push_back(ahead);
 	    i++;
-	    
-	    
+	    ahead=now[i+1];	    
 	 }
 	 else if(now[i]=='['&&ahead==']')
 	 {
-	    token.push_back(now[i]);
+	    token.push_back(ahead);
 	    i++;
+	    ahead=now[i+1];
 	    
+	 }else
+	 {}
+	 if(now[i]==92)
+	 {
+	    a5a = getToken("%");
+	    out<<a5a<<" ";
 	 }
-	 
+	 else
+	 {
 	 a5a = getToken(token);
-	 //cout<<a5a<<" ";
 	 out<<a5a<<" ";
+	 }
       }
       else if(token=="")
-      {
-	 
+      {	 
       }
       else
-      {
-	 
+      {	 
 	 cout<<endl<<b<<token<<"not identified token";
-	 //i++;
       }    
    }
    out.close();

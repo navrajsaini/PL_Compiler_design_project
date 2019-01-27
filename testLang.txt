@@ -20,8 +20,8 @@ read s;
 do!~(x=0)->
 	call Search;
 	if found-> write x, i;[]
-		~found->writex;
+		~found->write x ;
 	fi;
-	readx;
+	read x;
 od;
 end.
