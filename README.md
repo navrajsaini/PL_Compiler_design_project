@@ -6,7 +6,9 @@ administration.cpp, admininstration.h, scanner.h,
 scanner.cpp Makefile, Readme, symboltable.h, 
 symboltable.cpp, token.h, token.cpp
 
-To compile: in the terminal run make
+To compile:
+   The test program: run make test
+   The main program: run make plc
 
 The code has no compile time errors or any runtime errors
 
