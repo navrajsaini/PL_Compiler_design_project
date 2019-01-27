@@ -48,7 +48,7 @@ string spellS(Symbol s)
       case od: return "od"; break;
       case false1: return "false"; break;
       case true1: return "true"; break;
-      default: return "not a reserved word"; break;
+      default: return a; break;
    }
 }
 
