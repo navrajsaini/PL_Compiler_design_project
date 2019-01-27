@@ -59,5 +59,5 @@ ostream& operator<< (ostream &os, Token& a)
    os << "Token: " << spellS(a.getSymbol()) << endl
       << "\tAttributes: " << endl
       << "\t\tLexeme: " << a.getLexeme() << endl
-      << "\t\tValue: " << a.getValue() << endl;
+      << "\t\tValue: " << a.getValue()+1 << endl;
 }

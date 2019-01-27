@@ -34,7 +34,7 @@ int Symtable::insert(string s)
 {
    int hashval;
    int val = Symtable::search(s);
-   if (val == -1)
+   if (val == -1 && Symtable::full() != true)
    {
       hashval = hashfn(s);
       if (s == "begin")
