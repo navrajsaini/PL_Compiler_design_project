@@ -39,7 +39,7 @@ bool Scanner::isAlpha (char a)
       {
 	 return true;
       }
-      if(a>=91)
+      if(a>=97)
       {
 	 if(a<=122)
 	 {
@@ -47,28 +47,43 @@ bool Scanner::isAlpha (char a)
 	 }
       }
    }
+   //cout<<"not alpha: "<<a<<endl;
    return false;
 }
 //returns true if character is a numeric value via ascii
 bool Scanner::isNumeric (char a)
 {
+
+   
    switch(a)
    {
       case '1':
+	 return true;
       case '2':
+	 return true;
       case '3':
+	 return true;
       case '4':
+	 return true;
       case '5':
+	 return true;
       case '6':
+	 return true;
       case '7':
+	 return true;
       case '8':
+	 return true;
       case '9':
+	 return true;
       case '0':
 	 return true;
+      default:
+	 return false;
+	 //cout<<"not numeric:"<<a<<endl;
    }
 
    
-   return false;
+   
    
 }
 //returns true if character is special
@@ -76,8 +91,7 @@ bool Scanner::isSpecial (char a)
 {
    switch(a)
    {
-      case'.':
-	 cout<<"per";
+      case '.':
 	 return true;
       case',':
 	 return true;
@@ -126,10 +140,8 @@ bool Scanner::isSpecial (char a)
 int Scanner::getToken(string token)
 {
    int storeVal;
-   //Symtable symbolTable2;
-   
+  
    storeVal = symbolTable.insert(token);
-   //cout<<storeVal<<endl;
    return storeVal;
 }
 
@@ -163,6 +175,7 @@ void Scanner::tokenLine(char now[], int y)
 	    token.push_back(now[i]);
 	    i++;
 	    ahead=now[i+1];
+
 	    while(isNumeric(now[i])==true)
 	    {
 	       token.push_back(now[i]);
@@ -173,19 +186,17 @@ void Scanner::tokenLine(char now[], int y)
 	 }
 	 //call to store token and move to next token, in this case a special
 	 a5a = getToken(token);
-	 cout<<a5a<<" ";
+	 //cout<<a5a<<" ";
 	 out<<a5a<<" ";
+	 i--;
       }
       else if(isNumeric(now[i])==true)
       {
-	 while(isNumeric(now[i]==true))
+	 while(isNumeric(now[i])==true)
 	 {
 	    token.push_back(now[i]);
-	    if(isNumeric(ahead)==true)
-	    {
-	       i++;
-	       ahead=now[i+1];
-	    }
+	    i++;
+	    ahead=now[i+1];
 	    
 	 }
 	 if(isAlpha(now[i]==true))
@@ -195,26 +206,45 @@ void Scanner::tokenLine(char now[], int y)
 	    return;
 	 }
 	 a5a = getToken(token);
-	 cout<<a5a<<" ";
+	 //cout<<a5a<<" ";
 	 out<<a5a<<" ";
+	 i--;
       }
       else if(isSpecial(now[i])==true)
       {
 	 token.push_back(now[i]);
+	 if(now[i]==':'&&ahead=='=')
+	 {
+	    token.push_back(now[i]);
+	    i++;
+	 }
+	 else if(now[i]=='-'&&ahead=='>')
+	 {
+	    token.push_back(now[i]);
+	    i++;
+	    
+	    
+	 }
+	 else if(now[i]=='['&&ahead==']')
+	 {
+	    token.push_back(now[i]);
+	    i++;
+	    
+	 }
+	 
 	 a5a = getToken(token);
-	 cout<<a5a<<" ";
+	 //cout<<a5a<<" ";
 	 out<<a5a<<" ";
       }
       else if(token=="")
       {
-	 cout<<"fuck:"<<now[i]<<endl;
 	 
       }
       else
       {
 	 
 	 cout<<endl<<b<<token<<"not identified token";
-	 i++;
+	 //i++;
       }    
    }
    out.close();

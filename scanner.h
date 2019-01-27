@@ -23,7 +23,7 @@ class Scanner
   public:
    Scanner(){}//default constructor, doesn't do anything
    Scanner(string inCodeName, string outFileName);//, Symtable &symbolTable);
-   //~Scanner();//destructor
+   ~Scanner(){}//destructor
    int getToken(string token);
    void tokenLine(char now[], int y);
    
