@@ -167,10 +167,3 @@ bool Scanner::isComment(char a)
       return true;
    return false;
 }
-Token recognizeName()
-{
-   
-}
-Token recognizeSpecial();
-Token recognizeNumeral();
-Token recognizeComment();

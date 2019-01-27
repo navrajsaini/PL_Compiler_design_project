@@ -24,7 +24,8 @@ class Scanner
    Scanner(){}//default constructor, doesn't do anything
    Scanner(string inCodeName);//, Symtable &symbolTable);
    //~Scanner();//destructor
-   Token getToken();
+   int getToken(string token, char ca);
+   void tokenLine(char now[], int y);
    
    char ahead;//look ahead character
   private:
@@ -34,7 +35,7 @@ class Scanner
    Symtable *symtableptr;
    
 
-   bool isWhitespace (char a);
+   bool isSpace (char a);
    
    bool isAlpha (char a);
    
@@ -42,9 +43,9 @@ class Scanner
    
    bool isSpecial (char a);
    
-   Token recognizeName();
-   Token recognizeSpecial();
-   Token recognizeNumeral();
-   Token recognizeComment();
+   int recognizeName();
+   int recognizeSpecial();
+   int recognizeNumeral();
+   bool isComment(char a);
 };
 #endif

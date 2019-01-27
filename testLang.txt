@@ -1,6 +1,6 @@
 $ project languguage
 begin
   const a = 10;
-  integer array A[n];
+  const b=10;
+  integer array A[a];
 end.
-
