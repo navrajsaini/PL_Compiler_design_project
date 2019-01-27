@@ -24,15 +24,17 @@ class Scanner
    Scanner(){}//default constructor, doesn't do anything
    Scanner(string inCodeName);//, Symtable &symbolTable);
    //~Scanner();//destructor
-   int getToken(string token, char ca);
+   int getToken(string token);
    void tokenLine(char now[], int y);
    
    char ahead;//look ahead character
   private:
    
-   //ifstream infileptr;
+   int luck;
+   Symtable symbolTable;
+   
    string codeFileName;
-   Symtable *symtableptr;
+
    
 
    bool isSpace (char a);

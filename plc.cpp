@@ -4,9 +4,11 @@
 
 #include <iostream>
 #include <fstream>
-#include "scanner.cpp"
-#include "administration.cpp"
-//#include "symboltable.cpp"
+#include "scanner.h"
+#include "administration.h"
+#include "symboltable.h"
+#include "token.h"
+
 using namespace std;
 
 int main ()

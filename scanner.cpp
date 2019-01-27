@@ -59,43 +59,61 @@ bool Scanner::isSpecial (char a)
    switch(a)
    {
       case'.':
+	 return true;
       case',':
+	 return true;
       case';':
+	 return true;
       case'[':
+	 return true;
       case']':
+	 return true;
       case'&':
+	 return true;
       case'|':
+	 return true;
       case'~':
+	 return true;
       case'<':
+	 return true;
       case'=':
+	 return true;
       case'>':
+	 return true;
       case'+':
+	 return true;
       case'-':
+	 return true;
       case'*':
+	 return true;
       case'/':
+	 return true;
       case 92:
+	 return true;
       case'(':
+	 return true;
       case')':
-	 //case'$':
+	 return true;
       case':':
-	 break;
+	 return true;
       default:
+	 return false;
 	 break;
+	 
    }
-   return false;
-}
-
-int Scanner::getToken(string token, char ca)
-{
-   int storeVal;
-   if(ca=='a')
-      storeVal=recognizeName(token);
-   if(ca=='b')
-      storeVal=recognizeNumerical(token);
-   if(ca=='c')
-      storeVal=recognizeSpecial(token);
    
 }
+
+int Scanner::getToken(string token)
+{
+   int storeVal;
+   Symtable symbolTable2;
+   
+   storeVal = symbolTable2.insert(token);
+   cout<<storeVal<<endl;
+   return storeVal;
+}
+
 
 void Scanner::tokenLine(char now[], int y)
 {
@@ -119,7 +137,6 @@ void Scanner::tokenLine(char now[], int y)
 	 while(isAlpha(now[i])==true)
 	 {
 	    token.push_back(now[i]);
-	    cout<<token;
 	    i++;
 	    while(isNumeric(now[i])==true)
 	    {
@@ -129,16 +146,24 @@ void Scanner::tokenLine(char now[], int y)
 	    
 	 }
 	 //call to store token and move to next token, in this case a special
-	 a5a = getToken(token, 'a');
+	 a5a = getToken(token);
       }
-      if(isNumeric(now[i])==true)
+      else if(isNumeric(now[i])==true)
       {
-	 if(isSpecial(ahead)==true||isSpace(ahead)==true)
+	 while(isNumeric(now[i]==true)
+	 token.push_back(now[i]);
+	 i++;
+	 if(isSpecial(ahead)==true)
+	 {
+	    	 token.push_back(now[i]);
+	 i++;
+	 }
+	 else if( isSpace(ahead)==true)
 	 {
 	    
 	 }
       }
-      if(isSpecial(now[i])==true)
+      else if(isSpecial(now[i])==true)
       {
 	 if(isSpecial(ahead)==true)
 	 {
@@ -146,7 +171,7 @@ void Scanner::tokenLine(char now[], int y)
 	 }
       }
       
-       cout<<now[i];
+      //cout<<now[i];
       
       
 
@@ -167,10 +192,3 @@ bool Scanner::isComment(char a)
       return true;
    return false;
 }
-Token recognizeName()
-{
-   
-}
-Token recognizeSpecial();
-Token recognizeNumeral();
-Token recognizeComment();

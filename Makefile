@@ -6,7 +6,7 @@ CCCFLAGS = -std=c++11
 
 # all is called a target, after the colon you have dependencies
 # ie. "the target all is dependent on the executables
-all : test
+all : test bob
 
 # the target <excecutable1> is dependent on the list of dependencies
 # the line following  is the required executable (don't need to adjust it)
@@ -14,6 +14,8 @@ all : test
 # $^ = this target
 # $@ = this/these dependencies
 test: test.o token.o symboltable.o #administration.o scanner.o
+	$(CCC) $(CCCFLAGS) $^ -o $@
+bob: plc.o token.o symboltable.o administration.o scanner.o
 	$(CCC) $(CCCFLAGS) $^ -o $@
 
 # if 2 or more problems in assignment, you can compile them all with extra 
@@ -41,4 +43,4 @@ clean:
 	rm -f *.o *~ *% *# .#*
 
 clean-all: clean
-	rm -f test
+	rm -f test bob
