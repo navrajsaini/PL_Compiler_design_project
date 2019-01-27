@@ -26,7 +26,7 @@ class Scanner
    //~Scanner();//destructor
    int getToken(string token);
    void tokenLine(char now[], int y);
-
+   
    void setName(string in, string out);
    char ahead;//look ahead character
    Symtable symbolTable;

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "token.h"
-#include "symboltable.h"
+#include "administration.h"
 
 using namespace std;
 
@@ -35,5 +35,24 @@ int main ()
    cout << "location for end token is: " << symb << endl;
    cout << "testing inserting a id that's already in it."
 	<< "the loc is: " << symtest.insert("od") << endl;
+
+   //---------------------------------------------------------
+   //TESTING SCANNER && ADMIN
+   bool space, alpha, num;
+   cout << endl << endl << endl;
+   cout << "--------testing scanner-----------";
+   string codefile = "testLang.txt", tokenfile = "testOutput";
+   
+   remove(tokenfile.c_str());
+   cout << endl;
+   
+   Scanner scanTest (codefile, tokenfile);
+   space = scanTest.isSpace(' ');
+   alpha = scanTest.isAlpha('A');
+   num = scanTest.isNumeric('5');
+
+   cout << "' ' is a space? " << space << endl
+	<< "A is alpha? " << alpha << endl
+	<< "5 is numeric? " << num << endl;
    return 0;
 }

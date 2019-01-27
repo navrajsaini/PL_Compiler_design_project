@@ -199,7 +199,6 @@ void Symtable::printTable()
    for (std::size_t i = 0; i < occupied; i++)
    {
       a = htable[i];
-      cout << "a = htable[" << i << "]" << endl;
       a.insert(cout);
    }
 }

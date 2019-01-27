@@ -13,7 +13,7 @@ all : test plc
 # Note: executable lines, ie. $(CCC) ..., always begin with a tab.
 # $^ = this target
 # $@ = this/these dependencies
-test: test.o token.o symboltable.o #administration.o scanner.o
+test: test.o token.o symboltable.o administration.o scanner.o
 	$(CCC) $(CCCFLAGS) $^ -o $@
 plc: plc.o token.o symboltable.o administration.o scanner.o
 	$(CCC) $(CCCFLAGS) $^ -o $@
@@ -34,7 +34,7 @@ plc: plc.o token.o symboltable.o administration.o scanner.o
 # current dependency so you can leave it out.  You can also leave out the
 # corresponding executable line
 
-#administration.o : administration.h
+administration.o : administration.h
 token.o : token.h token.cpp
 symboltable.o : symboltable.cpp
 test.o : test.cpp
