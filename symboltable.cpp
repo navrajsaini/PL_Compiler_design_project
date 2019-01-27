@@ -171,6 +171,7 @@ int Symtable::insert(string s)
    }
    else//if it already exists
    {
+      val = Symtable::search(s);
       return val;
    }
 
