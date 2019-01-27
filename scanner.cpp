@@ -52,13 +52,22 @@ bool Scanner::isAlpha (char a)
 //returns true if character is a numeric value via ascii
 bool Scanner::isNumeric (char a)
 {
-   if(a>=48)
+   switch(a)
    {
-      if(a<=57)
-      {
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+      case '0':
 	 return true;
-      }
    }
+
+   
    return false;
    
 }
@@ -68,6 +77,7 @@ bool Scanner::isSpecial (char a)
    switch(a)
    {
       case'.':
+	 cout<<"per";
 	 return true;
       case',':
 	 return true;
@@ -130,8 +140,9 @@ void Scanner::tokenLine(char now[], int y)
 //Token (Symbol s, int v, string l) : sname(s), svalue(attval(v, l))
    out.open(tokenFileName.c_str(), ios::app);
    string token;
-   int a5a;
-   for(int i=0;i<=255;i++)
+   int a5a, i, b=0;
+   
+   for(i=0; i<=255; i++)
    {
       ahead=now[i+1];      
       //cout<<now[i]<<" "<<ahead;
@@ -140,21 +151,23 @@ void Scanner::tokenLine(char now[], int y)
 	 out.close();
 	 return;
       }
+      token="";
       while(isSpace(now[i])==true)
       {
 	 i++;
       }
-      //isAlpha(ahead)==true
       if(isAlpha(now[i])==true)
       {
 	 while(isAlpha(now[i])==true)
 	 {
 	    token.push_back(now[i]);
 	    i++;
+	    ahead=now[i+1];
 	    while(isNumeric(now[i])==true)
 	    {
 	       token.push_back(now[i]);
 	       i++;
+	       ahead=now[i+1];
 	    }
 	    
 	 }
@@ -168,34 +181,43 @@ void Scanner::tokenLine(char now[], int y)
 	 while(isNumeric(now[i]==true))
 	 {
 	    token.push_back(now[i]);
-	    i++;
+	    if(isNumeric(ahead)==true)
+	    {
+	       i++;
+	       ahead=now[i+1];
+	    }
 	    
 	 }
+	 if(isAlpha(now[i]==true))
+	 {
+	    
+	    cout<<endl<<spellS(BADNAME)<<" on line:" ;
+	    return;
+	 }
 	 a5a = getToken(token);
+	 cout<<a5a<<" ";
+	 out<<a5a<<" ";
       }
       else if(isSpecial(now[i])==true)
       {
-	 if(isSpecial(ahead)==true)
-	 {
-	    
-	 }
+	 token.push_back(now[i]);
+	 a5a = getToken(token);
+	 cout<<a5a<<" ";
+	 out<<a5a<<" ";
       }
-      
-      //cout<<now[i];
-      
-      
-
-
-
-
-
-
-      
-      
-      
+      else if(token=="")
+      {
+	 cout<<"fuck:"<<now[i]<<endl;
+	 
+      }
+      else
+      {
+	 
+	 cout<<endl<<b<<token<<"not identified token";
+	 i++;
+      }    
    }
    out.close();
-   
 }
 
 
