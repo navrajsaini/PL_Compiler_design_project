@@ -11,64 +11,46 @@
 #include <stdio.h>
 
 using namespace std;
-
 int main ()
 {
    // variables for file names
-   
    /*remove testLang.txt when project complete*/
-   string codeFileName = "testLang.txt", tokenFileName = "tokenFile";
+   string codeFileName /*= "testLang.txt"*/, tokenFileName /* = "tokenFile"*/;
 
    //get the file name for input and then declare and open file
    cout<<"Welcome to compiler4600, please enter your code input file name: ";
-   
-   /*fix the commented out cin when complete */
-   //cin>>CodeFileName;
-   
-   //ifstream codeFileIn;// TokenFileIn, 
-   //codeFileIn.open(codeFileName.c_str());
-
+   cin>>codeFileName;
    //get the file name for output and then declare and open file
    cout<<endl<< "Now, please enter your scanner output file: ";
+   cin>>tokenFileName;
    
-   /*fix the commented out cin when complete */
-   //cin>>TokenFileName;
-   
-   //ofstream tokenFileOut;
-   remove(tokenFileName.c_str());
-   //tokenFileOut.open(tokenFileName.c_str(), trunc);
-   
-   //tokenFileOut.close();
-   
+   remove(tokenFileName.c_str()); 
 
    cout<<endl;
-
-   //create symbol table
-
-   /*remove comments for the symbol table creation*/
-   //Symtable table;
    
-   //creating a scanner
-   
-   /* remove comments for scanner when scanner complete */
-   Scanner scan(codeFileName, tokenFileName);//, table);
-
+   //creating a scanner 
+   Scanner scan(codeFileName, tokenFileName);
 
    //run the compiler
-
-   /*decomment for running*/
    Admin compiler(codeFileName, tokenFileName, scan);
 
-   /**/
+   //calls the scanner function.
    int stat = compiler.scan();
-   /*
-     if(stat == 1)
-     cout<< "Scan Complete" << endl;
-     else
-     cout << "Scan errors have occoured" <<endl;
-   */
+   char answer;
+   //result msg
+   if(stat == 1)
+   {
+	cout<< "Scan Complete" << endl;
+	cout<<"would you like us to output the completed syboltable? y/n"<<endl;
+	cin>>answer;
 
-
-   //codeFileIn.close();
+   }
+   else
+      cout << "Scan errors have occoured" <<endl;
+   if(answer=='y'||answer=='Y')
+   {
+      compiler.print();//printing token list
+   }
+   
    return 0;
 }

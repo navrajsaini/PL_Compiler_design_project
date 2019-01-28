@@ -13,7 +13,6 @@
 #include <fstream>
 #include <string>
 #include "token.h"
-
 #include "symboltable.h"
 
 using namespace std;
@@ -24,33 +23,24 @@ class Scanner
    Scanner(){}//default constructor, doesn't do anything
    Scanner(string inCodeName, string outFileName);//, Symtable &symbolTable);
    ~Scanner(){}//destructor
-   int getToken(string token);
-   void tokenLine(char now[], int y);
-   
-   void setName(string in, string out);
+   int getToken(string token);//gets and stores token, sends back token value
+   void tokenLine(char now[], int y);//looks at and goes through each line of text
+   //then stores the token in the vecotor and the value in a file
+
+   void setName(string in, string out);   //set name for files
    char ahead;//look ahead character
-   Symtable symbolTable;
+   Symtable symbolTable;//symbol table that has inserted tokens
+
   private:
-   
-   int luck;
+   int lN;//   line number
+   ofstream out;//for outputing to file in tokenLine
+   string codeFileName;//name of codefile
+   string tokenFileName;//name of token file
 
-   ofstream out;
-   string codeFileName;
-   string tokenFileName;
-
-   
-
-   bool isSpace (char a);
-   
-   bool isAlpha (char a);
-   
-   bool isNumeric (char a);
-   
-   bool isSpecial (char a);
-   
-   int recognizeName();
-   int recognizeSpecial();
-   int recognizeNumeral();
-   bool isComment(char a);
+   bool isSpace (char a);//checks if char is a space
+   bool isAlpha (char a);//checks is char is alpha
+   bool isNumeric (char a);//checks if char is numeric
+   bool isSpecial (char a);//checks if char is a special symbol
+   bool isComment(char a);//checks if there is a comment on this line.
 };
 #endif

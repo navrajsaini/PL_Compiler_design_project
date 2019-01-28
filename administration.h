@@ -26,21 +26,24 @@ class Admin
 
    //new line for input
    void newLine(){lineNo++; correctLine = true;}
-
+   // Getter for line number.
+   int getLineNo();
+   
    //error function for phases
    void error(string text);
-
+   //calls the scanner and sends it a line to be scanned.
    int scan();
+
+   //printing for the symtable
+   void print();
    
   private:
-   //output file
-
-   ifstream input;
-   ofstream output;
-   string in;
-   string out;
+   ifstream input;//for input file
+   ofstream output;//for output file
+   string in;//name of input file
+   string out;//name of output file
    //scanner
-   Scanner view;
+   Scanner view;//created scanner for admin
 
    //maintain current line number.
    int lineNo;

@@ -4,7 +4,8 @@ Group: Navraj Saini and Jordan Kolody
 Navraj: 
 I started working on the project bottom up (building the symbol, token and symbol table) while Jordan worked top down (plc, admin, scanner). We both were able to finish our parts and I was able to work on testing the function while helping Jordan implement my sections into his part.
 
-Jordan: 
+Jordan:
+I began my journey in the main of plc. I finnished formatting plc correctly and then when onto fry bigger fish. The creation of admin and scanner was my focus following plc. From there i began creating each of the functions of Admin, and Scannner. Then intergrated them in the time that followed. The final piece of the puzzle was tokenLine and getToken. These two functions required the most focus as sorting symbols from numerics from names was a challange late into the night. The next proccess included intergrating with raj's functions. Once these were done some polish was lightly applied to functions lacking. At last i removed most of my debuging lines and raj and i's project was packaged for submition.
 
 Files included: 
 administration.cpp, admininstration.h, scanner.h, 
