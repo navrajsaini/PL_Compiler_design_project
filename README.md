@@ -12,13 +12,15 @@ scanner.cpp Makefile, Readme, symboltable.h,
 symboltable.cpp, token.h, token.cpp
 
 To compile:
+   
    The test program: make test
+
    The main program: make plc
 
 The code has no compile time errors or any runtime errors. There are a few warnings that come up if -Wall -g is added to the Makefile, which are because the private variables are assigned after the public functions manipulate them or use them in some way.
 
 Hours spent on this assignment:
 
-     Navraj: 23
+     Navraj: 27
 
-     Jordan: 23
+     Jordan: 30
