@@ -130,7 +130,8 @@ int Symtable::insert(string s)
 	 Token if1(Symbol::if1, hashval, s);
 	 htable.insert (htable.begin()+hashval, if1);
 	 occupied++;
-	 cout << "hash val is: " << hashval << endl << htable[hashval];
+	 cout << "hash val is: " << hashval
+	      << endl << " getSymbol() = " << spellS (htable[hashval].getSymbol()) << endl;
 	 return hashval;
       }
       else if(s == "do")
@@ -143,21 +144,29 @@ int Symtable::insert(string s)
       else if(s == "fi")
       {
 	 Token fi(Symbol::fi, hashval, s);
+	 
 	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
 	 {
-	    cout << endl << "why still here? " << endl << spellS (htable[hashval].getSymbol()) << endl
-		 << "the lexeme is: " << htable[hashval].getLexeme() << endl << "hashval is: " << hashval << endl;
+	    cout << endl << "why still here? " << endl << spellS (htable[hashval+1].getSymbol())
+		 << endl << "the lexeme is: " << htable[hashval].getLexeme()
+		 << endl << "hashval is: " << hashval << endl
+		 << htable[hashval+1];
 	    htable.insert (htable.begin()+hashval, fi);
 	    occupied++;
+	    return hashval;
 	 }
 	 else
 	 {
-	    cout << endl << "or am i going crazy?" << endl;
-	    hashval += 7;
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       cout << endl << "or am i going crazy?" << endl;
+	       hashval += 1;
+	    }
 	    htable.insert (htable.begin()+hashval, fi);
-	    occupied++;
 	 }
+	 occupied++;
 	 return hashval;
+	 
       }
       else if(s == "od")
       {
@@ -170,7 +179,8 @@ int Symtable::insert(string s)
 	 }
 	 else
 	 {
-	    hashval += 7;
+	    cout << "int the else for od... " << endl;
+	    hashval += 1;
 	    htable.insert(htable.begin()+hashval, od);
 	    occupied++;
 	 }
@@ -389,14 +399,15 @@ int Symtable::search(string s)
 void Symtable::printTable()
 {
    Token a;
-   for (std::size_t i = 0; i < SYMTABLESIZE; i++)
+   for (std::size_t i = 0; i < 307; i++)
    {
-      //if ( search ( spellS(htable[i].getSymbol())) != -1)
-      //{
-      a = htable[i];
-      a.insert(cout);
+      if ( spellS(htable[i].getSymbol()) != "NONAME")
+      {
+	 cout << "i: " << i+1 << endl;
+	 a = htable[i];
+	 a.insert(cout);
       
-      //}
+      }
    }
 }
 
