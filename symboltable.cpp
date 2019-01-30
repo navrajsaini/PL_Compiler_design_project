@@ -4,7 +4,8 @@
 */
 #include <iostream>
 #include "symboltable.h"
-
+#include <cmath>
+#include <cstring>
 using namespace std;
 /*
   load the reserve words via the insert function to the symbol table
@@ -22,7 +23,8 @@ void Symtable::loadResvd()
    int val;
    for (int i = 0; i < sizeof(ins)/sizeof(ins[0]); i++)
    {
-      insert(ins[i]);
+      val = insert(ins[i]);
+      cout << val << " this is in the loadResvd: " << ins[i] << endl << htable[val];
       
    }
 }
@@ -40,6 +42,12 @@ int Symtable::insert(string s)
       hashval = hashfn(s);
       //if and else if statements to create the token for the
       //keywords or the special chars which are then inserted.
+
+      //---------------------------------------------------------------------------------------
+      //NEED TO FIX THIS FUNCTION... NEEDS A PART OF IF THE LOCATION AT THE
+      //HASH VALUE IS ALREADY OCCUPIED, HAVE TO CREATE A FUNCTION TO MAKE IT WORK SOMEHOW...
+      //---------------------------------------------------------------------------------------
+      
       if (s == "begin")
       {
 	 Token begin(Symbol::begin, hashval, s);
@@ -122,6 +130,7 @@ int Symtable::insert(string s)
 	 Token if1(Symbol::if1, hashval, s);
 	 htable.insert (htable.begin()+hashval, if1);
 	 occupied++;
+	 cout << "hash val is: " << hashval << endl << htable[hashval];
 	 return hashval;
       }
       else if(s == "do")
@@ -134,15 +143,37 @@ int Symtable::insert(string s)
       else if(s == "fi")
       {
 	 Token fi(Symbol::fi, hashval, s);
-	 htable.insert (htable.begin()+hashval, fi);
-	 occupied++;
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    cout << endl << "why still here? " << endl << spellS (htable[hashval].getSymbol()) << endl
+		 << "the lexeme is: " << htable[hashval].getLexeme() << endl << "hashval is: " << hashval << endl;
+	    htable.insert (htable.begin()+hashval, fi);
+	    occupied++;
+	 }
+	 else
+	 {
+	    cout << endl << "or am i going crazy?" << endl;
+	    hashval += 7;
+	    htable.insert (htable.begin()+hashval, fi);
+	    occupied++;
+	 }
 	 return hashval;
       }
       else if(s == "od")
       {
+	 
 	 Token od(Symbol::od, hashval, s);
-	 htable.insert (htable.begin()+hashval, od);
-	 occupied++;
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    htable.insert (htable.begin()+hashval, od);
+	    occupied++;
+	 }
+	 else
+	 {
+	    hashval += 7;
+	    htable.insert(htable.begin()+hashval, od);
+	    occupied++;
+	 }
 	 return hashval;
       }
       else if(s == "false")
@@ -341,15 +372,16 @@ int Symtable::search(string s)
 {
    Token a;
    string comp;
-   for (std::size_t i = 0; i <= occupied; i++)//check all the loctions that are
-                                              //occupied
+   for (std::size_t i = 0; i < 307; i++)//check all the loctions that are
+                                                           //occupied
    {
       a = htable[i];
       comp = a.getLexeme();
-      if (comp == s)
-      {
-	 return i+1;//if found return it's location
-      }
+      if ( spellS ( htable[i].getSymbol()) != "NONAME")
+	 if (comp == s)
+	 {
+	    return i+1;//if found return it's location
+	 }
    }
    return -1;//return -1 if not found
 }
@@ -357,10 +389,14 @@ int Symtable::search(string s)
 void Symtable::printTable()
 {
    Token a;
-   for (std::size_t i = 0; i < occupied; i++)
+   for (std::size_t i = 0; i < SYMTABLESIZE; i++)
    {
+      //if ( search ( spellS(htable[i].getSymbol())) != -1)
+      //{
       a = htable[i];
       a.insert(cout);
+      
+      //}
    }
 }
 
@@ -369,7 +405,18 @@ int Symtable::hashfn(string s)
 //will edit it later for a more appropriate
 //hash func
 {
+   /*
    int i = SYMTABLESIZE-occupied;
    i = SYMTABLESIZE-i;
    return i % SYMTABLESIZE;
+   */
+   
+   int primeA = 983;
+   int h = 0;
+   for (int i = 0; i < sizeof(s)/sizeof(s[0]); i++)
+   {
+      h += s[i]* primeA;
+   }
+   h = h % SYMTABLESIZE;
+   return h;
 }

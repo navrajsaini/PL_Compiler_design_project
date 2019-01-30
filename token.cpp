@@ -29,7 +29,7 @@ string spellS(Symbol s)
       case BADNUM: return "Bad Number error"; break;
       case BADNAME: return "Bad Name error"; break;
       case NEWLINE: return "New Line error"; break;
-      case NONAME: return "No Name error"; break;
+      case NONAME: return "NONAME"; break;
       case ENDOFFILE: return "End of File"; break;
       case BADCHAR: return "Bad Character error"; break;
 	 //The reserved words
@@ -76,5 +76,5 @@ ostream& operator<< (ostream &os, Token& a)
    os << "Token: " << spellS(a.getSymbol()) << endl
       << "\tAttributes: " << endl
       << "\t\tLexeme: " << a.getLexeme() << endl
-      << "\t\tValue: " << a.getValue()+1 << endl;
+      << "\t\tValue: " << a.getValue() << endl;
 }

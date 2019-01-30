@@ -32,12 +32,12 @@ int main ()
    cout << "testing search function" << endl;
    int symb = symtest.search("end");
    cout << "location for end token is: " << symb << endl;
-   cout << "testing inserting a id that's already in it."
+   cout << "testing inserting a id that's already in it. "
 	<< "the loc is: " << symtest.insert("od") << endl;
 
    //---------------------------------------------------------
    //TESTING SCANNER && ADMIN
-   /*
+   
    bool space, alpha, num;
    
    cout << endl << endl << endl;
@@ -50,7 +50,12 @@ int main ()
    Scanner scanTest (codefile, tokenfile);
    
    cout << "the location of do is: " << scanTest.getToken("do") << endl;
-   */
+   
+   Admin compiler(codefile, tokenfile, scanTest);
+   cout << "finished making the compiler..." << endl;
+   int fin = compiler.scan();
+   cout << "compile finished, output is: " << fin << endl;
+   
 /*
    space = scanTest.isSpace(' ');
    alpha = scanTest.isAlpha('A');
