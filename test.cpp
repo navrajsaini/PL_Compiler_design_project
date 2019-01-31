@@ -5,6 +5,7 @@ using namespace std;
 
 int main ()
 {
+   /*
    //TEST THE TOKEN FUNCTIONS and SYMBOL FUNCTIONS
    cout << "---------testing the token and symbol functions----" << endl;
    Token a (NUM, 5, "five");
@@ -39,7 +40,7 @@ int main ()
    cout << "the loc of if: " << symtest.search("if") << endl
 	<< "the loc of fi: " << symtest.search("fi") << endl;
 
-   
+   */
    //---------------------------------------------------------
    //TESTING SCANNER && ADMIN
    
@@ -60,7 +61,8 @@ int main ()
    cout << "finished making the compiler..." << endl;
    int fin = compiler.scan();
    cout << "compile finished, output is: " << fin << endl;
-
+   cout << endl << endl << "about to print... " << endl;
+   compiler.print();
    
    /*
    space = scanTest.isSpace(' ');

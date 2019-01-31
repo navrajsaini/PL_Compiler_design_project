@@ -143,14 +143,13 @@ int Symtable::insert(string s)
       }
       else if(s == "fi")
       {
-	 Token fi(Symbol::fi, hashval, s);
-	 
 	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
 	 {
 	    cout << endl << "why still here? " << endl << spellS (htable[hashval+1].getSymbol())
 		 << endl << "the lexeme is: " << htable[hashval].getLexeme()
 		 << endl << "hashval is: " << hashval << endl
 		 << htable[hashval+1];
+	    Token fi(Symbol::fi, hashval, s);
 	    htable.insert (htable.begin()+hashval, fi);
 	    occupied++;
 	    return hashval;
@@ -160,8 +159,9 @@ int Symtable::insert(string s)
 	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
 	    {
 	       cout << endl << "or am i going crazy?" << endl;
-	       hashval += 1;
+	       hashval += 1;	       
 	    }
+	    Token fi(Symbol::fi, hashval, s);
 	    htable.insert (htable.begin()+hashval, fi);
 	 }
 	 occupied++;
@@ -171,16 +171,20 @@ int Symtable::insert(string s)
       else if(s == "od")
       {
 	 
-	 Token od(Symbol::od, hashval, s);
 	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
 	 {
+	    Token od(Symbol::od, hashval, s);
 	    htable.insert (htable.begin()+hashval, od);
 	    occupied++;
 	 }
 	 else
 	 {
-	    cout << "int the else for od... " << endl;
-	    hashval += 1;
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       cout << "int the else for od... " << endl;
+	       hashval += 1;
+	    }
+	    Token od(Symbol::od, hashval, s);
 	    htable.insert(htable.begin()+hashval, od);
 	    occupied++;
 	 }
@@ -387,26 +391,26 @@ int Symtable::search(string s)
    {
       a = htable[i];
       comp = a.getLexeme();
-      if ( spellS ( htable[i].getSymbol()) != "NONAME")
+      if ( spellS ( a.getSymbol()) != "NONAME")
+      {
 	 if (comp == s)
 	 {
-	    return i+1;//if found return it's location
+	    return i;//if found return it's location
 	 }
+      }
+      return -1;//return -1 if not found
    }
-   return -1;//return -1 if not found
 }
-
 void Symtable::printTable()
 {
    Token a;
    for (std::size_t i = 0; i < 307; i++)
    {
-      if ( spellS(htable[i].getSymbol()) != "NONAME")
+      if ( spellS(htable[i].getSymbol()) != "NONAME" )
       {
-	 cout << "i: " << i+1 << endl;
+	 cout << "i: " << i << endl;
 	 a = htable[i];
 	 a.insert(cout);
-      
       }
    }
 }

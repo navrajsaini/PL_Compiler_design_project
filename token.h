@@ -47,7 +47,7 @@ class Token
       os << "Token: " << spellS(sname) << endl
 	 << "\tAttributes: " << endl
 	 << "\t\tLexeme: " << getLexeme() << endl
-	 << "\t\tValue: " << getValue()+1 << endl;
+	 << "\t\tValue: " << getValue() << endl;
    }
   private:
    struct attval
