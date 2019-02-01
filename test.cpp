@@ -48,7 +48,7 @@ int main ()
    
    cout << endl << endl << endl;
    cout << "--------testing scanner-----------";
-   string codefile = "testLang.txt", tokenfile = "testOutput";
+   string codefile = "testLang1.txt", tokenfile = "testOutput";
    
    //remove(tokenfile.c_str());
    cout << endl;
