@@ -888,10 +888,10 @@ void Symtable::printTable()
    Token a;
    for (std::size_t i = 0; i < 307; i++)
    {
+      a = htable[i];
       if (spellS (a.getSymbol()) != "NONAME")
       {
-	 a = htable[i];
-	 cout << a;
+	 a.insert(cout);
       }
    }
 }
