@@ -46,7 +46,8 @@ To compile:
    
             The test file is created for the purpose of testing the functions in the scanner and the parser.
             It can also be used to test all the testlang files (test1-test7) in one run.
-            Once those files complete the testLang files is run once. It is the only files that does not contain errors.
+            Once those files complete the testLang files is run once. 
+            It is the only files that does not contain errors.
 
    The main program: make plc
     
