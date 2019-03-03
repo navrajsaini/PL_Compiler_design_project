@@ -11,8 +11,8 @@ Scanner::Scanner(string inCodeName, string outCodeName)//, Symtable &symbolTable
 {
    setName(inCodeName, outCodeName);
    symbolTable.loadResvd();
-   LN=0;
-   TN=0;
+   LN=1;
+   TN=1;
 }
 
 //this function determines if the caracter is white space, if it is it returns true
@@ -294,9 +294,9 @@ void Scanner::tokenLine(char now[], int y)
       {	 
 	 cout<<endl<<token<<" is a not identified token on line: "<<LN;
 	 cout<<endl;
-      }    
+      }
+      
    }
-   LN++;
    out.close();
 }
 

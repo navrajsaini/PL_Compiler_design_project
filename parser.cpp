@@ -13,8 +13,8 @@ using namespace std;
 Parse::Parse(string in)
 {
    file=in;
-   tokeNum=0;
-   for(int i=1; i<256; i++)
+   //tokeNum=0;
+   for(int i=0; i<256; i++)
    {
       ln[i][0]=0;
       ln[i][1]=0;
@@ -23,7 +23,7 @@ Parse::Parse(string in)
 //assins the test line
 void Parse::asn(int sec, int part, int numb)
 {
-   ln[sec+1][part]=numb;
+   ln[sec][part]=numb;
    //test line
    //cout<<"token and line num: "<<numb<<" ";
 }
@@ -54,15 +54,22 @@ void Parse::printToken()
 // the match function that incriments LHS with a couple test lines.
 void Parse::match()
 {
+   NS=LHS;
    LHS=token[tokeNum];
    tokeNum++;
    //test line
-   cout<<"token '"<<LHS<<"' is token '"<<tokeNum-1<<"'"<<endl;
+   //cout<<"token '"<<LHS<<"' is the '"<<tokeNum-1<<"' token parsed"<<endl;
 }
 //give a decent;y detailed report of the type of error that has been found
 void Parse::errorReport()
 {
-   cout<<endl<<"With the "<<tokeNum<<"th token, there was an error on Line Number: "<<ln[tokeNum][0]+1<<" in : "<<where<<", token: "<<LHS<<", number "<<ln[tokeNum][1]<<endl; 
+   cout<<endl<<"Total tokens parsed: '"<<tokeNum;
+   cout<<"' There was an error on Line Number: '";
+   cout<<ln[tokeNum][0]<<"'"<<endl;
+   cout<<"This, has the last function to be called acronymed as: '";
+   cout<<where<<"'"<<endl;
+   cout<<"The token of issue is: '"<<NS;
+   cout<<"' with a hashval of: '"<<ln[tokeNum-1][1]<<"'"<<endl; 
 }
 //--------------------------------------------------------------------------
 //the start of the grammar
@@ -70,12 +77,16 @@ void Parse::parseNow()
 {
    //test line
    //printToken();
+   NS=LHS;
    Program();
    
 }
 void Parse::check()
 {
-   cout<<endl<<LHS<<" "<<ln[tokeNum][1]<<" "<<where<<endl;
+   if(yn==1)
+   {
+      cout<<endl<<LHS<<" "<<ln[tokeNum-1][1]<<" "<<where<<endl;
+   }
 }
 /*This is the start of the PL Grammar Parsing Stage.
   The rest of the functions are the grammar functions.
@@ -118,15 +129,10 @@ void Parse::Block()
       if(LHS=="end")
       {
 	 match();
-      }else{
-	 where="B";
+      }else
 	 errorReport();
-      }
    }else
-   {
-      where="B";
       errorReport();
-   }
 }
 
 void Parse::DefPtr()
@@ -138,11 +144,8 @@ void Parse::DefPtr()
       {
 	 match();
 	 DefPtr();
-      }else
-      {
-	 where="DP";	 
+      }else	 
 	 errorReport();
-      }
    }  
 }
 void Parse::Def()//definition function

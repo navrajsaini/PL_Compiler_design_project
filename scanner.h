@@ -34,11 +34,11 @@ class Scanner
    Symtable symbolTable;//symbol table that has inserted tokens
    int lineToke[256][2]; //line token test stuff
 
-   
+   int LN;//   line number 
 
   private:
    
-   int LN;//   line number
+
    int TN;// Token number
    void inc(int);
    ofstream out;//for outputing to file in tokenLine

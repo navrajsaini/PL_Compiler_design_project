@@ -49,6 +49,7 @@ int Admin::scan()
 	 now[j]=' ';  
       input.getline(now,256);   
       view.tokenLine(now, 256);
+      view.LN++;
       lineNo++;
    }while(!input.eof());
 /*
@@ -66,8 +67,8 @@ void Admin::lineAsn()
    for(int i=1; i<256; i++)
    {  
       lin[i][0]=view.lineToke[i][0];
-lin[i][1]=view.lineToke[i][1];
-cout<<lin[i][0]<<" "<<lin[i][1]<<" ";
+      lin[i][1]=view.lineToke[i][1];
+      //cout<<lin[i][0]<<" "<<lin[i][1]<<" ";
 
    }
 }
@@ -79,6 +80,14 @@ cout<<lin[i][0]<<" "<<lin[i][1]<<" ";
 void Admin::parse()
 {
    Parse parser(out);
+   cout<<" would you like to see the parser functions and info as they are called?";
+   cout<<" Y(y)/N(n): ";
+   string yn;
+   cin>>yn;
+   if(yn=="Y"||yn=="y")
+   {
+      parser.yn=1;
+   }
    for(int i=1; i<256; i++)
    {
       parser.asn(i, 0, view.lineToke[i][0]);

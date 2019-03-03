@@ -35,6 +35,7 @@ class Parse
    int tokCount=0;
    string file;
    int tokeNum=0;
+   bool yn=0;
 //------------------------------------------------------------------------
 /*The Grammar Rule functions
   For a more detailed explanation go to parse.cpp  
@@ -98,6 +99,7 @@ class Parse
    ifstream input;
 //private variables: LHS is look ahead symbol
    string LHS;
+   string NS;
    int value;
 //when a match is found match is called and match incriments LHS by one.
    void match();
