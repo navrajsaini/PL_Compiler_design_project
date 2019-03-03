@@ -942,7 +942,7 @@ int Symtable::insertNum(string s)
 
 //receives a value from admin for the location of the token
 //returns the lexeme for the token to be used in the parcer
-int giveLex(int val)
+int Symtable::giveLex(int val)
 {
    return htable[val].getLexeme();
 }
