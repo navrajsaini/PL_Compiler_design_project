@@ -51,10 +51,8 @@ int main ()
    }
    else
       cout << "Scan errors have occoured" <<endl;
-
-   compiler.parse();
    
-   
-   
+   //Time to parse
+   compiler.parse(); 
    return 0;
 }
