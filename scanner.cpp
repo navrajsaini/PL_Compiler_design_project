@@ -137,6 +137,14 @@ int Scanner::getToken(string token)
    return storeVal;
 }
 
+int Scanner::getNum(string token)
+{
+   int storeVal;
+   storeVal = symbolTable.insertNum(token);
+   return storeVal;
+   
+}
+
 /*TOKENLINE BLOCK 0
   tokenline will go through the line as a forloop,
   and then detrimin what the char is
@@ -219,7 +227,7 @@ void Scanner::tokenLine(char now[], int y)
 	    return;
 	 }
 	 //call to store token and move to next token, in this case a numeric
-	 prnt = getToken(token);
+	 prnt = getNum(token);
 	 out<<prnt<<" ";
 	 i--;
 	 ahead=now[i+1];

@@ -24,12 +24,15 @@ class Scanner
    Scanner(string inCodeName, string outFileName);//, Symtable &symbolTable);
    ~Scanner(){}//destructor
    int getToken(string token);//gets and stores token, sends back token value
+   int getNum(string token);
    void tokenLine(char now[], int y);//looks at and goes through each line of text
    //then stores the token in the vecotor and the value in a file
 
    void setName(string in, string out);   //set name for files
    char ahead;//look ahead character
    Symtable symbolTable;//symbol table that has inserted tokens
+
+   
 
   private:
    int lN;//   line number
