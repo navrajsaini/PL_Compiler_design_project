@@ -40,3 +40,11 @@ parser.cpp
 
 To compile:
    The main program: make plc
+    
+The code has no compile time errors or any runtime errors.
+
+Hours spent on this assignment:
+
+     Navraj: 5+(from 10am)
+
+     Jordan: 14+(from 10am)
