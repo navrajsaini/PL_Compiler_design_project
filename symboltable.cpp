@@ -24,8 +24,6 @@ void Symtable::loadResvd()
    for (int i = 0; i < sizeof(ins)/sizeof(ins[0]); i++)
    {
       val = insert(ins[i]);
-      cout << val << " this is in the loadResvd: " << ins[i] << endl << htable[val];
-      
    }
 }
 /*
@@ -866,18 +864,22 @@ int Symtable::search(string s)
 {
    Token a;
    string comp;
-   for (std::size_t i = 0; i < 307; i++)//check all the loctions that are
+   for (/*std::size_t*/int i = 0; i < 307; i++)//check all the loctions that are
                                                            //occupied
    {
       a = htable[i];
       comp = a.getLexeme();
-      if ( spellS ( a.getSymbol()) != "NONAME")
+      if ( spellS (a.getSymbol()) != "NONAME")
       {
-	 if (comp == s)
+	 if ( comp == s )
 	 {
 	    return i;//if found return it's location
 	 }
+	 else
+	    ;
       }
+      else
+	 ;
    }
    return -1;//return -1 if not found
 }
@@ -887,10 +889,6 @@ void Symtable::printTable()
    for (std::size_t i = 0; i < 307; i++)
    {
       a = htable[i];
-      if ( spellS(a.getSymbol()) != "NONAME" )
-      {
-	 a.insert(cout);
-      }
    }
 }
 
@@ -899,18 +897,8 @@ int Symtable::hashfn(string s)
 //will edit it later for a more appropriate
 //hash func
 {
-   /*
-   int i = SYMTABLESIZE-occupied;
-   i = SYMTABLESIZE-i;
-   return i % SYMTABLESIZE;
-   */
    
-   int primeA = 983;
-   int h = 0;
-   for (int i = 0; i < sizeof(s)/sizeof(s[0]); i++)
-   {
-      h += s[i]* primeA;
-   }
-   h = h % SYMTABLESIZE;
-   return h;
+   int i = SYMTABLESIZE-occupied;
+   i = (SYMTABLESIZE-i) *  311;
+   return i % (SYMTABLESIZE-1);
 }

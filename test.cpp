@@ -55,15 +55,15 @@ int main ()
    
    Scanner scanTest (codefile, tokenfile);
    
-   cout << "the location of do is: " << scanTest.getToken("do") << endl;
-   
+      
    Admin compiler(codefile, tokenfile, scanTest);
    cout << "finished making the compiler..." << endl;
    int fin = compiler.scan();
    cout << "compile finished, output is: " << fin << endl;
    cout << endl << endl << "about to print... " << endl;
    compiler.print();
-   
+
+   cout << "the location of begin is: " << scanTest.getToken("begin") << endl;
    /*
    space = scanTest.isSpace(' ');
    alpha = scanTest.isAlpha('A');
