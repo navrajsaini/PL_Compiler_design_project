@@ -30,7 +30,7 @@ Hours spent on this assignment:
 --------------------------------PARSER------------------------------------------
 
 Navraj:
-I was under the asumption the project was due on the 5th, not the 3rd. Under that assumption I was unable to help with some of the stuff Jordan was working on. I was able to fix the hash function to work better and a few other issues from the scanner. For the parser I created the .h file and added in the functions that needed to be implemented. Majority of the work for the Parser was done by Jordan. I was able to make sure any and all issues he had with the scanner, on my part, were fixed. This included adding a function for the returning the token name based on the value (location) of the token in the symbol table, fixing the insert function in symbol table as it kept breaking, and making other misalanious changes to token.cpp and symboltable.cpp.
+I was under the asumption the project was due on the 5th, not the 3rd. Under that assumption I was unable to help with some of the stuff Jordan was working on. I was able to fix the hash function to work better and a few other issues from the scanner. For the parser I created the .h file and added in the functions that needed to be implemented. Majority of the work for the Parser was done by Jordan. I was able to make sure any and all issues he had with the scanner, on my part, were fixed. This included adding a function for the returning the token name based on the value (location) of the token in the symbol table, fixing the insert function in symbol table as it kept breaking, and making other miscellaneous changes to token.cpp and symboltable.cpp.
 
 Jordan:
 
