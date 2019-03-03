@@ -14,16 +14,16 @@ string spellS(Symbol s)
 {
    switch (s)
    {
-      case NUM: return "Number"; break;
-      case DIV: return "div"; break;
-      case MOD: return "mod"; break;
-      case SEMICOLON: return "semicolon"; break;
-      case PLUS: return "plus"; break;
-      case MINUS: return "minus"; break;
-      case TIMES: return "times"; break;
-      case DIVIDE: return "div"; break;
-      case LEFTP: return "leftP"; break;
-      case RIGHTP: return "rightP"; break;
+      case NUM: return "num"; break;
+      case DIV: return "/"; break;
+      case MOD: return "%"; break;
+      case SEMICOLON: return ";"; break;
+      case PLUS: return "+"; break;
+      case MINUS: return "-"; break;
+      case TIMES: return "*"; break;
+      case DIVIDE: return "/"; break;
+      case LEFTP: return "("; break;
+      case RIGHTP: return ")"; break;
 
 	 //the error handling and reporting symbols
       case BADNUM: return "Bad Number error"; break;
@@ -51,22 +51,22 @@ string spellS(Symbol s)
       case false1: return "false"; break;
       case true1: return "true"; break;
 	 
-      case Symbol::colon: return "colon"; break;
-      case Symbol::period: return "period"; break;
-      case Symbol::comma: return "comma"; break;
+      case Symbol::colon: return ":"; break;
+      case Symbol::period: return "."; break;
+      case Symbol::comma: return ","; break;
       case Symbol::rightB: return "["; break;
       case Symbol::leftB: return "]"; break;
-      case Symbol::and1: return "and"; break;
-      case Symbol::or1: return "or"; break;
-      case Symbol::not1: return "not"; break;
-      case Symbol::greater: return "greater"; break;
-      case Symbol::less: return "less"; break;
-      case Symbol::equal: return "equal"; break;
+      case Symbol::and1: return "&"; break;
+      case Symbol::or1: return "|"; break;
+      case Symbol::not1: return "~"; break;
+      case Symbol::greater: return ">"; break;
+      case Symbol::less: return "<"; break;
+      case Symbol::equal: return "="; break;
       case closedS: return "[]"; break;
-      case assign: return "assign"; break;
-      case arrow: return "arrow"; break;
+      case assign: return ":="; break;
+      case arrow: return "->"; break;
 	 //need to have it go from symbol to string...
-      default: return "ID"; break;
+      default: return "id"; break;
    }
 }
 
