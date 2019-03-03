@@ -80,8 +80,8 @@ int Symtable::insert(string s)
 	    Token end(Symbol::end, hashval, s);
 	    htable.insert (htable.begin()+hashval, end);
 	 }
-	    occupied++;
-	    return hashval;
+	 occupied++;
+	 return hashval;
       }
       
       else if(s == "const")
@@ -848,7 +848,7 @@ int Symtable::insert(string s)
 	 }
 	 else//return the value of where it is
 	 {
-	    return val;
+	    return -1;
 	 }
       }
    }
