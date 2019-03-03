@@ -18,6 +18,8 @@ Admin::Admin(string inFile, string outFile, Scanner &sn)
    view.setName(in, out);
    view.symbolTable.loadResvd();
 }
+//irrelivant function, for testing purposes,
+//that is soon to be removed in clean up
 string Admin::doTheThing(int value)
 {
    return view.symbolTable.giveLex(value);
@@ -57,7 +59,8 @@ int Admin::scan()
 input.close();
    return 1;
 }
-
+//for the line test function stuff
+//this is specically for the errreport in parser
 void Admin::lineAsn()
 {
    for(int i=1; i<256; i++)
@@ -68,18 +71,20 @@ cout<<lin[i][0]<<" "<<lin[i][1]<<" ";
 
    }
 }
+//theAdmin parse function
+//starts by creating the parser then it goes onto launch the testline
+//system for the error reporting 
+//finaly it gets the tokens and proceeds to call the parser to parse through
+//and find any errors
 void Admin::parse()
 {
-
-
    Parse parser(out);
    for(int i=1; i<256; i++)
    {
       parser.asn(i, 0, view.lineToke[i][0]);
       parser.asn(i, 1, view.lineToke[i][1]);
    }
-input.open("tokenFile");
-//cout<<parser.file.c_str()<<" ";
+   input.open(parser.file.c_str());
    string lex;
    int value;
    do{
@@ -93,8 +98,8 @@ input.open("tokenFile");
    parser.parseIt();
 
 }
+//for test line
 string Admin::parserAsn(int value)
 {
-
 return view.symbolTable.giveLex(value);
 }

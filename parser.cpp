@@ -7,9 +7,9 @@
 #include <string>
 #include "parser.h"
 #include "administration.h"
-//#include "scanner.h"
-//#include "global.cpp"
+
 using namespace std;
+//constructor that initialises the lets line array and sets other vars
 Parse::Parse(string in)
 {
    file=in;
@@ -20,25 +20,30 @@ Parse::Parse(string in)
       ln[i][1]=0;
    }
 }
-
+//assins the test line
 void Parse::asn(int sec, int part, int numb)
 {
    ln[sec][part]=numb;
+   //test line
    //cout<<"token and line num: "<<numb<<" ";
 }
+//the beginning of the parsing
 void Parse::parseIt()  
 {  
    match();
    parseNow();
    //errorReport();
 }
+//creating the token string list
 void Parse::tokens(string val)
 {
+   //test line
    //cout<<" "<<val<<" ";
    token[tokCount]=val;
    tokCount++;
    
 }
+//print function for tokens strings
 void Parse::printToken()
 {
    for(int i=0; i<156;i++)
@@ -46,28 +51,43 @@ void Parse::printToken()
       cout<<"token '"<<i<<"' is '"<<token[i]<<"' ";
    }
 }
-void Parse::parseNow()
-{
-   //printToken();
-   Program();
-   
-}
+// the match function that incriments LHS with a couple test lines.
 void Parse::match()
-{  
+{
    LHS=token[tokeNum];
    tokeNum++;
+   //test line
    cout<<"token '"<<LHS<<"' is token '"<<tokeNum-1<<"'"<<endl;
 }
-
+//give a decent;y detailed report of the type of error that has been found
 void Parse::errorReport()
 {
    cout<<endl<<"There was an error on Line Number: "<<ln[tokeNum][0]<<" and token: "<<ln[tokeNum][1]<<endl; 
 }
-
-//This is the start of the PL Grammar Parsing Stage.
+//--------------------------------------------------------------------------
+//the start of the grammar
+void Parse::parseNow()
+{
+   //test line
+   //printToken();
+   Program();
+   
+}
+/*This is the start of the PL Grammar Parsing Stage.
+  The rest of the functions are the grammar functions.
+  There is minimal commenting through all of the grammar functions.
+  They are self explanitory.
+  I eddited the grammar to change the 0 or 1 iterations
+  and also the 0 or more iterations.
+  They were made into new functions
+  Furthermore i removed amiguioty by adding new grammar rules
+  this code also checks for error as it goes then sends back an error report
+  from the result.
+  Thats pretty much it for explanation here. everytime a terminal is found
+  match is called then LHS is incrimented to the next look ahead.
+ */
 void Parse::Program()
 {
-   //first(program)
    if(LHS=="begin")
    {
       Block();

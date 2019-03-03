@@ -4,7 +4,6 @@
 #include "scanner.h"
 #include <iostream>
 #include <fstream>
-#include "global.cpp"
 using namespace std;
 
 //scanner constructor, it load reserve word and stores the name of the files
@@ -130,6 +129,7 @@ bool Scanner::isSpecial (char a)
    }
    
 }
+//test line
 void Scanner::inc(int SV)
 {
 lineToke[TN][1]=SV;
@@ -150,7 +150,7 @@ int Scanner::getToken(string token)
    
    return storeVal;
 }
-
+//new function to fix id number problem
 int Scanner::getNum(string token)
 {
    int storeVal;

@@ -37,7 +37,9 @@ class Admin
 
    //printing for the symtable
    void print();
+   //the parse function
    void parse();
+   //irrelivant function, keeping for testing purposes
    string doTheThing(int);
    
   private:
@@ -47,7 +49,11 @@ class Admin
    string out;//name of output file
    //scanner
    Scanner view;//created scanner for admin
+   //assn test line
    void lineAsn();
+   //another of the test line arrays
+   //I was having some problems passing line back from scanner,
+   //and then to parser so i made these
    int lin[256][2];
    string parserAsn(int value);
 
@@ -59,7 +65,7 @@ class Admin
 
    //count errors
    int errorCount;
-
+   //test line array
    int TL[256];
    
 };
