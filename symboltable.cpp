@@ -938,10 +938,12 @@ int Symtable::insertNum(string s)
 	 return hashval;
       }
    }
-   else
+   else if (val != -1)
    {
       return val;
    }
+   else
+      return -1;
 }
 
 //receives a value from admin for the location of the token
