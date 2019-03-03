@@ -944,5 +944,6 @@ int Symtable::insertNum(string s)
 //returns the lexeme for the token to be used in the parcer
 string Symtable::giveLex(int val)
 {
-   return htable[val].getLexeme();
+   Token a = htable[val].getSymbol();
+   return spellS(a);
 }
