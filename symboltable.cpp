@@ -4,7 +4,8 @@
 */
 #include <iostream>
 #include "symboltable.h"
-
+#include <cmath>
+#include <cstring>
 using namespace std;
 /*
   load the reserve words via the insert function to the symbol table
@@ -22,8 +23,7 @@ void Symtable::loadResvd()
    int val;
    for (int i = 0; i < sizeof(ins)/sizeof(ins[0]); i++)
    {
-      insert(ins[i]);
-      
+      val = insert(ins[i]);
    }
 }
 /*
@@ -42,297 +42,820 @@ int Symtable::insert(string s)
       //keywords or the special chars which are then inserted.
       if (s == "begin")
       {
-	 Token begin(Symbol::begin, hashval, s);
-	 htable.insert (htable.begin()+hashval, begin);
-	 occupied++;
-	 return hashval;
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+	 {
+	    Token begin(Symbol::begin, hashval, s);
+	    htable.insert (htable.begin()+hashval, begin);
+	    occupied++;
+	    return hashval;
+	 }
+	 else//increment the hashval and insert the token into a free loc
+	 {
+	    while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	       //keep looking for a free location
+	    {
+	       hashval += 1;
+	    }
+	    Token begin(Symbol::begin, hashval, s);
+	    htable.insert (htable.begin()+hashval, begin);
+	    occupied++;
+	    return hashval;
+	 }
       }
+      
       else if(s == "end")
       {
-	 Token end(Symbol::end, hashval, s);
-	 htable.insert (htable.begin()+hashval, end);
-	 occupied++;
-	 return hashval;
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+	 {
+	    Token end(Symbol::end, hashval, s);
+	    htable.insert (htable.begin()+hashval, end);
+	 }
+	 else
+	 {
+	    while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	       //keep looking for a free location
+	    {
+	       hashval += 1;
+	    }
+	    Token end(Symbol::end, hashval, s);
+	    htable.insert (htable.begin()+hashval, end);
+	 }
+	    occupied++;
+	    return hashval;
       }
+      
       else if(s == "const")
       {
-	 Token const1(Symbol::const1, hashval, s);
-	 htable.insert (htable.begin()+hashval, const1);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+	 {
+	    Token const1(Symbol::const1, hashval, s);
+	    htable.insert (htable.begin()+hashval, const1);
+	 }
+	 else
+	 {
+	    while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	       //keep looking for a free location
+	    {
+	       hashval += 1;
+	    }
+	    Token const1(Symbol::const1, hashval, s);
+	    htable.insert (htable.begin()+hashval, const1);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "array")
       {
-	 Token array(Symbol::array, hashval, s);
-	 htable.insert (htable.begin()+hashval, array);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+	 {
+	    Token array(Symbol::array, hashval, s);
+	    htable.insert (htable.begin()+hashval, array);
+	 }
+	 else
+	 {
+	    while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval +=1;
+	    }
+	    Token array(Symbol::array, hashval, s);
+	    htable.insert (htable.begin()+hashval, array);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "integer")
       {
-	 Token integer(Symbol::integer, hashval, s);
-	 htable.insert (htable.begin()+hashval, integer);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+	 {
+	    Token integer(Symbol::integer, hashval, s);
+	    htable.insert (htable.begin()+hashval, integer);
+	 }
+	 else
+	 {
+	    while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval +=1;
+	    }
+	    Token integer(Symbol::integer, hashval, s);
+	    htable.insert (htable.begin()+hashval, integer);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "Boolean")
       {
-	 Token Boolean(Symbol::Boolean, hashval, s);
-	 htable.insert (htable.begin()+hashval, Boolean);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+	 {
+	    Token Boolean(Symbol::Boolean, hashval, s);
+	    htable.insert (htable.begin()+hashval, Boolean);
+	 }
+	 else
+	 {
+	    while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval +=1;
+	    }
+	    Token Boolean(Symbol::Boolean, hashval, s);
+	    htable.insert (htable.begin()+hashval, Boolean);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "proc")
       {
-	 Token proc(Symbol::proc, hashval, s);
-	 htable.insert (htable.begin()+hashval, proc);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+	 {
+	    Token proc(Symbol::proc, hashval, s);
+	    htable.insert (htable.begin()+hashval, proc);
+	 }
+	 else
+	 {
+	    while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval +=1;
+	    }
+	    Token proc(Symbol::proc, hashval, s);
+	    htable.insert (htable.begin()+hashval, proc);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "skip")
       {
-	 Token skip(Symbol::skip, hashval, s);
-	 htable.insert (htable.begin()+hashval, skip);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+	 {
+	    Token skip(Symbol::skip, hashval, s);
+	    htable.insert (htable.begin()+hashval, skip);
+	 }
+	 else
+	 {
+	    while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval +=1;
+	    }
+	    Token skip(Symbol::skip, hashval, s);
+	    htable.insert (htable.begin()+hashval, skip);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "read")
       {
-	 Token read(Symbol::read, hashval, s);
-	 htable.insert (htable.begin()+hashval, read);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+	 {
+	    Token read(Symbol::read, hashval, s);
+	    htable.insert (htable.begin()+hashval, read);
+	 }
+	 else
+	 {
+	    while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval +=1;
+	    }
+	    Token read(Symbol::read, hashval, s);
+	    htable.insert (htable.begin()+hashval, read);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "write")
       {
-	 Token write(Symbol::write, hashval, s);
-	 htable.insert (htable.begin()+hashval, write);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+	 {
+	    Token write(Symbol::write, hashval, s);
+	    htable.insert (htable.begin()+hashval, write);
+	 }
+	 else
+	 {
+	    while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval +=1;
+	    }
+	    Token write(Symbol::write, hashval, s);
+	    htable.insert (htable.begin()+hashval, write);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "call")
       {
-	 Token call(Symbol::call, hashval, s);
-	 htable.insert (htable.begin()+hashval, call);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+	 {
+	    Token call(Symbol::call, hashval, s);
+	    htable.insert (htable.begin()+hashval, call);
+	 }
+	 else
+	 {
+	    while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval +=1;
+	    }
+	    Token call(Symbol::call, hashval, s);
+	    htable.insert (htable.begin()+hashval, call);
+	 }
 	 occupied++;
 	 return hashval;
       }
       else if(s == "if")
       {
-	 Token if1(Symbol::if1, hashval, s);
-	 htable.insert (htable.begin()+hashval, if1);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+	 {
+	    Token if1(Symbol::if1, hashval, s);
+	    htable.insert (htable.begin()+hashval, if1);
+	 }
+	 else
+	 {
+	    while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval +=1;
+	    }
+	    Token if1(Symbol::if1, hashval, s);
+	    htable.insert (htable.begin()+hashval, if1);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "do")
       {
-	 Token do1(Symbol::do1, hashval, s);
-	 htable.insert (htable.begin()+hashval, do1);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+	 {
+	    Token do1(Symbol::do1, hashval, s);
+	    htable.insert (htable.begin()+hashval, do1);
+	 }
+	 else
+	 {
+	    while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval +=1;
+	    }
+	    Token do1(Symbol::do1, hashval, s);
+	    htable.insert (htable.begin()+hashval, do1);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "fi")
       {
-	 Token fi(Symbol::fi, hashval, s);
-	 htable.insert (htable.begin()+hashval, fi);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token fi(Symbol::fi, hashval, s);
+	    htable.insert (htable.begin()+hashval, fi);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;	       
+	    }
+	    Token fi(Symbol::fi, hashval, s);
+	    htable.insert (htable.begin()+hashval, fi);
+	 }
 	 occupied++;
 	 return hashval;
+	 
       }
+      
       else if(s == "od")
       {
-	 Token od(Symbol::od, hashval, s);
-	 htable.insert (htable.begin()+hashval, od);
+	 
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token od(Symbol::od, hashval, s);
+	    htable.insert (htable.begin()+hashval, od);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token od(Symbol::od, hashval, s);
+	    htable.insert(htable.begin()+hashval, od);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "false")
       {
-	 Token false1(Symbol::false1, hashval, s);
-	 htable.insert (htable.begin()+hashval, false1);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token false1(Symbol::false1, hashval, s);
+	    htable.insert (htable.begin()+hashval, false1);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token false1(Symbol::false1, hashval, s);
+	    htable.insert (htable.begin()+hashval, false1);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "true")
       {
-	 Token true1(Symbol::true1, hashval, s);
-	 htable.insert (htable.begin()+hashval, true1);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token true1(Symbol::true1, hashval, s);
+	    htable.insert (htable.begin()+hashval, true1);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token true1(Symbol::true1, hashval, s);
+	    htable.insert (htable.begin()+hashval, true1);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == ",")
       {
-	 Token comma(Symbol::comma, hashval, s);
-	 htable.insert (htable.begin()+hashval, comma);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token comma(Symbol::comma, hashval, s);
+	    htable.insert (htable.begin()+hashval, comma);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token comma(Symbol::comma, hashval, s);
+	    htable.insert (htable.begin()+hashval, comma);
+	 }
 	 occupied++;
 	 return hashval;
       }
       else if(s == ".")
       {
-	 Token period(Symbol::period, hashval, s);
-	 htable.insert (htable.begin()+hashval, period);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token period(Symbol::period, hashval, s);
+	    htable.insert (htable.begin()+hashval, period);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token period(Symbol::period, hashval, s);
+	    htable.insert (htable.begin()+hashval, period);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "[")
       {
-	 Token rightB(Symbol::rightB, hashval, s);
-	 htable.insert (htable.begin()+hashval, rightB);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token rightB(Symbol::rightB, hashval, s);
+	    htable.insert (htable.begin()+hashval, rightB);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token rightB(Symbol::rightB, hashval, s);
+	    htable.insert (htable.begin()+hashval, rightB);
+	 }
 	 occupied++;
 	 return hashval;
       }
+
       else if(s == "]")
       {
-	 Token leftB(Symbol::leftB, hashval, s);
-	 htable.insert (htable.begin()+hashval, leftB);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token leftB(Symbol::leftB, hashval, s);
+	    htable.insert (htable.begin()+hashval, leftB);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token leftB(Symbol::leftB, hashval, s);
+	    htable.insert (htable.begin()+hashval, leftB);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "&")
       {
-	 Token and1(Symbol::and1, hashval, s);
-	 htable.insert (htable.begin()+hashval, and1);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token and1(Symbol::and1, hashval, s);
+	    htable.insert (htable.begin()+hashval, and1);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token and1(Symbol::and1, hashval, s);
+	    htable.insert (htable.begin()+hashval, and1);
+	 }
 	 occupied++;
 	 return hashval;
       }
+
       else if(s == "|")
       {
-	 Token or1(Symbol::or1, hashval, s);
-	 htable.insert (htable.begin()+hashval, or1);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token or1(Symbol::or1, hashval, s);
+	    htable.insert (htable.begin()+hashval, or1);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token or1(Symbol::or1, hashval, s);
+	    htable.insert (htable.begin()+hashval, or1);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "~")
       {
-	 Token not1(Symbol::not1, hashval, s);
-	 htable.insert (htable.begin()+hashval, not1);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token not1(Symbol::not1, hashval, s);
+	    htable.insert (htable.begin()+hashval, not1);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token not1(Symbol::not1, hashval, s);
+	    htable.insert (htable.begin()+hashval, not1);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "<")
       {
-	 Token less(Symbol::less, hashval, s);
-	 htable.insert (htable.begin()+hashval, less);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token less(Symbol::less, hashval, s);
+	    htable.insert (htable.begin()+hashval, less);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token less(Symbol::less, hashval, s);
+	    htable.insert (htable.begin()+hashval, less);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == ">")
       {
-	 Token greater(Symbol::greater, hashval, s);
-	 htable.insert (htable.begin()+hashval, greater);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token greater(Symbol::greater, hashval, s);
+	    htable.insert (htable.begin()+hashval, greater);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token greater(Symbol::greater, hashval, s);
+	    htable.insert (htable.begin()+hashval, greater);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "=")
       {
-	 Token equal(Symbol::equal, hashval, s);
-	 htable.insert (htable.begin()+hashval, equal);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token equal(Symbol::equal, hashval, s);
+	    htable.insert (htable.begin()+hashval, equal);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token equal(Symbol::equal, hashval, s);
+	    htable.insert (htable.begin()+hashval, equal);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "[]")
       {
-	 Token closedS(Symbol::closedS, hashval, s);
-	 htable.insert (htable.begin()+hashval, closedS);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token closedS(Symbol::closedS, hashval, s);
+	    htable.insert (htable.begin()+hashval, closedS);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token closedS(Symbol::closedS, hashval, s);
+	    htable.insert (htable.begin()+hashval, closedS);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == ":=")
       {
-	 Token assign(Symbol::assign, hashval, s);
-	 htable.insert (htable.begin()+hashval, assign);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token assign(Symbol::assign, hashval, s);
+	    htable.insert (htable.begin()+hashval, assign);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token assign(Symbol::assign, hashval, s);
+	    htable.insert (htable.begin()+hashval, assign);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == ":")
       {
-	 Token colon(Symbol::colon, hashval, s);
-	 htable.insert (htable.begin()+hashval, colon);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token colon(Symbol::colon, hashval, s);
+	    htable.insert (htable.begin()+hashval, colon);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token colon(Symbol::colon, hashval, s);
+	    htable.insert (htable.begin()+hashval, colon);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == ";")
       {
-	 Token semicolon(Symbol::SEMICOLON, hashval, s);
-	 htable.insert (htable.begin()+hashval, semicolon);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token semicolon(Symbol::SEMICOLON, hashval, s);
+	    htable.insert (htable.begin()+hashval, semicolon);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token semicolon(Symbol::SEMICOLON, hashval, s);
+	    htable.insert (htable.begin()+hashval, semicolon);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "/")
       {
-	 Token div(Symbol::DIV, hashval, s);
-	 htable.insert (htable.begin()+hashval, div);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token div(Symbol::DIV, hashval, s);
+	    htable.insert (htable.begin()+hashval, div);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token div(Symbol::DIV, hashval, s);
+	    htable.insert (htable.begin()+hashval, div);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "%")
       {
-	 Token mod(Symbol::MOD, hashval, s);
-	 htable.insert (htable.begin()+hashval, mod);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token mod(Symbol::MOD, hashval, s);
+	    htable.insert (htable.begin()+hashval, mod);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token mod(Symbol::MOD, hashval, s);
+	    htable.insert (htable.begin()+hashval, mod);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "+")
       {
-	 Token plus(Symbol::PLUS, hashval, s);
-	 htable.insert (htable.begin()+hashval, plus);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token plus(Symbol::PLUS, hashval, s);
+	    htable.insert (htable.begin()+hashval, plus);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token plus(Symbol::PLUS, hashval, s);
+	    htable.insert (htable.begin()+hashval, plus);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "-")
       {
-	 Token minus(Symbol::MINUS, hashval, s);
-	 htable.insert (htable.begin()+hashval, minus);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token minus(Symbol::MINUS, hashval, s);
+	    htable.insert (htable.begin()+hashval, minus);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token minus(Symbol::MINUS, hashval, s);
+	    htable.insert (htable.begin()+hashval, minus);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "*")
       {
-	 Token times(Symbol::TIMES, hashval, s);
-	 htable.insert (htable.begin()+hashval, times);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token times(Symbol::TIMES, hashval, s);
+	    htable.insert (htable.begin()+hashval, times);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token times(Symbol::TIMES, hashval, s);
+	    htable.insert (htable.begin()+hashval, times);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "->")
       {
-	 Token arrow(Symbol::arrow, hashval, s);
-	 htable.insert (htable.begin()+hashval, arrow);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token arrow(Symbol::arrow, hashval, s);
+	    htable.insert (htable.begin()+hashval, arrow);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token arrow(Symbol::arrow, hashval, s);
+	    htable.insert (htable.begin()+hashval, arrow);
+	 }
 	 occupied++;
 	 return hashval;
       }
+      
       else if(s == "(")
       {
-	 Token leftP(Symbol::LEFTP, hashval, s);
-	 htable.insert (htable.begin()+hashval, leftP);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token leftP(Symbol::LEFTP, hashval, s);
+	    htable.insert (htable.begin()+hashval, leftP);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token leftP(Symbol::LEFTP, hashval, s);
+	    htable.insert (htable.begin()+hashval, leftP);
+	 }
 	 occupied++;
 	 return hashval;
       }
       else if(s == ")")
       {
-	 Token rightP(Symbol::RIGHTP, hashval, s);
-	 htable.insert (htable.begin()+hashval, rightP);
+	 if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	 {
+	    Token rightP(Symbol::RIGHTP, hashval, s);
+	    htable.insert (htable.begin()+hashval, rightP);
+	 }
+	 else
+	 {
+	    while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	    {
+	       hashval += 1;
+	    }
+	    Token rightP(Symbol::RIGHTP, hashval, s);
+	    htable.insert (htable.begin()+hashval, rightP);
+	 }
 	 occupied++;
 	 return hashval;
       }
       else//if the reserved word isn't already in the table...
 	 //create a token for it and insert it in
       {
-	 val = search(s);
 	 hashval = hashfn(s);
 	 if (val == -1)//if the id isn't in the symbol table already
 	 {
-	    Token ID (Symbol::ID, hashval, s);
-	    htable.insert (htable.begin()+hashval, ID);
+	    if (spellS (htable[hashval].getSymbol()) == "NONAME")
+	    {
+	       Token ID (Symbol::ID, hashval, s);
+	       htable.insert (htable.begin()+hashval, ID);
+	    }
+	    else
+	    {
+	       while (spellS (htable[hashval].getSymbol()) != "NONAME")
+	       {
+		  hashval += 1;
+	       }
+	       Token ID (Symbol::ID, hashval, s);
+	       htable.insert (htable.begin()+hashval, ID);
+	    }
 	    occupied++;
-	    return hashval+1;
+	    return hashval;
+	 }
+	 else//return the value of where it is
+	 {
+	    return val;
 	 }
       }
    }
    else//if it already exists return the location
    {
-      val = Symtable::search(s);
       return val;
    }
-
 }
 /*
   search function to make sure the word isn't already in the symbol table
@@ -341,26 +864,31 @@ int Symtable::search(string s)
 {
    Token a;
    string comp;
-   for (std::size_t i = 0; i <= occupied; i++)//check all the loctions that are
-                                              //occupied
+   for (/*std::size_t*/int i = 0; i < 307; i++)//check all the loctions that are
+                                                           //occupied
    {
       a = htable[i];
       comp = a.getLexeme();
-      if (comp == s)
+      if ( spellS (a.getSymbol()) != "NONAME")
       {
-	 return i+1;//if found return it's location
+	 if ( comp == s )
+	 {
+	    return i;//if found return it's location
+	 }
+	 else
+	    ;
       }
+      else
+	 ;
    }
    return -1;//return -1 if not found
 }
-
 void Symtable::printTable()
 {
    Token a;
-   for (std::size_t i = 0; i < occupied; i++)
+   for (std::size_t i = 0; i < 307; i++)
    {
       a = htable[i];
-      a.insert(cout);
    }
 }
 
@@ -369,7 +897,8 @@ int Symtable::hashfn(string s)
 //will edit it later for a more appropriate
 //hash func
 {
+   
    int i = SYMTABLESIZE-occupied;
-   i = SYMTABLESIZE-i;
-   return i % SYMTABLESIZE;
+   i = (SYMTABLESIZE-i) *  311;
+   return i % (SYMTABLESIZE-1);
 }

@@ -5,6 +5,7 @@ using namespace std;
 
 int main ()
 {
+   /*
    //TEST THE TOKEN FUNCTIONS and SYMBOL FUNCTIONS
    cout << "---------testing the token and symbol functions----" << endl;
    Token a (NUM, 5, "five");
@@ -27,31 +28,43 @@ int main ()
    cout << "loading the reserved words...." << endl;
    symtest.loadResvd();
    
-   cout << "Printing the hash table..." << endl;
+   cout << endl << "Printing the hash table..." << endl;
    symtest.printTable();
+
    cout << "testing search function" << endl;
    int symb = symtest.search("end");
    cout << "location for end token is: " << symb << endl;
-   cout << "testing inserting a id that's already in it."
-	<< "the loc is: " << symtest.insert("od") << endl;
+   cout << "testing inserting a id that's already in it. "
+	<< "the loc of od: " << symtest.insert("od") << endl;
+   
+   cout << "the loc of if: " << symtest.search("if") << endl
+	<< "the loc of fi: " << symtest.search("fi") << endl;
 
+   */
    //---------------------------------------------------------
    //TESTING SCANNER && ADMIN
-   /*
+   
    bool space, alpha, num;
    
    cout << endl << endl << endl;
    cout << "--------testing scanner-----------";
-   string codefile = "testLang.txt", tokenfile = "testOutput";
+   string codefile = "testLang1.txt", tokenfile = "testOutput";
    
    //remove(tokenfile.c_str());
    cout << endl;
    
    Scanner scanTest (codefile, tokenfile);
    
-   cout << "the location of do is: " << scanTest.getToken("do") << endl;
-   */
-/*
+      
+   Admin compiler(codefile, tokenfile, scanTest);
+   cout << "finished making the compiler..." << endl;
+   int fin = compiler.scan();
+   cout << "compile finished, output is: " << fin << endl;
+   cout << endl << endl << "about to print... " << endl;
+   compiler.print();
+
+   cout << "the location of begin is: " << scanTest.getToken("begin") << endl;
+   /*
    space = scanTest.isSpace(' ');
    alpha = scanTest.isAlpha('A');
    num = scanTest.isNumeric('5');
