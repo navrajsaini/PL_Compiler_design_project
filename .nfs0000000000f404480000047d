@@ -1,0 +1,5 @@
+$ project languguage
+begin
+  const a = 10;
+  integer array A[n];
+end.
