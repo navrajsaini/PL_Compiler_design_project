@@ -103,5 +103,7 @@ class Parse
    void match();
 //error reporting fuction
    void errorReport();
+   void check();
+   string where;
 };
 #endif
