@@ -891,7 +891,7 @@ void Symtable::printTable()
       if (spellS (a.getSymbol()) != "NONAME")
       {
 	 a = htable[i];
-	 a.insert(cout);
+	 cout << a;
       }
    }
 }
