@@ -848,7 +848,7 @@ int Symtable::insert(string s)
 	 }
 	 else//return the value of where it is
 	 {
-	    return -1;
+	    return val;
 	 }
       }
    }
