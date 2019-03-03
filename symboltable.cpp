@@ -891,7 +891,7 @@ void Symtable::printTable()
       a = htable[i];
       if (spellS (a.getSymbol()) != "NONAME")
       {
-	 a.insert(cout);
+	 cout << a;
       }
    }
 }
@@ -937,6 +937,10 @@ int Symtable::insertNum(string s)
 	 occupied++;
 	 return hashval;
       }
+   }
+   else
+   {
+      return val;
    }
 }
 
