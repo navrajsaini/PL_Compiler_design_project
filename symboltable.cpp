@@ -859,13 +859,13 @@ int Symtable::insert(string s)
 }
 /*
   search function to make sure the word isn't already in the symbol table
- */
+*/
 int Symtable::search(string s)
 {
    Token a;
    string comp;
    for (/*std::size_t*/int i = 0; i < 307; i++)//check all the loctions that are
-                                                           //occupied
+      //occupied
    {
       a = htable[i];
       comp = a.getLexeme();
@@ -901,4 +901,37 @@ int Symtable::hashfn(string s)
    int i = SYMTABLESIZE-occupied;
    i = (SYMTABLESIZE-i) *  311;
    return i % (SYMTABLESIZE-1);
+}
+
+int Symtable::insertNum(string s)
+{
+   int hashval;
+   int val = Symtable::search(s);//check if the word is in the table already
+   //if not and the table is not full insert it based on if the word is a
+   //keyword or special char or a user input ID
+   if (val == -1 && Symtable::full() != true)
+   {
+      hashval = hashfn(s);
+      //if and else if statements to create the token for the
+      //keywords or the special chars which are then inserted.
+      if (spellS (htable[hashval].getSymbol()) == "NONAME")//if the location is empty
+      {
+	 Token NUM(Symbol::NUM, hashval, s);
+	 htable.insert (htable.begin()+hashval, NUM);
+	 occupied++;
+	 return hashval;
+      }
+      else//increment the hashval and insert the token into a free loc
+      {
+	 while ( spellS(htable[hashval].getSymbol()) != "NONAME")
+	    //keep looking for a free location
+	 {
+	    hashval += 1;
+	 }
+	 Token NUM(Symbol::NUM, hashval, s);
+	 htable.insert (htable.begin()+hashval, NUM);
+	 occupied++;
+	 return hashval;
+      }
+   }
 }

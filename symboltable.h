@@ -29,6 +29,7 @@ class Symtable
    //Insert the token and return its location.
    //------------might need to be modified later----------------
    int insert(string);
+   int insertNum(string);//insert a num token into the symbol table
    //return true if table is full
    bool full(){return occupied == SYMTABLESIZE;}
    //return the number of occupied cells
