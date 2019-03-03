@@ -889,6 +889,7 @@ void Symtable::printTable()
    for (std::size_t i = 0; i < 307; i++)
    {
       a = htable[i];
+      a.insert(cout);
    }
 }
 
