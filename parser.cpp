@@ -89,6 +89,8 @@ void Parse::check()
   from the result.
   Thats pretty much it for explanation here. everytime a terminal is found
   match is called then LHS is incrimented to the next look ahead.
+
+  the names of the functions are added in in the comments.
  */
 void Parse::Program()
 {where="P";check();
@@ -117,13 +119,11 @@ void Parse::Block()
       {
 	 match();
       }else{
-	 cout << "in the first else in B." << endl;
 	 where="B";
 	 errorReport();
       }
    }else
    {
-      cout << "in the last else in B..." << endl;
       where="B";
       errorReport();
    }
@@ -134,7 +134,6 @@ void Parse::DefPtr()
    if(LHS=="const"||LHS=="integer"||LHS=="boolean"||LHS=="proc")
    {
       Def();
-      //cout<<" ."<<LHS<<". ";
       if(LHS==";")
       {
 	 match();
@@ -146,7 +145,7 @@ void Parse::DefPtr()
       }
    }  
 }
-void Parse::Def()
+void Parse::Def()//definition function
 {where="D";check();
    if(LHS=="const")
    {
@@ -173,7 +172,7 @@ void Parse::ConstDef()
       }
    }
 }
-void Parse::VarDef()
+void Parse::VarDef()//variable definition
 {where="VD";check();
    if(LHS=="boolean"||LHS=="integer")
    {
@@ -184,7 +183,7 @@ void Parse::VarDef()
       errorReport();
    } 
 }
-void Parse::VarDefB()
+void Parse::VarDefB()//variable definition for multiple itirations
 {where="VDB";check();
    if(LHS=="id")
    {
@@ -209,7 +208,7 @@ void Parse::VarDefB()
    }
 }
 
-void Parse::TypeSym()
+void Parse::TypeSym()//Type Symbol
 {where="TS";check();
    if(LHS=="integer")
    {
@@ -220,7 +219,7 @@ void Parse::TypeSym()
    }else
       errorReport();
 }
-void Parse::VarList()
+void Parse::VarList()//variable list
 {where="VL";check();
    if(LHS=="id")
    {
@@ -229,7 +228,7 @@ void Parse::VarList()
    }else
       errorReport();
 }
-void Parse::VarListB()
+void Parse::VarListB()//variable list for multiple itiretions
 {where="VLB";check();
    if(LHS==",")
    {
@@ -241,7 +240,7 @@ void Parse::VarListB()
       
    }
 }
-void Parse::ProcDef()
+void Parse::ProcDef()//procedure definition
 {where="PD";check();
    if(LHS=="proc")
    {
@@ -251,7 +250,7 @@ void Parse::ProcDef()
    }
 }
 
-void Parse::StatPtr()
+void Parse::StatPtr()//statement part
 {where="SP";check();
    if(LHS=="skip"||LHS=="read"||LHS=="write"||LHS=="id"||LHS=="do"||LHS=="call"||LHS=="if")
    {
@@ -269,7 +268,7 @@ void Parse::StatPtr()
    {
    }
 }
-void Parse::Stat()
+void Parse::Stat()//statement
 {where="S";check();
    if(LHS=="read")
    {
@@ -295,14 +294,14 @@ void Parse::Stat()
    }else
       errorReport();
 }
-void Parse::EmptyStat()
+void Parse::EmptyStat()//empty statement
 {where="ES";check();
    if(LHS=="skip")
    {
       match();
    }
 }
-void Parse::ReadStat()
+void Parse::ReadStat()//read statement
 {where="RS";check();
    if(LHS=="read")
    {
@@ -315,7 +314,7 @@ void Parse::ReadStat()
    }
 }
 
-void Parse::VarAcList()
+void Parse::VarAcList()//variable access list
 {where="VAL";check();
    if(LHS=="id")
    {
@@ -324,7 +323,7 @@ void Parse::VarAcList()
    }else
       errorReport();
 }
-void Parse::VarAcListB()
+void Parse::VarAcListB()//variable access list for iterations
 {where="VALB";check();
    if(LHS==",")
    {
@@ -336,7 +335,7 @@ void Parse::VarAcListB()
       
    }
 }
-void Parse::WriteStat()
+void Parse::WriteStat()//write statement
 {where="WS";check();
    if(LHS=="write")
    {
@@ -344,7 +343,7 @@ void Parse::WriteStat()
       ExpList();
    }
 }
-void Parse::ExpList()
+void Parse::ExpList()//expression list
 {where="EL";check();
    if(LHS=="+"||LHS=="-"||LHS==">"||LHS=="<"||LHS=="="||LHS=="|"||LHS=="->"||LHS=="&"||LHS=="num"||LHS=="true"||LHS=="false"||LHS=="id"||LHS=="~"||LHS==","){
       Exp();
@@ -352,7 +351,7 @@ void Parse::ExpList()
    }else
       errorReport();
 }
-void Parse::ExpListB()
+void Parse::ExpListB()//expression list for multiple iterations
 {where="ELB";check();
    if(LHS==",")
    {
@@ -364,7 +363,7 @@ void Parse::ExpListB()
       
    }
 }
-void Parse::AsnStat()
+void Parse::AsnStat()//assignment statement
 {where="AS";check();
    if(LHS=="id")
    {
@@ -378,7 +377,7 @@ void Parse::AsnStat()
    }else
       errorReport();
 }
-void Parse::ProcStat()
+void Parse::ProcStat()//procedure statement
 {where="PS";check();
    if(LHS=="call")
    {
@@ -386,7 +385,7 @@ void Parse::ProcStat()
       ProcName();
    }
 }
-void Parse::IfStat()
+void Parse::IfStat()//if statements
 {where="IS";check();
    if(LHS=="if")
    {
@@ -399,7 +398,7 @@ void Parse::IfStat()
    }
 }
 
-void Parse::DoStat()
+void Parse::DoStat()//do statement
 {where="DS";check();
    if(LHS=="do")
    {
@@ -412,13 +411,13 @@ void Parse::DoStat()
    }
 }
 
-void Parse::GarCmdList()
+void Parse::GarCmdList()//guarded command list
 {where="GCL";check();
    //didnt include all the possibilities
    GarCmd();
    GarCmdListB();
 }
-void Parse::GarCmdListB()
+void Parse::GarCmdListB()//guarded command list for multiple iterations
 {where="GCLB";check();
    if(LHS=="[]")
    {
@@ -431,7 +430,7 @@ void Parse::GarCmdListB()
    }
 }
 
-void Parse::GarCmd()
+void Parse::GarCmd()//guarded command
 {where="GC";check();
    Exp();
    if(LHS=="->")
@@ -442,7 +441,7 @@ void Parse::GarCmd()
       errorReport();
 
 }
-void Parse::Exp()
+void Parse::Exp()//expression
 {where="E";check();
 //   if(LHS=="num"||LHS=="true"||LHS=="false"||LHS=="id"||LHS=="("||LHS=="~"||LHS=="num"||LHS=="true"||LHS=="false"||LHS=="id"||LHS=="("||LHS=="+")
 //   {
@@ -452,7 +451,7 @@ void Parse::Exp()
 //      errorReport();
 }
 
-void Parse::ExpB()
+void Parse::ExpB()//expression for multiple iterations
 {where="EB";check();
    if(LHS=="|"||LHS=="&")
    {
@@ -464,7 +463,7 @@ void Parse::ExpB()
       
    }
 }
-void Parse::PrimOp()
+void Parse::PrimOp()//primary operations
 {where="PO";check();
    if(LHS=="&")
    {
@@ -476,13 +475,13 @@ void Parse::PrimOp()
       errorReport();
 }
 
-void Parse::PrimExp()
+void Parse::PrimExp()//primary expressions
 {where="PE";check();
    
       SimpExp();
       PrimExpB();
 }
-void Parse::PrimExpB()
+void Parse::PrimExpB()//primary expression for multiple iterations
 {where="PEB";check();
    if(LHS=="<"||LHS=="="||LHS==">")
    {
@@ -493,7 +492,7 @@ void Parse::PrimExpB()
       
    }
 }
-void Parse::RelatOp()
+void Parse::RelatOp()//relational operator
 {where="RO";check();
    if(LHS=="<")
    {
@@ -507,7 +506,7 @@ void Parse::RelatOp()
    }else
       errorReport();
 }
-void Parse::SimpExp()
+void Parse::SimpExp()//simple expression
 {where="SE";check();
 //   if(LHS=="-"||LHS=="num"||LHS=="false"||LHS=="true"||LHS=="id"||LHS=="("||LHS=="~")
 //   {
@@ -529,7 +528,7 @@ void Parse::Line()
    }
 }
 
-void Parse::SimpExpB()
+void Parse::SimpExpB()//simple expression for multiple iterations
 {where="SEB";check();
    if(LHS=="-"||LHS=="+")
    {
@@ -541,7 +540,7 @@ void Parse::SimpExpB()
 
    }
 }
-void Parse::AddOp()
+void Parse::AddOp()//Add/subtract operator
 {where="AO";check();
    if(LHS=="+")
    {
@@ -552,7 +551,7 @@ void Parse::AddOp()
    }else
       errorReport();
 }
-void Parse::Term()
+void Parse::Term()//Term
 {where="T";check();
    if(LHS=="num"||LHS=="false"||LHS=="true"||LHS=="id"||LHS=="("||LHS=="~")
    {
@@ -561,7 +560,7 @@ void Parse::Term()
    }else
       errorReport();
 }
-void Parse::TermB()
+void Parse::TermB()//term for multiple iterations
 {where="TB";check();
    if(LHS=="*"||LHS=="%"||LHS=="/")
    {
@@ -573,7 +572,7 @@ void Parse::TermB()
 
    }
 }
-void Parse::MultOp()
+void Parse::MultOp()//multiplying, div, and mod operator
 {where="MO";check();
    if(LHS=="*")
    {
@@ -587,7 +586,7 @@ void Parse::MultOp()
    }else
       errorReport();
 }
-void Parse::Factor()
+void Parse::Factor()//factor
 {where="F";check();
    if(LHS=="num"||LHS=="false"||LHS=="true")
    {
@@ -611,7 +610,7 @@ void Parse::Factor()
    }else
       errorReport();
 }
-void Parse::VarAc()
+void Parse::VarAc()//Variable access
 {where="Va";check();
    if(LHS=="id")
    {
@@ -622,7 +621,7 @@ void Parse::VarAc()
     }else
       errorReport();
 }
-void Parse::VarAcB()
+void Parse::VarAcB()//variable access for mulitple iterations
 {where="VAB";check();
    if(LHS=="[")
    {
@@ -644,7 +643,7 @@ void Parse::IndexSelect()
       }
    }
 }
-void Parse::Const()
+void Parse::Const()//constant
 {where="C";check();
    if(LHS=="num")
    {
@@ -658,7 +657,7 @@ void Parse::Const()
    }else
       errorReport();
 }
-void Parse::BoolSym()
+void Parse::BoolSym()//boolean symbol
 {where="BS";check();
    if(LHS=="false")
    {
@@ -670,7 +669,7 @@ void Parse::BoolSym()
       errorReport();
 }
 
-void Parse::VarName()
+void Parse::VarName()//variable name
 {where="VN";check();
    if(LHS=="id")
    {
@@ -678,7 +677,7 @@ void Parse::VarName()
    }
 }
 
-void Parse::ConstName()
+void Parse::ConstName()//constant name
 {where="CN";check();
    if(LHS=="id")
    {
@@ -687,7 +686,7 @@ void Parse::ConstName()
       errorReport();
 }
 
-void Parse::Num()
+void Parse::Num()//number
 {where="N";check();
    if(LHS=="num")
    {
@@ -696,7 +695,7 @@ void Parse::Num()
       errorReport();
 }
 
-void Parse::ProcName()
+void Parse::ProcName()//procedure name
 {where="PN";check();
    if(LHS=="id")
    {
