@@ -45,6 +45,8 @@ To compile:
    The test program: make test
    
             The test file is created for the purpose of testing the functions in the scanner and the parser.
+            It can also be used to test all the testlang files (test1-test7) in one run.
+            Once those files complete the testLang files is run once. It is the only files that does not contain errors.
 
    The main program: make plc
     
@@ -52,6 +54,6 @@ The code has no compile time errors or any runtime errors.
 
 Hours spent on this assignment:
 
-     Navraj: 5+(from 10am)
+     Navraj: 10+(from 3pm)
 
-     Jordan: 14+(from 10am)
+     Jordan: 19+(from 3pm)
