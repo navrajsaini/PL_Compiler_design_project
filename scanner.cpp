@@ -4,6 +4,7 @@
 #include "scanner.h"
 #include <iostream>
 #include <fstream>
+#include <parser.h>
 using namespace std;
 
 //scanner constructor, it load reserve word and stores the name of the files
@@ -11,6 +12,8 @@ Scanner::Scanner(string inCodeName, string outCodeName)//, Symtable &symbolTable
 {
    setName(inCodeName, outCodeName);
    symbolTable.loadResvd();
+   LN=0;
+   TN=0;
 }
 
 //this function determines if the caracter is white space, if it is it returns true
@@ -127,13 +130,22 @@ bool Scanner::isSpecial (char a)
    }
    
 }
-
+void Scanner::inc(int SV)
+{
+   lineToke[TN][1]=SV;
+   lineToke[TN][0]=LN;
+   TN++;
+}
 //called to get the token value then returned to be storred in file
 int Scanner::getToken(string token)
 {
    int storeVal;
    
    storeVal = symbolTable.insert(token);
+
+   inc(storeVal);
+
+   
    return storeVal;
 }
 
@@ -141,6 +153,7 @@ int Scanner::getNum(string token)
 {
    int storeVal;
    storeVal = symbolTable.insertNum(token);
+   inc(storeVal);
    return storeVal;
    
 }
@@ -277,11 +290,11 @@ void Scanner::tokenLine(char now[], int y)
       }
       else
       {	 
-	 cout<<endl<<token<<" is a not identified token on line: "<<lN;
+	 cout<<endl<<token<<" is a not identified token on line: "<<LN;
 	 cout<<endl;
       }    
    }
-   lN++;
+   LN++;
    out.close();
 }
 

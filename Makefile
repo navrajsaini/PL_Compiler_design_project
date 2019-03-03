@@ -15,7 +15,7 @@ all : test plc
 # $@ = this/these dependencies
 test: test.o token.o symboltable.o administration.o scanner.o
 	$(CCC) $(CCCFLAGS) $^ -o $@
-plc: plc.o token.o symboltable.o administration.o scanner.o
+plc: plc.o token.o symboltable.o administration.o scanner.o parser.o
 	$(CCC) $(CCCFLAGS) $^ -o $@
 
 # if 2 or more problems in assignment, you can compile them all with extra 
@@ -38,6 +38,7 @@ administration.o : administration.h
 token.o : token.h token.cpp
 symboltable.o : symboltable.cpp
 test.o : test.cpp
+parser.o :parser.cpp
 #etc
 clean:
 	rm -f *.o *~ *% *# .#*

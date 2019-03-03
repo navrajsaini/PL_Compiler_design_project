@@ -17,6 +17,8 @@ class Parse
 {
   public:
 
+   Parse(string in);
+
 //the function that is executed to find the start of the program
    void Program();
 
@@ -115,7 +117,13 @@ class Parse
 
    void ProcName();
   private:
+   ifstream input;
    string LHS;
-   
+   int tokeNum;
+   void match();
+   void parseFile;
+   string file;
+   void parseNow();
+   void errorReport();
 };
 #endif

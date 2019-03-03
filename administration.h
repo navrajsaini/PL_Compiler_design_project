@@ -36,6 +36,7 @@ class Admin
 
    //printing for the symtable
    void print();
+   void parse();
    
   private:
    ifstream input;//for input file
@@ -53,5 +54,8 @@ class Admin
 
    //count errors
    int errorCount;
+
+   int TL[256];
+   
 };
 #endif

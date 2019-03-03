@@ -50,3 +50,9 @@ int Admin::scan()
 */
    return 1;
 }
+
+void Admin::parse()
+{
+   Parse parser(out);
+   parser.parseFile();
+}

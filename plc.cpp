@@ -11,6 +11,9 @@
 #include <stdio.h>
 
 using namespace std;
+
+int lineToke[256][2];
+
 int main ()
 {
    // variables for file names
@@ -44,13 +47,15 @@ int main ()
 	cout<<"would you like us to output the completed syboltable? y/n"<<endl;
 	cin>>answer;
 
+	if(answer=='y'||answer=='Y')
+	   compiler.print();//printing token list
    }
    else
       cout << "Scan errors have occoured" <<endl;
-   if(answer=='y'||answer=='Y')
-   {
-      compiler.print();//printing token list
-   }
+
+   compiler.parse();
+   
+   
    
    return 0;
 }
