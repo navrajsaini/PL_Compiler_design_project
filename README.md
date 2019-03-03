@@ -57,4 +57,4 @@ Hours spent on this assignment:
 
      Navraj: 10+(from 3pm)
 
-     Jordan: 19+(from 3pm)
+     Jordan: 24+(from 3pm)
