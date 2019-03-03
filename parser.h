@@ -40,6 +40,7 @@ class Parse
    void Def();
    void ConstDef();
    void VarDef();
+   void VarDefB();
 
 //function for the type of symbols "integer", "Boolean"
    void TypeSym();

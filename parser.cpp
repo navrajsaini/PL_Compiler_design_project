@@ -67,14 +67,18 @@ void Parse::errorReport()
 //This is the start of the PL Grammar Parsing Stage.
 void Parse::Program()
 {
-   Block();
-   
-   if(LHS==".")
+   //first(program)
+   if(LHS=="begin")
    {
-      cout<<endl<<"YOU SUCCESSFULY PARSED, CONGRATS!!!!"<<endl;
+      Block();
+   
+      if(LHS==".")
+      {
+	 cout<<endl<<"YOU SUCCESSFULY PARSED, CONGRATS!!!!"<<endl;
+      }else
+	 errorReport();
    }else
-      cout<<"nope"<<endl;
-      //errorReport();
+      errorReport();
 }
 
 void Parse::Block()
@@ -88,35 +92,36 @@ void Parse::Block()
       if(LHS=="end")
       {
 
-      }
-      else
-	 cout<<" inside Block ";
-	 //errorReport();
+      }else
+	 errorReport();
    }else
-      cout<<" next to ";
-      //errorReport();
+      errorReport();
 }
 
 void Parse::DefPtr()
 {
-   Def();
-   if(LHS==";")
+   if(LHS=="const"||LHS=="integer"||LHS=="boolean"||LHS=="proc")
    {
-      match();
-      DefPtr();
-   }
-//or
-//epsilon
-   
-   
+      Def();
+      if(LHS==";")
+      {
+	 match();
+	 DefPtr();
+      }
+   }  
 }
 void Parse::Def()
 {
-   ConstDef();
-//or
-   VarDef();
-//or
-   ProcDef();
+   if(LHS=="const")
+   {
+      ConstDef();
+   }else if(LHS=="integer"||LHS=="boolean")
+   {  
+      VarDef();
+   }else if(LHS=="proc")
+   {
+      ProcDef();
+   }
 }
 void Parse::ConstDef()
 {
@@ -133,26 +138,38 @@ void Parse::ConstDef()
 }
 void Parse::VarDef()
 {
-   TypeSym();
-   VarList();
-//or
-   TypeSym();
-      if(LHS=="array")
+   if(LHS=="boolean"||LHS=="integer")
+   {
+      TypeSym();
+      VarDefB();
+   }else
+   {
+      errorReport();
+   } 
+}
+void Parse::VarDefB()
+{
+   if(LHS=="id")
+   {
+      VarList();
+   }else if(LHS=="array")
+   {
+      match();
+      VarList();
+      if(LHS=="[")
       {
 	 match();
-	 VarList();
-	 if(LHS=="[")
+	 Const();
+	 
+	 if(LHS=="]")
 	 {
 	    match();
-	    Const();
-	 
-	    if(LHS=="]")
-	    {
-	       match();
-	    }
 	 }
       }
-
+   }else
+   {
+      errorReport();
+   }
 }
 
 void Parse::TypeSym()
@@ -160,17 +177,20 @@ void Parse::TypeSym()
    if(LHS=="integer")
    {
       match();
-   }
-//or
-   if(LHS=="boolean")
+   }else if(LHS=="boolean")
    {
       match();
-   }
+   }else
+      errorReport();
 }
 void Parse::VarList()
 {
-   VarName();
-   VarListB();
+   if(LHS=="id")
+   {
+      VarName();
+      VarListB();
+   }else
+      errorReport();
 }
 void Parse::VarListB()
 {
@@ -179,10 +199,10 @@ void Parse::VarListB()
       match();
       VarName();
       VarListB();
+   }else
+   {
+      
    }
-//or
-//epsilon
-
 }
 void Parse::ProcDef()
 {
@@ -196,30 +216,43 @@ void Parse::ProcDef()
 
 void Parse::StatPtr()
 {
-   Stat();
-   if(LHS==";")
+   if(LHS=="skip"||LHS=="read"||LHS=="write"||LHS=="id"||LHS=="do"||LHS=="call"||LHS=="if")
    {
-      match();
-      StatPtr();
+      Stat();
+      if(LHS==";")
+      {
+	 match();
+	 StatPtr();
+      }
+   }else
+   {
    }
-//or
-//epsilon   
 }
 void Parse::Stat()
 {
-   EmptyStat();
-//or
-   ReadStat();
-//or
+   if(LHS=="read")
+   {
+      EmptyStat();
+   }else if(LHS=="skip")
+   {
+      ReadStat();
+   }else if(LHS=="write")
+   {
    WriteStat();
-//or   
+   }else if(LHS=="id")
+   {
    AsnStat();
-//or   
-   ProcStat();
-//or   
-   IfStat();
-//or   
-   DoStat();
+   }else if(LHS=="call") 
+   {
+      ProcStat();
+   }else if(LHS=="if")
+   {
+      IfStat();
+   }else if(LHS=="do")
+   {
+      DoStat();
+   }else
+      errorReport();
 }
 void Parse::EmptyStat()
 {
@@ -239,8 +272,12 @@ void Parse::ReadStat()
 
 void Parse::VarAcList()
 {
-   VarAc();
-   VarAcListB();
+   if(LHS=="id")
+   {
+      VarAc();
+      VarAcListB();
+   }else
+      errorReport();
 }
 void Parse::VarAcListB()
 {
@@ -249,10 +286,10 @@ void Parse::VarAcListB()
       match();
       VarAc();
       VarAcListB();
+   }else
+   {
+      
    }
-//or
-//epsilon
-
 }
 void Parse::WriteStat()
 {
@@ -264,10 +301,12 @@ void Parse::WriteStat()
 }
 void Parse::ExpList()
 {
-   Exp();
-   ExpListB();
+   if(LHS=="+"||LHS=="-"||LHS==">"||LHS=="<"||LHS=="="||LHS=="|"||LHS=="->"||LHS=="&"){
+      Exp();
+      ExpListB();
+   }else
+      errorReport();
 }
-
 void Parse::ExpListB()
 {
    if(LHS==",")
@@ -275,18 +314,24 @@ void Parse::ExpListB()
       match();
       Exp();
       ExpListB();
+   }else
+   {
+      
    }
-//or
-//epsilon
 }
 void Parse::AsnStat()
 {
-   VarAcList();
-   if(LHS==":=")
+   if(LHS=="id")
    {
-      match();
-      ExpList();
-   }
+      VarAcList();
+      if(LHS==":=")
+      {
+	 match();
+	 ExpList();
+      }else
+	 errorReport();
+   }else
+      errorReport();
 }
 void Parse::ProcStat()
 {
@@ -334,9 +379,10 @@ void Parse::GarCmdListB()
       match();
       GarCmd();
       GarCmdListB();
+   }else
+   {
+      
    }
-//or
-//epsilon
 }
 
 void Parse::GarCmd()
@@ -346,71 +392,83 @@ void Parse::GarCmd()
    {
       match();
       StatPtr();
-   }
+   }else
+      errorReport();
 
 }
 void Parse::Exp()
 {
-   PrimExp();
-   ExpB();
+   if(LHS=="+"||LHS=="-"||LHS=="<"||LHS==">"||LHS=="=")
+   {
+      PrimExp();
+      ExpB();
+   }else
+      errorReport();
 }
 
 void Parse::ExpB()
 {
-   PrimOp();
-   PrimExp();
-   ExpB();
-//or
-//epsilon
+   if(LHS=="+"||LHS=="-"||LHS=="<"||LHS==">"||LHS=="=")
+   {
+      PrimOp();
+      PrimExp();
+      ExpB();
+   }else
+   {
+
+   }
 }
 void Parse::PrimOp()
 {
    if(LHS=="&")
    {
       match();
-   }
-//or
-   if(LHS=="|")
+   }else if(LHS=="|")
    {
       match();
-   }
+   }else
+      errorReport();
 }
 
 void Parse::PrimExp()
 {
-   SimpExp();
-   PrimExpB();
+      SimpExp();
+      PrimExpB();
 }
 void Parse::PrimExpB()
 {
-   RelatOp();
-   SimpExp();
-//or
-//epsilon
-
+   if(LHS=="<"||LHS=="="||LHS==">")
+   {
+      RelatOp();
+      SimpExp();
+   }else
+   {
+      
+   }
 }
 void Parse::RelatOp()
 {
-if(LHS=="<")
+   if(LHS=="<")
    {
       match();
-   }
-//or
-if(LHS=="=")
+   }else if(LHS=="=")
    {
       match();
-   }
-//or
-if(LHS==">")
+   }else if(LHS==">")
    {
       match();
-   }
+   }else
+      errorReport();
 }
 void Parse::SimpExp()
 {
-   Line();
-   Term();
-   SimpExpB();
+   if(LHS=="-"||LHS=="num"||LHS=="false"||LHS=="true"||LHS=="id"||LHS=="("||LHS=="~")
+   {
+      Line();
+      Term();
+      SimpExpB();
+   }else
+      errorReport();
 }
 
 void Parse::Line()
@@ -418,95 +476,114 @@ void Parse::Line()
    if(LHS=="-")
    {
       match();
+   }else
+   {
+
    }
-//or
-//epsilon
 }
 
 void Parse::SimpExpB()
 {
-   AddOp();
-   Term();
-   SimpExpB();
-//or
-//epsilon
+   if(LHS=="-"||LHS=="+")
+   {
+      AddOp();
+      Term();
+      SimpExpB();
+   }else
+   {
+
+   }
 }
 void Parse::AddOp()
 {
    if(LHS=="+")
    {
       match();
-   }
-//or
-   if(LHS=="-")
+   }else if(LHS=="-")
    {
       match();
-   }
+   }else
+      errorReport();
 }
 void Parse::Term()
 {
-   Factor();
-   TermB();
+   if(LHS=="num"||LHS=="false"||LHS=="true"||LHS=="id"||LHS=="("||LHS=="~")
+   {
+      Factor();
+      TermB();
+   }else
+      errorReport();
 }
 void Parse::TermB()
 {
-   MultOp();
-   Factor();
-   TermB();
-//or
-//epsilon
+   if(LHS=="*"||LHS=="%"||LHS=="/")
+   {
+      MultOp();
+      Factor();
+      TermB();
+   }else
+   {
+
+   }
 }
 void Parse::MultOp()
 {
    if(LHS=="*")
    {
       match();
-   }
-//or
-   if(LHS=="%")
+   }else if(LHS=="%")
    {
       match();
-   }
-//or
-   if(LHS=="/")
+   }else if(LHS=="/")
    {
       match();
-   }
+   }else
+      errorReport();
 }
 void Parse::Factor()
 {
-   Const();
-//or
-   VarAc();
-//or
-   if(LHS=="(")
+   if(LHS=="num"||LHS=="false"||LHS=="true")
+   {
+      Const();
+   }else if(LHS=="id")
+   {
+      VarAc();
+   }else if(LHS=="(")
    {
       match();
       Exp();
       if(LHS==")")
       {
 	 match();
-      }
-   }
-//or
-   if(LHS=="~")
+      }else
+	 errorReport();
+   }else if(LHS=="~")
    {
       match();
       Factor();
-   } 
+   }else
+      errorReport();
 }
 
 void Parse::VarAc()
 {
-   VarName();
-   VarAcB();
+   if(LHS=="id")
+   {
+      VarName();
+      VarAcB();
+   }else
+      errorReport();
 }
 
 void Parse::VarAcB()
 {
-   IndexSelect();
-//or
-//epsilon
+   if(LHS=="[")
+   {
+      IndexSelect();
+   }else
+   {
+
+   }
 }
 
 void Parse::IndexSelect()
@@ -524,11 +601,17 @@ void Parse::IndexSelect()
 
 void Parse::Const()
 {
-   Num();
-//or
-   BoolSym();
-//or
-   ConstName();
+   if(LHS=="num")
+   {
+      Num();
+   }else if(LHS=="true"||LHS=="false")
+   {
+      BoolSym();
+   }else if(LHS=="id")
+   {
+      ConstName();
+   }else
+      errorReport();
 }
 
 void Parse::BoolSym()
@@ -536,12 +619,11 @@ void Parse::BoolSym()
    if(LHS=="false")
    {
       match();
-   }
-//or
-   if(LHS=="true")
+   }else if(LHS=="true")
    {
       match();
-   }
+   }else
+      errorReport();
 }
 
 void Parse::VarName()
@@ -557,7 +639,8 @@ void Parse::ConstName()
    if(LHS=="id")
    {
       match();
-   }
+   }else
+      errorReport();
 }
 
 void Parse::Num()
@@ -565,7 +648,8 @@ void Parse::Num()
    if(LHS=="id")
    {
       match();
-   }
+   }else
+      errorReport();
 }
 
 void Parse::ProcName()
@@ -573,5 +657,7 @@ void Parse::ProcName()
    if(LHS=="id")
    {
       match();
-   }
+   }else
+      errorReport();
 }
+   
