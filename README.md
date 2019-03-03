@@ -41,6 +41,9 @@ symboltable.cpp, token.h, token.cpp, parser.h,
 parser.cpp
 
 To compile:
+
+   The test program: make test
+
    The main program: make plc
     
 The code has no compile time errors or any runtime errors.
