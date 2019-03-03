@@ -15,8 +15,8 @@ symboltable.cpp, token.h, token.cpp
 
 To compile:
    
-   The test program: make test
-
+   The test program: make test. 
+      
    The main program: make plc
 
 The code has no compile time errors or any runtime errors. There are a few warnings that come up if -Wall -g is added to the Makefile, which are because the private variables are assigned after the public functions manipulate them or use them in some way.
@@ -43,6 +43,8 @@ parser.cpp
 To compile:
 
    The test program: make test
+   
+            The test file is created for the purpose of testing the functions in the scanner and the parser.
 
    The main program: make plc
     
