@@ -31,13 +31,15 @@ class Scanner
    void setName(string in, string out);   //set name for files
    char ahead;//look ahead character
    Symtable symbolTable;//symbol table that has inserted tokens
+   int lineToke[256][2];
 
    
 
   private:
+   
    int LN;//   line number
    int TN;
-   void inc();
+   void inc(int);
    ofstream out;//for outputing to file in tokenLine
    string codeFileName;//name of codefile
    string tokenFileName;//name of token file

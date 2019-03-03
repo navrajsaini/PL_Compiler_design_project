@@ -12,7 +12,6 @@
 
 using namespace std;
 
-int lineToke[256][2];
 
 int main ()
 {

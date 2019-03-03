@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include "scanner.h"
+//#include "parser.h"
 
 #define MAXERRORS 10
 
@@ -37,6 +38,7 @@ class Admin
    //printing for the symtable
    void print();
    void parse();
+   string doTheThing(int);
    
   private:
    ifstream input;//for input file
@@ -45,6 +47,9 @@ class Admin
    string out;//name of output file
    //scanner
    Scanner view;//created scanner for admin
+   void lineAsn();
+   int lin[256][2];
+   string parserAsn(int value);
 
    //maintain current line number.
    int lineNo;

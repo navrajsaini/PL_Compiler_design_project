@@ -5,6 +5,8 @@
 #include "administration.h"
 #include <fstream>
 #include <iostream>
+#include "parser.h"
+
 
 using namespace std;
 //constructing an admin object
@@ -16,7 +18,10 @@ Admin::Admin(string inFile, string outFile, Scanner &sn)
    view.setName(in, out);
    view.symbolTable.loadResvd();
 }
-
+string Admin::doTheThing(int value)
+{
+   return view.symbolTable.giveLex(value);
+}
 //returning line number
 int Admin::getLineNo()
 {
@@ -47,12 +52,49 @@ int Admin::scan()
 /*
   for debuging purposes
   view.symbolTable.printTable();
+  
 */
+input.close();
    return 1;
 }
 
+void Admin::lineAsn()
+{
+   for(int i=1; i<256; i++)
+   {  
+      lin[i][0]=view.lineToke[i][0];
+lin[i][1]=view.lineToke[i][1];
+cout<<lin[i][0]<<" "<<lin[i][1]<<" ";
+
+   }
+}
 void Admin::parse()
 {
+
+
    Parse parser(out);
-   parser.parseFile();
+   for(int i=1; i<256; i++)
+   {
+      parser.asn(i, 0, view.lineToke[i][0]);
+      parser.asn(i, 1, view.lineToke[i][1]);
+   }
+input.open("tokenFile");
+//cout<<parser.file.c_str()<<" ";
+   string lex;
+   int value;
+   do{
+      input>>value;
+      parser.tokens(parserAsn(value));
+//cout<<" "<<value<<" ";
+   }while(!input.eof());
+
+   input.close();
+
+   parser.parseIt();
+
+}
+string Admin::parserAsn(int value)
+{
+
+return view.symbolTable.giveLex(value);
 }

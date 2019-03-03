@@ -18,7 +18,16 @@ class Parse
   public:
 
    Parse(string in);
-
+   void parseIt();
+   void asn(int, int, int);
+   void parseNow();
+   void tokens(string);
+   string token[256];
+   int tokCount=0;
+   string file;
+   void printToken();
+   int tokeNum=0;
+//------------------------------------------------------------------------
 //the function that is executed to find the start of the program
    void Program();
 
@@ -27,7 +36,7 @@ class Parse
    
 
 //Functions for definitions of constants, variables, procedures
-   void DefPrt();
+   void DefPtr();
    void Def();
    void ConstDef();
    void VarDef();
@@ -37,13 +46,13 @@ class Parse
 
 //Functions for the names of lists
    void VarList();
-   void VarList2();
+   void VarListB();
    
 //function for "proc"
    void ProcDef();
 
 //functions for determining statements
-   void StatPrt();
+   void StatPtr();
    void Stat();
    void EmptyStat();
    void ReadStat();
@@ -89,11 +98,13 @@ class Parse
 
    void SimpExpB();
 
+   void Line();
+
    void AddOp();
 
-   void TermB();
+   void Term();
 
-   void TermA();
+   void TermB();
 
    void MultOp();
 
@@ -116,14 +127,17 @@ class Parse
    void Num();
 
    void ProcName();
+//---------------
+   int ln[256][2];
   private:
    ifstream input;
    string LHS;
-   int tokeNum;
+  
    void match();
-   void parseFile;
-   string file;
-   void parseNow();
+   int value;
+ 
+
+
    void errorReport();
 };
 #endif
