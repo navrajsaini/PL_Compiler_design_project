@@ -6,7 +6,7 @@
 #include <fstream>
 #include <string>
 #include "parser.h"
-#include "administration.h"
+
 
 using namespace std;
 //constructor that initialises the lets line array and sets other vars
@@ -26,6 +26,10 @@ void Parse::asn(int sec, int part, int numb)
    ln[sec][part]=numb;
    //test line
    //cout<<"token and line num: "<<numb<<" ";
+}
+void Parse::asnS(int sec, string s)
+{
+   lnLex[sec] = s;
 }
 //the beginning of the parsing
 void Parse::parseIt()  
@@ -88,6 +92,11 @@ void Parse::check()
       cout<<endl<<LHS<<" "<<ln[tokeNum-1][1]<<" "<<where<<endl;
    }
 }
+void Parse::scopeError(string s)
+{
+   cout<<s<<endl;
+}
+
 /*This is the start of the PL Grammar Parsing Stage.
   The rest of the functions are the grammar functions.
   There is minimal commenting through all of the grammar functions.
@@ -107,10 +116,12 @@ void Parse::Program()
 {where="P";check();
    if(LHS=="begin")
    {
+      bTable.newBlock();
       Block();
    
       if(LHS==".")
       {
+	 bTable.endBlock();
 	 cout<<endl<<"YOU SUCCESSFULY PARSED, CONGRATS!!!!"<<endl;
       }else
 	 errorReport();
@@ -134,7 +145,7 @@ void Parse::Block()
    }else
       errorReport();
 }
-
+//-----
 void Parse::DefPtr()
 {where="DP";check();
    if(LHS=="const"||LHS=="integer"||LHS=="boolean"||LHS=="proc")
@@ -148,11 +159,18 @@ void Parse::DefPtr()
 	 errorReport();
    }  
 }
+//-----
 void Parse::Def()//definition function
 {where="D";check();
    if(LHS=="const")
    {
+
+      eType= UNIVERSAL;
+      eKind=CONSTANT;
       ConstDef();
+      if (!bTable.define(index, eKind, eType, 1, checkLex))
+	 scopeError("Ambiguous definition of constant");
+      
    }else if(LHS=="integer"||LHS=="boolean")
    {  
       VarDef();
@@ -511,13 +529,11 @@ void Parse::RelatOp()//relational operator
 }
 void Parse::SimpExp()//simple expression
 {where="SE";check();
-//   if(LHS=="-"||LHS=="num"||LHS=="false"||LHS=="true"||LHS=="id"||LHS=="("||LHS=="~")
-//   {
+
       Line();
       Term();
       SimpExpB();
-//   }else
-//      errorReport();
+
 }
 
 void Parse::Line()
@@ -676,6 +692,8 @@ void Parse::VarName()//variable name
 {where="VN";check();
    if(LHS=="id")
    {
+      index= ln[tokeNum][1];
+      checkLex=lnLex[tokeNum];
       match();
    }
 }
@@ -684,6 +702,8 @@ void Parse::ConstName()//constant name
 {where="CN";check();
    if(LHS=="id")
    {
+      index= ln[tokeNum][1];
+      checkLex=lnLex[tokeNum];
       match();
    }else
       errorReport();
@@ -693,6 +713,8 @@ void Parse::Num()//number
 {where="N";check();
    if(LHS=="num")
    {
+      index= ln[tokeNum][1];
+      checkLex=lnLex[tokeNum];
       match();
    }else
       errorReport();
@@ -701,7 +723,9 @@ void Parse::Num()//number
 void Parse::ProcName()//procedure name
 {where="PN";check();
    if(LHS=="id")
-   {
+   {  
+      index= ln[tokeNum][1];
+      checkLex=lnLex[tokeNum];
       match();
    }else
       errorReport();

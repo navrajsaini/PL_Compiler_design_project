@@ -88,10 +88,13 @@ void Admin::parse()
    {
       parser.yn=1;
    }
+   string tempStr;
    for(int i=1; i<256; i++)
    {
       parser.asn(i, 0, view.lineToke[i][0]);
       parser.asn(i, 1, view.lineToke[i][1]);
+      tempStr = view.symbolTable.htable[(view.lineToke[i][1])].getLexeme();
+      parser.asnS(i, tempStr);
    }
    input.open(parser.file.c_str());
    string lex;
@@ -112,3 +115,5 @@ string Admin::parserAsn(int value)
 {
 return view.symbolTable.giveLex(value);
 }
+
+

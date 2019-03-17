@@ -11,17 +11,23 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "types.h"
+#include "administration.h"
+#include "BlockTable.h"
 using namespace std;
 
 class Parse
 {
-  public:
+   public:
 //CONSTRUCTOR
    Parse(string in);
 //INITIATES THE Parsing
    void parseIt();
 //assigns the parse teser line 
    void asn(int, int, int);
+   void asnS(int, string);
+
+
 //starts parsing through the Grammar
    void parseNow();
 //print the token string
@@ -92,10 +98,23 @@ class Parse
    void ProcName();
 //---------------------------------------------
 //test array for line number and error reporting 
-   int ln[256][2];
+int ln[256][2];
+string lnLex[256];
+   BlockTable bTable;
 
+   
   private:
 //FILE STREAM
+   myType eType;
+   Kind eKind;
+   int index;
+//index= ln[tokeNum][1];
+   string checkLex;
+
+void scopeError(string s);
+//      if (!bTable.define(cnameindex, CONSTANT, temptype, 1, tempvalue))
+//	 scopeError("Ambiguous definition of constant");
+
    ifstream input;
 //private variables: LHS is look ahead symbol
    string LHS;

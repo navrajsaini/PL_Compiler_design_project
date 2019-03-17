@@ -32,7 +32,7 @@ class Scanner
    void setName(string in, string out);   //set name for files
    char ahead;//look ahead character
    Symtable symbolTable;//symbol table that has inserted tokens
-   int lineToke[256][2]; //line token test stuff
+   int lineToke[256][3]; //line token test stuff
 
    int LN;//   line number 
 
