@@ -6,20 +6,24 @@
 
 BlockTable::BlockTable()
 {
-   
+   //vector <vector<TableEntry>> blocktable[MAXBLOCK][table];
 }
 
 //search till the current block level if found, return true
 //else return false
+//commented out section is for a 2d array
 bool BlockTable::search(int index)
 {
+   //remove this for look for a 2d array as we don't need to search
+   //through all the blocks only the current block.
+   //we need the for loop that is commented out
    for (int i = 0; i < blockLevel; i++)
    {
-      if (table[i].idindex == index)
+      //for (int j = 0; j < MAXBLOCK; j++)
+      if (table[i].idindex == index)//table[blockLevel][j].idindex == index
 	 return true;
-      else
-	 return false;
    }
+   return false;
 }
 
 //search for the index, if it's found
@@ -30,14 +34,8 @@ bool BlockTable::search(int index)
 //and return true
 bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nvalue)
 {
-   bool found;
-   
-   for (int i = 0; i < blockLevel; i++)
-   {
-      found = search (index);
-      if (found == true)
-	 return false;
-   }
+   if (search(index))
+      return false;
    
    if (newBlock())
    {
@@ -56,7 +54,8 @@ TableEntry BlockTable::find (int index, bool &error)
 {
    for (int i = 0; i < blockLevel; i++)
    {
-      if (table[i].idindex == index)
+      //for (int j = 0; j < MAXBLOCK; j++
+      if (table[i].idindex == index)//table[i][j].idindex == index
       {
 	 error = false;
 	 return true;
@@ -93,6 +92,8 @@ void BlockTable::endBlock()
 {
    for (int i = 0; i < blockLevel; i++)
    {
+      //for (int j = 0; j < MAXBLOCK; j++)
+      //table[i][j]. ... = ...;
       table[i].idindex = "";
       table[i].kind = NULL;
       table[i].type = NULL;
