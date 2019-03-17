@@ -20,7 +20,7 @@ bool BlockTable::search(int index)
    for (int i = 0; i < blockLevel; i++)
    {
       //for (int j = 0; j < MAXBLOCK; j++)
-      if (table[i].idindex == index)//table[blockLevel][j].idindex == index
+      if (table[i][idindex] == index)//table[blockLevel][j].idindex == index
 	 return true;
    }
    return false;
