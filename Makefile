@@ -13,9 +13,9 @@ all : test plc
 # Note: executable lines, ie. $(CCC) ..., always begin with a tab.
 # $^ = this target
 # $@ = this/these dependencies
-test: test.o token.o symboltable.o administration.o scanner.o parser.o
+test: test.o token.o symboltable.o administration.o scanner.o parser.o BlockTable.o
 	$(CCC) $(CCCFLAGS) $^ -o $@
-plc: plc.o token.o symboltable.o administration.o scanner.o parser.o
+plc: plc.o token.o symboltable.o administration.o scanner.o parser.o BlockTable.o
 	$(CCC) $(CCCFLAGS) $^ -o $@
 
 # if 2 or more problems in assignment, you can compile them all with extra 
