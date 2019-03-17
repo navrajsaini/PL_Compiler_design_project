@@ -32,7 +32,7 @@ bool BlockTable::search(int index)
 //if a new block can be created and the index wasn't found
 //insert into the new block that was created.
 //and return true
-bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nvalue)
+bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, string nvalue)
 {
    if (search(index))
       return false;
