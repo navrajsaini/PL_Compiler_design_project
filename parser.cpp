@@ -172,8 +172,13 @@ void Parse::Def()//definition function
 	 scopeError("Ambiguous definition of constant");
       
    }else if(LHS=="integer"||LHS=="boolean")
-   {  
+   {
+
+      eKind=VAR;
       VarDef();
+      
+         if (!bTable.define(index, eKind, eType, 1, checkLex))
+	 scopeError("Ambiguous definition of constant");
    }else if(LHS=="proc")
    {
       ProcDef();
@@ -204,6 +209,7 @@ void Parse::VarDef()//variable definition
       errorReport();
    } 
 }
+
 void Parse::VarDefB()//variable definition for multiple itirations
 {where="VDB";check();
    if(LHS=="id")
@@ -233,9 +239,11 @@ void Parse::TypeSym()//Type Symbol
 {where="TS";check();
    if(LHS=="integer")
    {
+      eType = INT;
       match();
    }else if(LHS=="boolean")
    {
+      eType = BOOL;
       match();
    }else
       errorReport();
@@ -317,10 +325,7 @@ void Parse::Stat()//statement
 }
 void Parse::EmptyStat()//empty statement
 {where="ES";check();
-   if(LHS=="skip")
-   {
-      match();
-   }
+      match(); 
 }
 void Parse::ReadStat()//read statement
 {where="RS";check();
@@ -386,8 +391,7 @@ void Parse::ExpListB()//expression list for multiple iterations
 }
 void Parse::AsnStat()//assignment statement
 {where="AS";check();
-   if(LHS=="id")
-   {
+ 
       VarAcList();
       if(LHS==":=")
       {
@@ -395,8 +399,7 @@ void Parse::AsnStat()//assignment statement
 	 ExpList();
       }else
 	 errorReport();
-   }else
-      errorReport();
+
 }
 void Parse::ProcStat()//procedure statement
 {where="PS";check();
@@ -572,12 +575,10 @@ void Parse::AddOp()//Add/subtract operator
 }
 void Parse::Term()//Term
 {where="T";check();
-   if(LHS=="num"||LHS=="false"||LHS=="true"||LHS=="id"||LHS=="("||LHS=="~")
-   {
+
       Factor();
       TermB();
-   }else
-      errorReport();
+
 }
 void Parse::TermB()//term for multiple iterations
 {where="TB";check();
@@ -612,6 +613,8 @@ void Parse::Factor()//factor
       Const();
    }else if(LHS=="id")
    {
+      index= ln[tokeNum][1];
+      checkLex=lnLex[tokeNum];
       VarAc();
    }else if(LHS=="(")
    {
@@ -633,10 +636,14 @@ void Parse::VarAc()//Variable access
 {where="Va";check();
    if(LHS=="id")
    {
+      index= ln[tokeNum][1];
+      checkLex=lnLex[tokeNum];
       VarName();
       VarAcB();
    }else if(LHS=="num")
    {
+      index= ln[tokeNum][1];
+      checkLex=lnLex[tokeNum];
     }else
       errorReport();
 }
@@ -666,12 +673,18 @@ void Parse::Const()//constant
 {where="C";check();
    if(LHS=="num")
    {
+      index= ln[tokeNum][1];
+      checkLex=lnLex[tokeNum];
       Num();
    }else if(LHS=="true"||LHS=="false")
    {
+      index= ln[tokeNum][1];
+      checkLex=lnLex[tokeNum];
       BoolSym();
    }else if(LHS=="id")
    {
+      index= ln[tokeNum][1];
+      checkLex=lnLex[tokeNum];
       ConstName();
    }else
       errorReport();
@@ -683,6 +696,8 @@ void Parse::BoolSym()//boolean symbol
       match();
    }else if(LHS=="true")
    {
+      index= ln[tokeNum][1];
+      checkLex=lnLex[tokeNum];
       match();
    }else
       errorReport();
