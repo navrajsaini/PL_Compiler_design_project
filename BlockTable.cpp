@@ -15,7 +15,7 @@ bool BlockTable::search(int index)
 {
    for (int i = 0; i < blockLevel; i++)
    {
-      if (table[i].index == index)
+      if (table[i].idindex == index)
 	 return true;
       else
 	 return false;
@@ -41,7 +41,6 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
    
    if (newBlock())
    {
-            
       table[blockLevel].idindex = index;
       table[blockLevel].kind = nkind;
       table[blockLevel].type = ntype;
@@ -57,7 +56,7 @@ TableEntry BlockTable::find (int index, bool &error)
 {
    for (int i = 0; i < blockLevel; i++)
    {
-      if (table[i].index == index)
+      if (table[i].idindex == index)
       {
 	 error = false;
 	 return true;
@@ -74,16 +73,31 @@ TableEntry BlockTable::find (int index, bool &error)
 //and return true
 bool BlockTable::newBlock()
 {
-   if(blockLevel+1 > MAXBLOCK)
-      return false;
+   if (blockLevel != 0)
+      if(blockLevel+1 > MAXBLOCK)
+	 return false;
+      else
+      {
+	 blockLevel++;
+	 return true;
+      }
    else
-   {
-      blockLevel++;
       return true;
-   }
 }
-
+//pop the current blocktable entry
+//so index is set to "",
+//kind and type are set to NULL,
+//size is set to default, 1,
+//value is set to 0
 void BlockTable::endBlock()
 {
-   
+   for (int i = 0; i < blockLevel; i++)
+   {
+      table[i].idindex = "";
+      table[i].kind = NULL;
+      table[i].type = NULL;
+      table[i].size = 1;
+      table[i].value = 0;
+      blockLevel--;
+   }
 }
