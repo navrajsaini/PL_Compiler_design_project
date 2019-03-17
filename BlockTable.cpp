@@ -7,7 +7,7 @@ BlockTable::BlockTable()
 {
    //vector <vector<TableEntry>> blocktable[MAXBLOCK][table];
 }
-
+BlockTable::~BlockTable(){}
 //search till the current block level if found, return true
 //else return false
 //commented out section is for a 2d array
