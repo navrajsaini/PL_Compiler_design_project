@@ -39,8 +39,8 @@ class Symtable
    void printTable();
    //return the lexeme at the location passed by the int from the token file
    string giveLex(int);
-  private:
    vector<Token> htable;//the hashtable
+  private:
    int occupied;//number of cells occupied
    int hashfn(string);//hash function
 
