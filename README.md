@@ -59,3 +59,24 @@ Hours spent on this assignment:
      Navraj: 11
 
      Jordan: 25
+-----------------------------------------------Scope and Type Checking--------------------------------------------
+Navraj:
+
+Jordan:
+
+Files included: 
+administration.cpp, admininstration.h, scanner.h, 
+scanner.cpp Makefile, Readme, symboltable.h, 
+symboltable.cpp, token.h, token.cpp, parser.h, 
+parser.cpp, types.h, BlockTable.h, BlockTable.cpp
+
+To compile:
+
+   make plc
+   
+The code has no compile time errors or any runtime errors.
+
+Hours spent on this assignment:
+
+   Navraj: 
+   Jordan: 
