@@ -39,6 +39,7 @@ token.o : token.h token.cpp
 symboltable.o : symboltable.cpp
 test.o : test.cpp
 parser.o :parser.cpp
+BlockTable.o : BlockTable.h
 #etc
 clean:
 	rm -f *.o *~ *% *# .#*

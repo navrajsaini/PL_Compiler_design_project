@@ -1,3 +1,7 @@
+/*
+  created and edited by Navraj Saini and Jordan Kolody
+  implementation for the BlockTable.h file
+ */
 #include "BlockTable.h"
 
 BlockTable::BlockTable()
@@ -5,10 +9,10 @@ BlockTable::BlockTable()
    
 }
 
+//search till the current block level if found, return true
+//else return false
 bool BlockTable::search(int index)
 {
-   //search till the current block level if found, return true
-   //else return false
    for (int i = 0; i < blockLevel; i++)
    {
       if (table[i].index == index)
@@ -18,23 +22,26 @@ bool BlockTable::search(int index)
    }
 }
 
+//search for the index, if it's found
+//return false
+//else insert in the new info and return true
+//if a new block can be created and the index wasn't found
+//insert into the new block that was created.
+//and return true
 bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nvalue)
 {
    bool found;
-   if (newBlock())//if we can create a new block
+   
+   for (int i = 0; i < blockLevel; i++)
    {
-      //search for the index, if it's found
-      //return false
-      //else insert in the new info and return true
-      for (int i = 0; i < blockLevel; i++)
-      {
-	 //if (table[i].idindex == index)
-	 //return false;
-	 found = search (index);
-	 if (found == true)
-	    return false;
-      }
-      
+      found = search (index);
+      if (found == true)
+	 return false;
+   }
+   
+   if (newBlock())
+   {
+            
       table[blockLevel].idindex = index;
       table[blockLevel].kind = nkind;
       table[blockLevel].type = ntype;
@@ -60,6 +67,11 @@ TableEntry BlockTable::find (int index, bool &error)
    return false;
 }
 
+//if the current blockLevel+1 is greater then MAXBLOCK
+//return false because no more blocks can be added in
+//else
+//increment the blockLevel
+//and return true
 bool BlockTable::newBlock()
 {
    if(blockLevel+1 > MAXBLOCK)
