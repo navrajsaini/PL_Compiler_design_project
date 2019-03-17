@@ -60,6 +60,7 @@ Hours spent on this assignment:
 
      Jordan: 25
 -----------------------------------------------Scope and Type Checking--------------------------------------------
+
 Navraj:
 
 Jordan:
@@ -79,4 +80,5 @@ The code has no compile time errors or any runtime errors.
 Hours spent on this assignment:
 
    Navraj: 
+   
    Jordan: 
