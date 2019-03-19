@@ -14,6 +14,7 @@ BlockTable::~BlockTable(){}
 //commented out section is for a 2d array
 bool BlockTable::search(int index)
 {
+   /*
    int temp;
    //remove this for look for a 2d array as we don't need to search
    //through all the blocks only the current block.
@@ -24,6 +25,27 @@ bool BlockTable::search(int index)
       if (table[i][0].idindex == index)//table[blockLevel][j].idindex == index
 	 return true;
    }
+   return false;
+   */
+   
+   int tempcomp;//compare temp variable
+   for (int i = 0; i < blockLevel; i++)
+   {
+      for (vector<TableEntry>::iterator j = table[blockLevel].begin();
+	   j != table[blockLevel].end(); ++j)
+      {
+	 cout << "in search function. if there's a issue after this" << endl
+	      << "j -> idindex does not place the first member in the struct"
+	      << endl << "to tempcomp.....";
+	 tempcomp = j->idindex;
+	 if (tempcomp == index)//table[i][j].idindex == index
+	 {
+	    cout << "done with search funciton" <<endl;
+	    return true;
+	 }
+      }
+   }
+   cout << "done with search func" << endl;
    return false;
 }
 
@@ -67,17 +89,21 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, string 
 //if the index is found, return true and set error to false
 //else error is set to true, and return false
 bool/*TableEntry*/ BlockTable::find (int index, bool &error)
-{
-   for (int i = 0; i < blockLevel; i++)
+{   
+   int temp;
+   cout << "in find function. if there are any issues here..." << endl
+	<< "the comparison or the for loop are not working properly."
+	<< endl;
+   for (auto j = table[blockLevel].begin();
+	j != table[blockLevel].end(); ++j)
    {
-      //for (int j = 0; j < MAXBLOCK; j++
-      if (table[i][0].idindex == index)//table[i][j].idindex == index
+      if (j -> idindex == index)
       {
-	 error = false;
+	 cout << "done with find func" << endl;
 	 return true;
       }
    }
-   error = true;
+   cout << "done with find func" << endl;
    return false;
 }
 
@@ -115,4 +141,7 @@ void BlockTable::endBlock()
    //if the blockLevel is greater than 0, decrement block
    if (blockLevel > 0)
       blockLevel--;
+   else
+      ;
+   cout << "done with endBlock" << endl;
 }
