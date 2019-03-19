@@ -7,6 +7,7 @@ BlockTable::BlockTable()
 {
    //vector <vector<TableEntry>> blocktable[MAXBLOCK][table];
 }
+
 BlockTable::~BlockTable(){}
 //search till the current block level if found, return true
 //else return false
@@ -37,14 +38,29 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, string 
    if (search(index))
       return false;
    
-   if (newBlock())
+   else if (newBlock())
    {
+      //create the Table entry
+      TableEntry a;
+      a.idindex = index;
+      a.kind = nkind;
+      a.type = ntype;
+      a.size = nsize;
+      a.value = nvalue;
+      
+      //push it to the new vector
+      cout << "if there is a error it will be after this line...." << endl
+	   << "the push_back function did not work properly." << endl;
+      table[blockLevel].push_back(a);
+      return true;
+      /*
       table[blockLevel][0].idindex = index;
       table[blockLevel][0].kind = nkind;
       table[blockLevel][0].type = ntype;
       table[blockLevel][0].size = nsize;
       table[blockLevel][0].value = nvalue;
       return true;
+      */
    }
 }
 //search all the entries in the table
@@ -90,15 +106,13 @@ bool BlockTable::newBlock()
 //value is set to 0
 void BlockTable::endBlock()
 {
-   for (int i = 0; i < blockLevel; i++)
-   {
-      //for (int j = 0; j < MAXBLOCK; j++)
-      //table[i][j]. ... = ...;
-      table[i][0].idindex = 0;
-      table[i][0].kind = UNDEFINED;
-      table[i][0].type = UNIVERSAL;
-      table[i][0].size = 1;
-      table[i][0].value = "";
+   cout << "in the endBlock function. " << endl
+	<< "if there's a error,it will be in the next line. " << endl
+	<< "I need to figure out how to erase the vector properly." << endl;
+   //erase all entries in the current block
+   table[blockLevel].erase(table[blockLevel].begin(), table[blockLevel].end());
+
+   //if the blockLevel is greater than 0, decrement block
+   if (blockLevel > 0)
       blockLevel--;
-   }
 }

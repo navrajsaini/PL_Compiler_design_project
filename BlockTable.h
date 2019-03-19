@@ -41,6 +41,7 @@ class BlockTable {
    // Use an array of vectors for the block table.
    vector<TableEntry> table[MAXBLOCK];
    // Keep track of the current block level.
-   int blockLevel;
+   int blockLevel = 0;
+   int vecloc = 0;
 };
 #endif
