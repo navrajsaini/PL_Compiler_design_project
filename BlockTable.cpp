@@ -64,7 +64,7 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, string 
    // I will be manipulating indtable for the code generation part.
    //don't need to do anything with it for now.
    indtable = find (index, error);
-   if (error == true)
+   if (error)
       return false;
    
    else if (newBlock())
