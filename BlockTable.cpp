@@ -3,12 +3,14 @@
   implementation for the BlockTable.h file
  */
 #include "BlockTable.h"
-BlockTable::BlockTable()
-{
-   //vector <vector<TableEntry>> blocktable[MAXBLOCK][table];
-}
 
+//constructor
+BlockTable::BlockTable()
+{}
+
+//destructor
 BlockTable::~BlockTable(){}
+
 //search till the current block level if found, return true
 //else return false
 //commented out section is for a 2d array
@@ -87,7 +89,13 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, string 
       return true;
       */
    }
+   else
+   {
+      cout << "no more space in the BlockTable" << endl;
+      return false;
+   }
 }
+
 //search all the entries in the table
 //if the index is found, return true and set error to false
 //else error is set to true, and return false
@@ -117,17 +125,23 @@ bool/*TableEntry*/ BlockTable::find (int index, bool &error)
 //and return true
 bool BlockTable::newBlock()
 {
-   if (blockLevel != 0)
-      if(blockLevel+1 > MAXBLOCK)
+   if (blockLevel > 0)//if the blockLevel is greater than 0
+   {
+      if(blockLevel+1 > MAXBLOCK)//check if blockLevel+1 is > 10
 	 return false;
-      else
+      else//if it isn't increment blockLevel and return true
       {
 	 blockLevel++;
 	 return true;
       }
+   }
    else
+   {
+      blockLevel++;//increment for if the blockLevel was 0
       return true;
+   }
 }
+
 //pop the current blocktable entry
 //so index is set to "",
 //kind and type are set to NULL,
