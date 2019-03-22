@@ -28,7 +28,7 @@ bool BlockTable::search(int index)
    return false;
    */
    
-   int tempcomp;//compare temp variable
+   int tempcomp;//temp variable for comparison done in if block
    for (int i = 0; i < blockLevel; i++)
    {
       for (vector<TableEntry>::iterator j = table[blockLevel].begin();
@@ -38,7 +38,7 @@ bool BlockTable::search(int index)
 	      << "j -> idindex does not place the first member in the struct"
 	      << endl << "to tempcomp.....";
 	 tempcomp = j->idindex;
-	 if (tempcomp == index)//table[i][j].idindex == index
+	 if (tempcomp == index)//the comparison that tempcomp is needed for
 	 {
 	    cout << "done with search funciton" <<endl;
 	    return true;
@@ -62,6 +62,9 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, string 
    
    else if (newBlock())
    {
+      cout << "in the define func, if there's a error after this line..."
+	   << endl << "I need to find a better way to assign the stuff..."
+	   << endl;
       //create the Table entry
       TableEntry a;
       a.idindex = index;
