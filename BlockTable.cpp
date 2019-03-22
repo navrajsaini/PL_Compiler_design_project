@@ -61,7 +61,9 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, string 
 {
    bool error;
    TableEntry indtable;
-   indtable = find (index, error);//this will be edited for the next part.
+   // I will be manipulating indtable for the code generation part.
+   //don't need to do anything with it for now.
+   indtable = find (index, error);
    if (error == true)
       return false;
    
@@ -141,21 +143,15 @@ TableEntry BlockTable::find (int index, bool &error)
 //else
 //increment the blockLevel
 //and return true
+//blockLevel start's at -1, that way we don't have to worry
+//about starting from 1 insead of 0.
 bool BlockTable::newBlock()
 {
-   if (blockLevel > 0)//if the blockLevel is greater than 0
+   if(blockLevel+1 > MAXBLOCK)//check if blockLevel+1 is > 10
+      return false;
+   else//if it isn't increment blockLevel and return true
    {
-      if(blockLevel+1 > MAXBLOCK)//check if blockLevel+1 is > 10
-	 return false;
-      else//if it isn't increment blockLevel and return true
-      {
-	 blockLevel++;
-	 return true;
-      }
-   }
-   else
-   {
-      blockLevel++;//increment for if the blockLevel was 0
+      blockLevel++;
       return true;
    }
 }
