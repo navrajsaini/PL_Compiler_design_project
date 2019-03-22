@@ -11,8 +11,8 @@ BlockTable::BlockTable()
 //destructor
 BlockTable::~BlockTable(){}
 
-//search till the current block level if found, return true
-//else return false
+//search till the current block level
+//if found, return true, else return false
 //commented out section is for a 2d array
 bool BlockTable::search(int index)
 {
@@ -59,7 +59,10 @@ bool BlockTable::search(int index)
 //and return true
 bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, string nvalue)
 {
-   if (search(index))
+   bool error;
+   TableEntry indtable;
+   indtable = find (index, error);//this will be edited for the next part.
+   if (error == true)
       return false;
    
    else if (newBlock())
@@ -97,11 +100,12 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, string 
 }
 
 //search all the entries in the table
-//if the index is found, return true and set error to false
-//else error is set to true, and return false
-bool/*TableEntry*/ BlockTable::find (int index, bool &error)
+//if the index is found, return it's location and
+// set error to false
+//else error is set to true
+TableEntry BlockTable::find (int index, bool &error)
 {   
-   int temp;
+   TableEntry a;
    cout << "in find function. if there are any issues here..." << endl
 	<< "the comparison or the for loop are not working properly."
 	<< endl;
@@ -111,11 +115,25 @@ bool/*TableEntry*/ BlockTable::find (int index, bool &error)
       if (j -> idindex == index)
       {
 	 cout << "done with find func" << endl;
-	 return true;
+	 error = false;
+	 
+	 a.idindex = j -> idindex;
+	 a.kind = j -> kind;
+	 a.type = j -> type;
+	 a.size = j -> size;
+	 a.value = j -> value;
+	 
+	 return a;
       }
    }
    cout << "done with find func" << endl;
-   return false;
+   a.idindex = 0;
+   a.kind = UNDEFINED;
+   a.type = UNIVERSAL;
+   a.size = 1;
+   a.value = "";
+   error = true;
+   return a;
 }
 
 //if the current blockLevel+1 is greater then MAXBLOCK
