@@ -19,7 +19,7 @@ typedef struct {
       Kind kind;  // object Kind
       myType type; // object type (integer, boolean)
       int size;    // single variable size = 1; for arrays the value in [] 
-      string value;   // value of named constants  
+      int value;   // value of named constants  
 } TableEntry;
 
 class BlockTable {
@@ -31,7 +31,7 @@ class BlockTable {
    // Inserts a TableEntry with the given field values in parameters. 
    // Returns true when successful, false when previously defined (ambiguous)
    bool define(int index, Kind nkind, myType ntype, int nsize,
-	       string nvalue);
+	       int nvalue);
    // true when found, false when not in the entire block table
    TableEntry find(int index, bool &error);
    // true when new block created, false when over MAXBLOCK

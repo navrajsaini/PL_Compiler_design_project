@@ -57,13 +57,13 @@ bool BlockTable::search(int index)
 //if a new block can be created and the index wasn't found
 //insert into the new block that was created.
 //and return true
-bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, string nvalue)
+bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nvalue)
 {
    bool error;
-   TableEntry indtable;
-   // I will be manipulating indtable for the code generation part.
+   TableEntry findtable, a;
+   // I will be manipulating findtable for the code generation part.
    //don't need to do anything with it for now.
-   indtable = find (index, error);
+   findtable = find (index, error);
    if (error)
       return false;
    
@@ -73,7 +73,7 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, string 
 	   << endl << "I need to find a better way to assign the stuff..."
 	   << endl;
       //create the Table entry
-      TableEntry a;
+      
       a.idindex = index;
       a.kind = nkind;
       a.type = ntype;
@@ -133,7 +133,7 @@ TableEntry BlockTable::find (int index, bool &error)
    a.kind = UNDEFINED;
    a.type = UNIVERSAL;
    a.size = 1;
-   a.value = "";
+   a.value = 0;
    error = true;
    return a;
 }
