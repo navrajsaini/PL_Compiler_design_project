@@ -30,8 +30,7 @@ class BlockTable {
    bool search(int index);
    // Inserts a TableEntry with the given field values in parameters. 
    // Returns true when successful, false when previously defined (ambiguous)
-   bool define(int index, Kind nkind, myType ntype, int nsize,
-	       int nvalue);
+   bool define(int index, Kind nkind, myType ntype, int nsize, int nvalue);
    // true when found, false when not in the entire block table
    TableEntry find(int index, bool &error);
    // true when new block created, false when over MAXBLOCK

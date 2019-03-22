@@ -168,9 +168,7 @@ void BlockTable::endBlock()
 	<< "I need to figure out how to erase the vector properly." << endl;
    //erase all entries in the current block
    table[blockLevel].erase(table[blockLevel].begin(), table[blockLevel].end());
-
-   //if the blockLevel is greater than 0, decrement block
-   if (blockLevel > 0)
+   if (blockLevel > -1)
       blockLevel--;
    else
       ;
