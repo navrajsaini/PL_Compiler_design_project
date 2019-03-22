@@ -4,6 +4,7 @@
 #include "scanner.h"
 #include <iostream>
 #include <fstream>
+#include <cmath>
 using namespace std;
 
 //scanner constructor, it load reserve word and stores the name of the files
@@ -13,6 +14,15 @@ Scanner::Scanner(string inCodeName, string outCodeName)//, Symtable &symbolTable
    symbolTable.loadResvd();
    LN=1;
    TN=1;
+   while(TN<255)
+   {
+      lineToke[TN][0];
+      lineToke[TN][1];
+      lineToke[TN][2];
+      TN++;
+   }
+   TN=1;
+	 
 }
 
 //this function determines if the caracter is white space, if it is it returns true
@@ -132,8 +142,9 @@ bool Scanner::isSpecial (char a)
 //test line
 void Scanner::inc(int SV)
 {
-lineToke[TN][1]=SV;
-lineToke[TN][0]=LN;
+lineToke[TN][1] = SV;
+lineToke[TN][0] = LN;
+lineToke[TN][2] = 0;
 //cout<<TN
 TN++;
 
@@ -232,6 +243,7 @@ void Scanner::tokenLine(char now[], int y)
       {
 	 while(isNumeric(now[i])==true)
 	 {
+	    
 	    token.push_back(now[i]);
 	    i++;
 	    ahead=now[i+1];	    
@@ -243,6 +255,8 @@ void Scanner::tokenLine(char now[], int y)
 	 }
 	 //call to store token and move to next token, in this case a numeric
 	 prnt = getNum(token);
+	 //minus 1 becasue it was incrimnted inside getnum
+	 lineToke[TN-1][2] = numericVAl(token);
 	 out<<prnt<<" ";
 	 i--;
 	 ahead=now[i+1];
@@ -306,4 +320,54 @@ bool Scanner::isComment(char a)
    if( a=='$')
       return true;
    return false;
+}
+int Scanner::numericVAl(string s)
+{
+   //cout<<s<<", "<<s.size()<<endl;
+   int sSize = s.size()-1;
+   int total = 0;
+   int inc = 0;
+   for(int i = sSize; 0 <= i; i--)
+   {
+      //cout<<inc<<", "<<sSize;
+      char a = s[i];
+      switch(a)
+      {
+	 case '1':
+	    total = total + (1 * pow(10, inc));
+	    break;
+	 case '2':
+	    total = total + (2 * pow(10, inc));
+	    break;
+	 case '3':
+	    total = total + (3 * pow(10, inc));
+	    break;	    
+	 case '4':
+	    total = total + (4 * pow(10, inc));
+	    break;			 
+	 case '5':
+	    total = total + (5 * pow(10, inc));
+	    break;	    
+	 case '6':
+	    total = total + (6 * pow(10, inc));
+	    break;			 
+	 case '7':
+	    total = total + (7 * pow(10, inc));
+	    break;	    
+	 case '8':
+	    total = total + (8 * pow(10, inc));
+	    break;	    
+	 case '9':
+	    total = total + (9 * pow(10, inc));
+	    break;	    
+	 case '0':
+	    total=total;	    
+	 default:
+	    break;
+      }
+      //cout<<", "<<total<<endl; 
+      inc++;
+   }
+   cout<<total<<endl;
+   return total;  
 }

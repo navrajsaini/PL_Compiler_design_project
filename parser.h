@@ -7,7 +7,6 @@
 
 #ifndef PARSE_H
 #define PARSE_H
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -26,8 +25,6 @@ class Parse
 //assigns the parse teser line 
    void asn(int, int, int);
    void asnS(int, string);
-
-
 //starts parsing through the Grammar
    void parseNow();
 //print the token string
@@ -37,11 +34,14 @@ class Parse
 //var for token strings
    string token[256];
 //parse vars: tokCount is for match, file is for opening the file,
-//and tokeNum is also for match
+//and tokeNum is also for match, the two allow for the flexebility, for error reporting during the parsing stage 
    int tokCount=0;
    string file;
    int tokeNum=0;
+//for outputting the parsing as it occours, mostly a testing variable
    bool yn=0;
+//test array for line number and error reporting 
+   int ln[256][3];
 //------------------------------------------------------------------------
 /*The Grammar Rule functions
   For a more detailed explanation go to parse.cpp  
@@ -97,24 +97,46 @@ class Parse
    void Num();
    void ProcName();
 //---------------------------------------------
-//test array for line number and error reporting 
-int ln[256][2];
-string lnLex[256];
+//Scope/Type
+/*This block of code is for the scope and type checking parts*/
+//test for lexical error report inside of the scope and type check.
+   string lnLex[256];
+//initializing the block table for scope and typ checking
    BlockTable bTable;
-
-   
+//outputs an error
+   void scopeError(string);
+//initiates and checks the error as to see if its in block table or not it it isnt
+//it inserts if it isnt it returns false and then the scope error fucntion is ran
+   bool checkDef();
+//erases the varaiables for the next check.
+   void eraseVar();
+//assigns both index and checkLex
+   void asnIndexLex();
+   void asnIndexLexList();
+//variable list
+   int varListIndex[10];
+   int varListLex[10];
+   bool checkDefList();
+   int listDepth = 0;
+   void eraseList();
+      
   private:
-//FILE STREAM
+//indicates type for the block table
    myType eType;
+//indicated the kind for block table
    Kind eKind;
+//indicates the index for the original hash table
    int index;
 //index= ln[tokeNum][1];
-   string checkLex;
-
-void scopeError(string s);
+   int checkLex;
+//for size of arrays
+   int size;
+//test line for 
 //      if (!bTable.define(cnameindex, CONSTANT, temptype, 1, tempvalue))
 //	 scopeError("Ambiguous definition of constant");
-
+/*end of scope and type checking variables and functions*/
+//--------------------------------
+//FILE STREAM
    ifstream input;
 //private variables: LHS is look ahead symbol
    string LHS;
@@ -124,7 +146,9 @@ void scopeError(string s);
    void match();
 //error reporting fuction
    void errorReport();
+//the check function that compares then incriments
    void check();
+//states where the parsing is, mostly for error checking and bug testing.
    string where;
 };
 #endif

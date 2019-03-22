@@ -68,8 +68,6 @@ void Admin::lineAsn()
    {  
       lin[i][0]=view.lineToke[i][0];
       lin[i][1]=view.lineToke[i][1];
-      //cout<<lin[i][0]<<" "<<lin[i][1]<<" ";
-
    }
 }
 //theAdmin parse function
@@ -89,24 +87,28 @@ void Admin::parse()
       parser.yn=1;
    }
    string tempStr;
-   for(int i=1; i<256; i++)
+   for(int i=1; i<255; i++)
    {
       parser.asn(i, 0, view.lineToke[i][0]);
       parser.asn(i, 1, view.lineToke[i][1]);
-      tempStr = view.symbolTable.htable[(view.lineToke[i][1])].getLexeme();
-      parser.asnS(i, tempStr);
+      parser.asn(i, 2, view.lineToke[i][2]);
+      //tempStr = view.symbolTable.htable[(view.lineToke[i][1])].getLexeme();
+      //parser.asnS(i, tempStr);
    }
    input.open(parser.file.c_str());
    string lex;
    int value;
-   do{
+   cout<<"why?";
+   while(!input.eof())
+   {
       input>>value;
       parser.tokens(parserAsn(value));
 //cout<<" "<<value<<" ";
-   }while(!input.eof());
+   }
+   
 
    input.close();
-
+   cout<<"BLLLLLAAAAAAHHH"<<endl;
    parser.parseIt();
 
 }

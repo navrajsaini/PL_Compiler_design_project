@@ -35,7 +35,7 @@ class Scanner
    int lineToke[256][3]; //line token test stuff
 
    int LN;//   line number 
-
+   int numericVAl(string);
   private:
    
 

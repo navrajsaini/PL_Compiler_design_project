@@ -18,14 +18,15 @@ Parse::Parse(string in)
    {
       ln[i][0]=0;
       ln[i][1]=0;
+      ln[i][2]=0;
    }
 }
 //assins the test line
 void Parse::asn(int sec, int part, int numb)
 {
-   ln[sec][part]=numb;
+   ln[sec][part] = numb;
    //test line
-   //cout<<"token and line num: "<<numb<<" ";
+   cout<<"token/line/num: "<<numb<<" "<<endl;
 }
 void Parse::asnS(int sec, string s)
 {
@@ -75,6 +76,80 @@ void Parse::errorReport()
    cout<<"The token of issue is: '"<<NS;
    cout<<"' with a hashval of: '"<<ln[tokeNum-1][1]<<"'"<<endl; 
 }
+//check for user input to then pring parsing as it occours
+void Parse::check()
+{
+   if(yn==1)
+   {
+      cout<<endl<<LHS<<" "<<ln[tokeNum-1][1]<<" "<<where<<endl;
+   }
+}
+//outputs the error msg for the scope
+void Parse::scopeError(string s)
+{
+   cout<<s<<endl;
+}
+//wipe the variables for the next type check
+void Parse::eraseVar()
+{
+   index = -1;
+   eKind = UNDEFINED;
+   eType = UNIVERSAL;
+   checkLex = -1;
+   size = 1;
+
+}
+
+//checks the scope and inserts into the table
+bool Parse::checkDef()
+{       
+   if (!bTable.define(index, eKind, eType, size, checkLex))
+   {
+      eraseVar();
+      return false;
+   }
+   eraseVar();
+   return true;
+}
+//assigns both index and checkLex
+void Parse::asnIndexLex()
+{
+   index = ln[tokeNum][1];
+   checkLex = ln[tokeNum][2];
+}
+//this is initializing the list depth level of index and lex to their values.
+void Parse::asnIndexLexList()
+{
+   varListIndex[listDepth] = ln[tokeNum][1];
+   varListLex[listDepth] = ln[tokeNum][2];
+   listDepth++;
+}
+//this does the same thing as check Deff but parses through a list of pairs of values
+bool Parse::checkDefList()
+{
+   for(listDepth = 0; listDepth <= 10; listDepth++)
+   {
+      if (!bTable.define(varListIndex[listDepth], eKind, eType, size, varListLex[listDepth]))
+      {
+	 eraseList();
+	 return false;
+      }
+   }
+   eraseList();
+   return true;
+}
+//erases the list for the next line that has it.
+void Parse::eraseList()
+{
+   eraseVar();
+   for(listDepth = 0; listDepth <= 10; listDepth++)
+   {
+      varListIndex[listDepth] = -1;
+      varListLex[listDepth] =-1; 
+   }
+   listDepth = 0;
+}
+
 //--------------------------------------------------------------------------
 //the start of the grammar
 void Parse::parseNow()
@@ -84,17 +159,6 @@ void Parse::parseNow()
    NS=LHS;
    Program();
    
-}
-void Parse::check()
-{
-   if(yn==1)
-   {
-      cout<<endl<<LHS<<" "<<ln[tokeNum-1][1]<<" "<<where<<endl;
-   }
-}
-void Parse::scopeError(string s)
-{
-   cout<<s<<endl;
 }
 
 /*This is the start of the PL Grammar Parsing Stage.
@@ -116,7 +180,11 @@ void Parse::Program()
 {where="P";check();
    if(LHS=="begin")
    {
-      bTable.newBlock();
+      //create a new block
+      if(!bTable.newBlock())
+	 scopeError("Exceded Block limit");
+      //
+      
       Block();
    
       if(LHS==".")
@@ -128,7 +196,7 @@ void Parse::Program()
    }else
       errorReport();
 }
-
+//-----
 void Parse::Block()
 {where="B";check();
    if(LHS=="begin")
@@ -148,7 +216,7 @@ void Parse::Block()
 //-----
 void Parse::DefPtr()
 {where="DP";check();
-   if(LHS=="const"||LHS=="integer"||LHS=="boolean"||LHS=="proc")
+   if(LHS=="const"||LHS=="integer"||LHS=="boolean"||LHS=="proc"||LHS=="Boolean")
    {
       Def();
       if(LHS==";")
@@ -164,31 +232,30 @@ void Parse::Def()//definition function
 {where="D";check();
    if(LHS=="const")
    {
-
-      eType= UNIVERSAL;
-      eKind=CONSTANT;
       ConstDef();
-      if (!bTable.define(index, eKind, eType, 1, checkLex))
+      if(!checkDef())
 	 scopeError("Ambiguous definition of constant");
       
-   }else if(LHS=="integer"||LHS=="boolean")
+   }else if(LHS=="integer"||LHS=="boolean"||LHS=="Boolean")
    {
-
-      eKind=VAR;
-      VarDef();
-      
-         if (!bTable.define(index, eKind, eType, 1, checkLex))
-	 scopeError("Ambiguous definition of constant");
+      VarDef();     
+      if(!checkDef())
+	 scopeError("Ambiguous definition of Variable");
    }else if(LHS=="proc")
    {
       ProcDef();
    }else
       errorReport();
 }
+//----
 void Parse::ConstDef()
 {where="CD";check();
    if(LHS=="const")
    {
+      //Initializing
+      eType = UNIVERSAL;
+      eKind = CONSTANT;
+      //
       match();
       ConstName();
       if(LHS=="=")
@@ -200,8 +267,11 @@ void Parse::ConstDef()
 }
 void Parse::VarDef()//variable definition
 {where="VD";check();
-   if(LHS=="boolean"||LHS=="integer")
+   if(LHS=="boolean"||LHS=="Boolean"||LHS=="integer")
    {
+//Scope/Type
+      eKind=VAR;
+//
       TypeSym();
       VarDefB();
    }else
@@ -240,8 +310,9 @@ void Parse::TypeSym()//Type Symbol
    if(LHS=="integer")
    {
       eType = INT;
+      
       match();
-   }else if(LHS=="boolean")
+   }else if(LHS=="boolean"||LHS=="Boolean")
    {
       eType = BOOL;
       match();
@@ -335,8 +406,7 @@ void Parse::ReadStat()//read statement
       VarAcList();
    }else
    {
-      //where="RS";
-      //errorReport();
+
    }
 }
 
@@ -371,11 +441,8 @@ void Parse::WriteStat()//write statement
 }
 void Parse::ExpList()//expression list
 {where="EL";check();
-   if(LHS=="+"||LHS=="-"||LHS==">"||LHS=="<"||LHS=="="||LHS=="|"||LHS=="->"||LHS=="&"||LHS=="num"||LHS=="true"||LHS=="false"||LHS=="id"||LHS=="~"||LHS==","){
       Exp();
       ExpListB();
-   }else
-      errorReport();
 }
 void Parse::ExpListB()//expression list for multiple iterations
 {where="ELB";check();
@@ -411,33 +478,29 @@ void Parse::ProcStat()//procedure statement
 }
 void Parse::IfStat()//if statements
 {where="IS";check();
-   if(LHS=="if")
-   {
       match();
       GarCmdList();
       if(LHS=="fi")
       {
 	 match();
-      }
-   }
+      }else
+	 errorReport();
 }
 
 void Parse::DoStat()//do statement
 {where="DS";check();
-   if(LHS=="do")
-   {
+
       match();
       GarCmdList();
       if(LHS=="od")
       {
 	 match();
-      }
-   }
+      }else
+	 errorReport();
 }
 
 void Parse::GarCmdList()//guarded command list
 {where="GCL";check();
-   //didnt include all the possibilities
    GarCmd();
    GarCmdListB();
 }
@@ -463,16 +526,11 @@ void Parse::GarCmd()//guarded command
       StatPtr();
    }else
       errorReport();
-
 }
 void Parse::Exp()//expression
 {where="E";check();
-//   if(LHS=="num"||LHS=="true"||LHS=="false"||LHS=="id"||LHS=="("||LHS=="~"||LHS=="num"||LHS=="true"||LHS=="false"||LHS=="id"||LHS=="("||LHS=="+")
-//   {
       PrimExp();
       ExpB();
-//   }else
-//      errorReport();
 }
 
 void Parse::ExpB()//expression for multiple iterations
@@ -613,8 +671,6 @@ void Parse::Factor()//factor
       Const();
    }else if(LHS=="id")
    {
-      index= ln[tokeNum][1];
-      checkLex=lnLex[tokeNum];
       VarAc();
    }else if(LHS=="(")
    {
@@ -634,18 +690,8 @@ void Parse::Factor()//factor
 }
 void Parse::VarAc()//Variable access
 {where="Va";check();
-   if(LHS=="id")
-   {
-      index= ln[tokeNum][1];
-      checkLex=lnLex[tokeNum];
       VarName();
       VarAcB();
-   }else if(LHS=="num")
-   {
-      index= ln[tokeNum][1];
-      checkLex=lnLex[tokeNum];
-    }else
-      errorReport();
 }
 void Parse::VarAcB()//variable access for mulitple iterations
 {where="VAB";check();
@@ -673,18 +719,12 @@ void Parse::Const()//constant
 {where="C";check();
    if(LHS=="num")
    {
-      index= ln[tokeNum][1];
-      checkLex=lnLex[tokeNum];
       Num();
    }else if(LHS=="true"||LHS=="false")
    {
-      index= ln[tokeNum][1];
-      checkLex=lnLex[tokeNum];
       BoolSym();
    }else if(LHS=="id")
    {
-      index= ln[tokeNum][1];
-      checkLex=lnLex[tokeNum];
       ConstName();
    }else
       errorReport();
@@ -693,11 +733,11 @@ void Parse::BoolSym()//boolean symbol
 {where="BS";check();
    if(LHS=="false")
    {
+      asnIndexLex();
       match();
    }else if(LHS=="true")
    {
-      index= ln[tokeNum][1];
-      checkLex=lnLex[tokeNum];
+      asnIndexLex();
       match();
    }else
       errorReport();
@@ -707,8 +747,7 @@ void Parse::VarName()//variable name
 {where="VN";check();
    if(LHS=="id")
    {
-      index= ln[tokeNum][1];
-      checkLex=lnLex[tokeNum];
+      asnIndexLex();
       match();
    }
 }
@@ -717,8 +756,7 @@ void Parse::ConstName()//constant name
 {where="CN";check();
    if(LHS=="id")
    {
-      index= ln[tokeNum][1];
-      checkLex=lnLex[tokeNum];
+      asnIndexLex();
       match();
    }else
       errorReport();
@@ -728,8 +766,7 @@ void Parse::Num()//number
 {where="N";check();
    if(LHS=="num")
    {
-      index= ln[tokeNum][1];
-      checkLex=lnLex[tokeNum];
+      asnIndexLex();
       match();
    }else
       errorReport();
@@ -739,8 +776,8 @@ void Parse::ProcName()//procedure name
 {where="PN";check();
    if(LHS=="id")
    {  
-      index= ln[tokeNum][1];
-      checkLex=lnLex[tokeNum];
+      asnIndexLex();
+      
       match();
    }else
       errorReport();
