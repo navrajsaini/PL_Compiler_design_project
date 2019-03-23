@@ -1,0 +1,15 @@
+$test file to see if there is a error for missing ";"
+$in a few lines... 2, 5, 9
+begin
+	const n = 10
+	integer array A[a];
+	proc Search
+	begin integer m
+	i, m := 1 , n;
+	do i <m ->
+		if A[i] =x ->m := i;[]
+			~(A[i]=x)->i :=i+ 1
+		fi;
+	od;
+	found:= A[i] =x
+end.
