@@ -1,7 +1,7 @@
 /*
   created and edited by Navraj Saini and Jordan Kolody
   implementation for the BlockTable.h file
- */
+*/
 #include "BlockTable.h"
 
 //constructor
@@ -19,12 +19,13 @@ bool BlockTable::search(int index)
    int tempcomp;//temp variable for comparison done in if block
    for (int i = 0; i < blockLevel; i++)
    {
-      for (vector<TableEntry>::iterator j = table[blockLevel].begin();
-	   j != table[blockLevel].end(); ++j)
+      for (vector<TableEntry>::iterator j = table[i].begin();
+	   j != table[i].end(); ++j)
       {
 	 cout << "in search function. if there's a issue after this" << endl
 	      << "j -> idindex does not place the first member in the struct"
-	      << endl << "to tempcomp.....";
+	      << endl << "to tempcomp..... idindex: "
+	      << j->idindex << endl;
 	 tempcomp = j->idindex;
 	 if (tempcomp == index)//the comparison that tempcomp is needed for
 	 {
@@ -45,15 +46,22 @@ bool BlockTable::search(int index)
 //and return true
 bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nvalue)
 {
-   bool error;
+   bool error, newblock_error;
    TableEntry findtable, a;
    // I will be manipulating findtable for the code generation part.
    //don't need to do anything with it for now.
    findtable = find (index, error);
    if (error)
+   {
+      cout << "error is true..." << endl;
       return false;
+   }
+   else
+      ;
+
+   newblock_error = newBlock();
    
-   else if (newBlock())
+   if (newblock_error == true)
    {
       cout << "in the define func, if there's a error after this line..."
 	   << endl << "I need to find a better way to assign the stuff..."
@@ -74,7 +82,7 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
    }
    else
    {
-      cout << "no more space in the BlockTable" << endl;
+      cout << "no more room in the blocktable" << endl;
       return false;
    }
 }
@@ -88,31 +96,35 @@ TableEntry BlockTable::find (int index, bool &error)
    TableEntry a;
    cout << "in find function. if there are any issues here..." << endl
 	<< "the comparison or the for loop are not working properly."
-	<< endl;
-   for (auto j = table[blockLevel].begin();
-	j != table[blockLevel].end(); ++j)
+	<< endl << endl;
+   //for (vector<TableEntry>::iterator j = table[blockLevel].begin();
+//	j != table[blockLevel].end(); ++j)
+   for (int i = 0; i < table[blockLevel].size(); i++)
    {
-      if (j -> idindex == index)
+      cout << "idindex: " << table[blockLevel][i].idindex << endl << endl;
+      
+      if (table[blockLevel][i].idindex == index)
       {
 	 cout << "done with find func" << endl;
-	 error = false;
 	 
-	 a.idindex = j -> idindex;
-	 a.kind = j -> kind;
-	 a.type = j -> type;
-	 a.size = j -> size;
-	 a.value = j -> value;
+	 error = true;
+	 
+	 a.idindex = table[blockLevel][i].idindex;
+	 a.kind = table[blockLevel][i].kind;
+	 a.type = table[blockLevel][i].type;
+	 a.size = table[blockLevel][i].size;
+	 a.value = table[blockLevel][i].value;
 	 
 	 return a;
       }
    }
-   cout << "done with find func" << endl;
+   cout << "done with find func, couldn't find it" << endl;
    a.idindex = 0;
    a.kind = UNDEFINED;
    a.type = UNIVERSAL;
    a.size = 1;
    a.value = 0;
-   error = true;
+   error = false;
    return a;
 }
 
@@ -125,6 +137,7 @@ TableEntry BlockTable::find (int index, bool &error)
 //about starting from 1 insead of 0.
 bool BlockTable::newBlock()
 {
+   cout << "making a new block..." << endl << endl;
    if(blockLevel+1 > MAXBLOCK)//check if blockLevel+1 is > 10
       return false;
    else//if it isn't increment blockLevel and return true
@@ -151,4 +164,26 @@ void BlockTable::endBlock()
    else
       ;
    cout << "done with endBlock" << endl;
+   printtable();
+}
+
+void BlockTable::printtable()
+{
+   cout << "printtable, blockLevel: " << blockLevel << endl;
+   int ind = 0;
+   for (int i = 0; i <= blockLevel; i++)
+   {
+      for (vector<TableEntry>::iterator j = table[i].begin();
+	   j != table[i].end(); ++j)
+      {
+	 cout << "location: " << ind << endl
+	      << "   index: " << j -> idindex << endl
+	      << "   kind: " << j -> kind << endl
+	      << "   type: " << j -> type << endl
+	      << "   size: " << j -> size << endl
+	      << "   value: " << j -> value << endl;
+	 ind++;
+      }
+   }
+   cout << "done with printtable" << endl;
 }

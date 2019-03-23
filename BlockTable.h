@@ -36,6 +36,8 @@ class BlockTable {
    // true when new block created, false when over MAXBLOCK
    bool newBlock();
    void endBlock();
+   
+   void printtable();
   private:
    // Use an array of vectors for the block table.
    vector<TableEntry> table[MAXBLOCK];

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "administration.h"
-
+#include "BlockTable.h"
 using namespace std;
 
 int main ()
@@ -46,5 +46,6 @@ int main ()
       cout << "------------------testing parser-----------" << endl;
       compiler.parse();
    }
-      return 0;
+   
+   return 0;
 }
