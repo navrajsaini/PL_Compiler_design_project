@@ -12,14 +12,14 @@ int main ()
    cout << "--------testing scanner-----------";
    string codefile, tokenfile;
    string codef[8] =
-      {"test1.txt", "test2.txt", "test3.txt",
-       "test4.txt", "test5.txt", "test6.txt",
-       "test7.txt", "testLang.txt"};
+      {"./test/test1.txt", "./test/test2.txt", "./test/test3.txt",
+       "./test/test4.txt", "./test/test5.txt", "./test/test6.txt",
+       "./test/test7.txt", "./test/testLang.txt"};
    
    string tokenf[8] =
-      {"test1Out", "test2Out", "test3Out",
-       "test4Out", "test5Out", "test6Out",
-       "test7Out", "testLangOut"};
+      {"./test/test1.Out", "./test/1test2.Out", "./test/test3.Out",
+       "./test/test4.Out", "./test/test5.Out", "./test/test6.Out",
+       "./test/test7.Out", "./test/testLang.Out"};
    for (int i = 0; i < 8; i++)
    {
       if (i == 7)
