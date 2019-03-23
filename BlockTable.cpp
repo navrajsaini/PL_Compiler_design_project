@@ -58,7 +58,7 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
    }
    else
       ;
-
+   
    newblock_ret = newBlock();
    
    if (newblock_ret == true)
@@ -67,7 +67,7 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
 	   << endl << "I need to find a better way to assign the stuff..."
 	   << endl;
       //create the Table entry
-      
+	 
       a.idindex = index;
       a.kind = nkind;
       a.type = ntype;
