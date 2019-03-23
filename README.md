@@ -62,8 +62,10 @@ Hours spent on this assignment:
 -----------------------------------------------Scope and Type Checking--------------------------------------------
 
 Navraj:
+I worked on implementing the BlockTable.h and making it work with types.h. Once my part was complete I did some bug testing and making sure the functions returned what they were should, there wasn't any redundent code in the files, and Jordan was able to call the functions with little to no trouble. I had to change some of the code for find as I was confused about how it was different from search, other than one searching only the current block and the other searching the whole table and why find had to return TableEntry. Once that issue was solved the code was edited to work properly. The parser will call the BlockTable so I did not need to change any code in the test.cpp file.
 
 Jordan:
+
 
 Files included: 
 administration.cpp, admininstration.h, scanner.h, 
@@ -74,6 +76,14 @@ parser.cpp, types.h, BlockTable.h, BlockTable.cpp
 To compile:
 
    make plc
+   
+The compile the test program: make test
+   
+            The test file is created for the purpose of testing the functions in the scanner and the parser.
+            It can also be used to test all the testlang files (test1-test7) in one run.
+            Since the parser calls the BlockTable there was no need for me to add in any extra code into test.cpp.
+            Once those files complete the testLang files is run once. 
+            It is the only file that does not contain errors.
    
 The code has no compile time errors or any runtime errors.
 
