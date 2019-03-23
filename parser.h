@@ -40,7 +40,7 @@ class Parse
    int tokeNum=0;
 //for outputting the parsing as it occours, mostly a testing variable
    bool yn=0;
-//test array for line number and error reporting 
+//test array for line number, index, and value
    int ln[256][3];
 //------------------------------------------------------------------------
 /*The Grammar Rule functions
@@ -111,14 +111,18 @@ class Parse
 //erases the varaiables for the next check.
    void eraseVar();
 //assigns both index and checkLex
-   void asnIndexLex();
-   void asnIndexLexList();
+   void asnIndexVal(int);
+   void asnIndexValList(int);
 //variable list
    int varListIndex[10];
-   int varListLex[10];
+   int varListVal[10];
+// 0 = name, 1 = index 
    bool checkDefList();
    int listDepth = 0;
    void eraseList();
+//value for the initilizing either the value or index, LorA is differentiating
+//between list and list ac.
+   int dx = 2, vl = 3, bl0 = 0, bl1 = 1, LorA = 0;
       
   private:
 //indicates type for the block table
@@ -128,9 +132,9 @@ class Parse
 //indicates the index for the original hash table
    int index;
 //index= ln[tokeNum][1];
-   int checkLex;
+   int checkVal;
 //for size of arrays
-   int size;
+   int size[10];
 //test line for 
 //      if (!bTable.define(cnameindex, CONSTANT, temptype, 1, tempvalue))
 //	 scopeError("Ambiguous definition of constant");

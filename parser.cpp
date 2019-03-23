@@ -95,15 +95,15 @@ void Parse::eraseVar()
    index = -1;
    eKind = UNDEFINED;
    eType = UNIVERSAL;
-   checkLex = -1;
-   size = 1;
+   checkVal = -1;
+   size[0] = 1;
 
 }
 
 //checks the scope and inserts into the table
 bool Parse::checkDef()
-{       
-   if (!bTable.define(index, eKind, eType, size, checkLex))
+{       int fuck=checkVal;
+   if (!bTable.define(index, eKind, eType, size, fuck))
    {
       eraseVar();
       return false;
@@ -112,24 +112,43 @@ bool Parse::checkDef()
    return true;
 }
 //assigns both index and checkLex
-void Parse::asnIndexLex()
+void Parse::asnIndexVal(int i)
 {
-   index = ln[tokeNum][1];
-   checkLex = ln[tokeNum][2];
+   if(i = 0)
+      checkVal = 0;
+   if(i = 1)
+      checkVal = 1;
+   if(i = 2)
+      index = ln[tokeNum][1];
+   if(i = 3)
+      checkVal = ln[tokeNum][2];
 }
 //this is initializing the list depth level of index and lex to their values.
-void Parse::asnIndexLexList()
+void Parse::asnIndexValList(int i)
 {
-   varListIndex[listDepth] = ln[tokeNum][1];
-   varListLex[listDepth] = ln[tokeNum][2];
-   listDepth++;
+   if(LorA == 1)
+   {
+      listDepth = 0;
+      LorA = 0;
+   }
+   if(i = 0)
+      varListVal[listDepth] = 0;
+   if(i = 1)
+      varListVal[listDepth] = 1;
+   if(i = 2)
+      varListIndex[listDepth] = ln[tokeNum][1];
+   if(i = 3)
+      varListVal[listDepth] = ln[tokeNum][2];
+   //if(LorA==0)
+      listDepth++;
 }
 //this does the same thing as check Deff but parses through a list of pairs of values
 bool Parse::checkDefList()
 {
-   for(listDepth = 0; listDepth <= 10; listDepth++)
+   int limit = listDepth;
+   for(listDepth = 0; listDepth <= limit; listDepth++)
    {
-      if (!bTable.define(varListIndex[listDepth], eKind, eType, size, varListLex[listDepth]))
+      if (!bTable.define(varListIndex[listDepth], eKind, eType, size[listDepth], varListVal[listDepth]))
       {
 	 eraseList();
 	 return false;
@@ -145,7 +164,8 @@ void Parse::eraseList()
    for(listDepth = 0; listDepth <= 10; listDepth++)
    {
       varListIndex[listDepth] = -1;
-      varListLex[listDepth] =-1; 
+      varListVal[listDepth] = -1;
+      size[listDepth] = 1;
    }
    listDepth = 0;
 }
@@ -183,13 +203,12 @@ void Parse::Program()
       //create a new block
       if(!bTable.newBlock())
 	 scopeError("Exceded Block limit");
-      //
-      
+      //call Block    
       Block();
-   
+      //pop block
+      bTable.endBlock();
       if(LHS==".")
       {
-	 bTable.endBlock();
 	 cout<<endl<<"YOU SUCCESSFULY PARSED, CONGRATS!!!!"<<endl;
       }else
 	 errorReport();
@@ -202,6 +221,7 @@ void Parse::Block()
    if(LHS=="begin")
    {
       match();
+      //call defptr then stat ptr
       DefPtr();
       StatPtr();
       
@@ -217,7 +237,7 @@ void Parse::Block()
 void Parse::DefPtr()
 {where="DP";check();
    if(LHS=="const"||LHS=="integer"||LHS=="boolean"||LHS=="proc"||LHS=="Boolean")
-   {
+   {  //calling def
       Def();
       if(LHS==";")
       {
@@ -231,8 +251,9 @@ void Parse::DefPtr()
 void Parse::Def()//definition function
 {where="D";check();
    if(LHS=="const")
-   {
+   {  //into const deff.
       ConstDef();
+      //this adds the constant to the stack
       if(!checkDef())
 	 scopeError("Ambiguous definition of constant");
       
@@ -251,8 +272,7 @@ void Parse::Def()//definition function
 void Parse::ConstDef()
 {where="CD";check();
    if(LHS=="const")
-   {
-      //Initializing
+   {  //Initializing
       eType = UNIVERSAL;
       eKind = CONSTANT;
       //
@@ -268,12 +288,11 @@ void Parse::ConstDef()
 void Parse::VarDef()//variable definition
 {where="VD";check();
    if(LHS=="boolean"||LHS=="Boolean"||LHS=="integer")
-   {
-//Scope/Type
+   {  //varKind
       eKind=VAR;
-//
+      //
       TypeSym();
-      VarDefB();
+      VarDefB();     
    }else
    {
       errorReport();
@@ -283,17 +302,23 @@ void Parse::VarDef()//variable definition
 void Parse::VarDefB()//variable definition for multiple itirations
 {where="VDB";check();
    if(LHS=="id")
-   {
+   {  varIndexValList(dx);
       VarList();
    }else if(LHS=="array")
    {
+      eKind = ARR;
       match();
+      
       VarList();
       if(LHS=="[")
-      {
+      { 
 	 match();
+	 //
 	 Const();
 	 
+	 if(ln[tokeNum][2]!=1)
+	    size[listDepth]=ln[tokeNum][2];
+	 //i may want to add a check if this val is a name and if so search for it.
 	 if(LHS=="]")
 	 {
 	    match();
@@ -346,7 +371,16 @@ void Parse::ProcDef()//procedure definition
    {
       match();
       ProcName();
+      // add to current block 
+      if(!checkDef())
+	 scopeError("Ambiguous definition of Procedure");
+      //add to block stack
+      if(!bTable.newBlock())
+	 scopeError("Exceded Block limit while declaring procedure");
+      
       Block();
+      //remove block from stack
+      bTable.endBlock();
    }
 }
 
@@ -415,6 +449,8 @@ void Parse::VarAcList()//variable access list
    if(LHS=="id")
    {
       VarAc();
+      if(!checkDef())
+	 scopeError("Ambiguous definition of variable");
       VarAcListB();
    }else
       errorReport();
@@ -425,6 +461,8 @@ void Parse::VarAcListB()//variable access list for iterations
    {
       match();
       VarAc();
+      if(!checkDef())
+	 scopeError("Ambiguous definition of variable");
       VarAcListB();
    }else
    {
@@ -717,11 +755,15 @@ void Parse::IndexSelect()
 }
 void Parse::Const()//constant
 {where="C";check();
+   eKind = CONSTANT;
    if(LHS=="num")
-   {
+   {  //
+      eType = INT;
+      
       Num();
    }else if(LHS=="true"||LHS=="false")
-   {
+   {  //
+      eType = BOOL;
       BoolSym();
    }else if(LHS=="id")
    {
@@ -732,51 +774,49 @@ void Parse::Const()//constant
 void Parse::BoolSym()//boolean symbol
 {where="BS";check();
    if(LHS=="false")
-   {
-      asnIndexLex();
+   {  //calling to initialize val to 0 for the type
+      asnIndexVal(bl0);
+      //ctd
       match();
    }else if(LHS=="true")
-   {
-      asnIndexLex();
+   {  //calling to initialize val to 1 for the type
+      asnIndexVal(bl1);
+      //ctd
       match();
    }else
       errorReport();
 }
-
 void Parse::VarName()//variable name
 {where="VN";check();
    if(LHS=="id")
-   {
-      asnIndexLex();
+   {  //initialise index
+      asnIndexVal(dx);
       match();
    }
 }
-
 void Parse::ConstName()//constant name
 {where="CN";check();
    if(LHS=="id")
-   {
-      asnIndexLex();
+   {  //initialise index
+      asnIndexVal(dx);
       match();
    }else
       errorReport();
 }
-
 void Parse::Num()//number
 {where="N";check();
    if(LHS=="num")
-   {
-      asnIndexLex();
+   {  //initialise val of number
+      asnIndexVal(vl);
       match();
    }else
       errorReport();
 }
-
 void Parse::ProcName()//procedure name
 {where="PN";check();
    if(LHS=="id")
-   {  
-      asnIndexLex();
+   {  //initialise index
+      asnIndexVal(dx);
       
       match();
    }else
