@@ -18,7 +18,8 @@ int main ()
    // variables for file names
    /*remove testLang.txt when project complete*/
    //string codeFileName /*= "testLang.txt"*/, tokenFileName /* = "tokenFile"*/;
-   string codeFileName = "testLang.txt", tokenFileName  = "tokenFile";
+   string codeFileName = "./testfiles/testLang.txt",
+      tokenFileName  = "./testfiles/tokenFile";
 
    //get the file name for input and then declare and open file
    cout<<"Welcome to compiler4600, please enter your code input file name: ";

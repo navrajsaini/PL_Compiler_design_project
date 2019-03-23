@@ -46,7 +46,7 @@ bool BlockTable::search(int index)
 //and return true
 bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nvalue)
 {
-   bool error, newblock_error;
+   bool error, newblock_ret;
    TableEntry findtable, a;
    // I will be manipulating findtable for the code generation part.
    //don't need to do anything with it for now.
@@ -59,9 +59,9 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
    else
       ;
 
-   newblock_error = newBlock();
+   newblock_ret = newBlock();
    
-   if (newblock_error == true)
+   if (newblock_ret == true)
    {
       cout << "in the define func, if there's a error after this line..."
 	   << endl << "I need to find a better way to assign the stuff..."
