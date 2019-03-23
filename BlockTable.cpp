@@ -75,9 +75,12 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
       a.value = nvalue;
       
       //push it to the new vector
+      
       cout << "if there is a error it will be after this line...." << endl
-	   << "the push_back function did not work properly." << endl;
-      table[blockLevel].push_back(a);
+	   << "then blockLevel shouldn't be blockLevel-1..." << endl;
+      //made it blockLevel-1 because the array starts at 0
+      //so if all the blocks are filled (10) the array location is 9 not 10
+      table[blockLevel-1].push_back(a);
       return true;
    }
    else
