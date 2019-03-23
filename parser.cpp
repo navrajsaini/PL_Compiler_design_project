@@ -102,8 +102,8 @@ void Parse::eraseVar()
 
 //checks the scope and inserts into the table
 bool Parse::checkDef()
-{       int fuck=checkVal;
-   if (!bTable.define(index, eKind, eType, size, fuck))
+{
+   if (!bTable.define(index, eKind, eType, size[0], checkVal))
    {
       eraseVar();
       return false;
@@ -302,7 +302,7 @@ void Parse::VarDef()//variable definition
 void Parse::VarDefB()//variable definition for multiple itirations
 {where="VDB";check();
    if(LHS=="id")
-   {  varIndexValList(dx);
+   {  asnIndexValList(dx);
       VarList();
    }else if(LHS=="array")
    {

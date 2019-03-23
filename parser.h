@@ -132,7 +132,7 @@ class Parse
 //indicates the index for the original hash table
    int index;
 //index= ln[tokeNum][1];
-   int checkVal;
+   int checkVal=0;
 //for size of arrays
    int size[10];
 //test line for 
