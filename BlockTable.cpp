@@ -16,20 +16,6 @@ BlockTable::~BlockTable(){}
 //commented out section is for a 2d array
 bool BlockTable::search(int index)
 {
-   /*
-   int temp;
-   //remove this for look for a 2d array as we don't need to search
-   //through all the blocks only the current block.
-   //we need the for loop that is commented out
-   for (int i = 0; i < blockLevel; i++)
-   {
-      //for (int j = 0; j < MAXBLOCK; j++)
-      if (table[i][0].idindex == index)//table[blockLevel][j].idindex == index
-	 return true;
-   }
-   return false;
-   */
-   
    int tempcomp;//temp variable for comparison done in if block
    for (int i = 0; i < blockLevel; i++)
    {
@@ -85,14 +71,6 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
 	   << "the push_back function did not work properly." << endl;
       table[blockLevel].push_back(a);
       return true;
-      /*
-      table[blockLevel][0].idindex = index;
-      table[blockLevel][0].kind = nkind;
-      table[blockLevel][0].type = ntype;
-      table[blockLevel][0].size = nsize;
-      table[blockLevel][0].value = nvalue;
-      return true;
-      */
    }
    else
    {
