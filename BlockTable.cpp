@@ -97,7 +97,7 @@ TableEntry BlockTable::find (int index, bool &error)
 	 cout << "done with find func" << endl;
 	 
 	 error = true;
-	 
+	 inScope = true;
 	 a.idindex = table[blockLevel][i].idindex;
 	 a.kind = table[blockLevel][i].kind;
 	 a.type = table[blockLevel][i].type;
@@ -110,6 +110,7 @@ TableEntry BlockTable::find (int index, bool &error)
    cout << "done with find func, couldn't find it" << endl;
    a.idindex = index;
    error = false;
+   inScope = false;
    return a;
 }
 
