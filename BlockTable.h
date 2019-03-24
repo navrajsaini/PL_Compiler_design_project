@@ -38,6 +38,7 @@ class BlockTable {
    void endBlock();
    
    void printtable();
+   bool inScope = false;
   private:
    // Use an array of vectors for the block table.
    vector<TableEntry> table[MAXBLOCK];
@@ -46,6 +47,6 @@ class BlockTable {
    //is called for the first time
    int blockLevel = -1;
 
-   bool inScope = false;
+   
 };
 #endif
