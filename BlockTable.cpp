@@ -57,17 +57,12 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
       return false;
    }
    else
-      ;
-   
-   newblock_ret = newBlock();
-   
-   if (newblock_ret == true)
    {
       cout << "in the define func, if there's a error after this line..."
 	   << endl << "I need to find a better way to assign the stuff..."
 	   << endl;
+      
       //create the Table entry
-	 
       a.idindex = index;
       a.kind = nkind;
       a.type = ntype;
@@ -75,18 +70,10 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
       a.value = nvalue;
       
       //push it to the new vector
-      
       cout << "if there is a error it will be after this line...." << endl
 	   << "then blockLevel shouldn't be blockLevel-1..." << endl;
-      //made it blockLevel-1 because the array starts at 0
-      //so if all the blocks are filled (10) the array location is 9 not 10
-      table[blockLevel-1].push_back(a);
+      table[blockLevel].push_back(a);
       return true;
-   }
-   else
-   {
-      cout << "no more room in the blocktable" << endl;
-      return false;
    }
 }
 
@@ -104,8 +91,6 @@ TableEntry BlockTable::find (int index, bool &error)
 //	j != table[blockLevel].end(); ++j)
    for (int i = 0; i < table[blockLevel].size(); i++)
    {
-      cout << "idindex: " << table[blockLevel][i].idindex << endl << endl;
-      
       if (table[blockLevel][i].idindex == index)
       {
 	 cout << "done with find func" << endl;
@@ -122,11 +107,7 @@ TableEntry BlockTable::find (int index, bool &error)
       }
    }
    cout << "done with find func, couldn't find it" << endl;
-   a.idindex = 0;
-   a.kind = UNDEFINED;
-   a.type = UNIVERSAL;
-   a.size = 1;
-   a.value = 0;
+   a.idindex = index;
    error = false;
    return a;
 }
@@ -146,6 +127,7 @@ bool BlockTable::newBlock()
    else//if it isn't increment blockLevel and return true
    {
       blockLevel++;
+      cout << endl << "newBlock, blockLevel: " << blockLevel << endl << endl;
       return true;
    }
 }
@@ -160,6 +142,8 @@ void BlockTable::endBlock()
    cout << "in the endBlock function. " << endl
 	<< "if there's a error,it will be in the next line. " << endl
 	<< "I need to figure out how to erase the vector properly." << endl;
+   cout << "printing the table before deleting it..." << endl;
+   printtable();
    //erase all entries in the current block
    table[blockLevel].erase(table[blockLevel].begin(), table[blockLevel].end());
    if (blockLevel > -1)
@@ -167,7 +151,6 @@ void BlockTable::endBlock()
    else
       ;
    cout << "done with endBlock" << endl;
-   printtable();
 }
 
 void BlockTable::printtable()
