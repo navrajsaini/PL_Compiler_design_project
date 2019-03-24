@@ -46,7 +46,5 @@ class BlockTable {
    //blockLevel is -1 so that we can start at 0 when newBlock
    //is called for the first time
    int blockLevel = -1;
-
-   
 };
 #endif
