@@ -22,10 +22,11 @@ bool BlockTable::search(int index)
       for (vector<TableEntry>::iterator j = table[i].begin();
 	   j != table[i].end(); ++j)
       {
+	 /*
 	 cout << "in search function. if there's a issue after this" << endl
 	      << "j -> idindex does not place the first member in the struct"
 	      << endl << "to tempcomp..... idindex: "
-	      << j->idindex << endl;
+	      << j->idindex << endl;*/
 	 tempcomp = j->idindex;
 	 if (tempcomp == index)//the comparison that tempcomp is needed for
 	 {
@@ -57,10 +58,10 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
       return false;
    }
    else
-   {
+   {/*
       cout << "in the define func, if there's a error after this line..."
 	   << endl << "I need to find a better way to assign the stuff..."
-	   << endl;
+	   << endl;*/
       
       //create the Table entry
       a.idindex = index;
@@ -70,8 +71,8 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
       a.value = nvalue;
       
       //push it to the new vector
-      cout << "if there is a error it will be after this line...." << endl
-	   << "then blockLevel shouldn't be blockLevel-1..." << endl;
+      /*cout << "if there is a error it will be after this line...." << endl
+	<< "then blockLevel shouldn't be blockLevel-1..." << endl;*/
       table[blockLevel].push_back(a);
       return true;
    }
@@ -84,9 +85,9 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
 TableEntry BlockTable::find (int index, bool &error)
 {   
    TableEntry a;
-   cout << "in find function. if there are any issues here..." << endl
+   /*cout << "in find function. if there are any issues here..." << endl
 	<< "the comparison or the for loop are not working properly."
-	<< endl << endl;
+	<< endl << endl;*/
    //for (vector<TableEntry>::iterator j = table[blockLevel].begin();
 //	j != table[blockLevel].end(); ++j)
    for (int i = 0; i < table[blockLevel].size(); i++)
@@ -127,7 +128,7 @@ bool BlockTable::newBlock()
    else//if it isn't increment blockLevel and return true
    {
       blockLevel++;
-      cout << endl << "newBlock, blockLevel: " << blockLevel << endl << endl;
+      /*cout << endl << "newBlock, blockLevel: " << blockLevel << endl << endl;*/
       return true;
    }
 }
@@ -138,11 +139,11 @@ bool BlockTable::newBlock()
 //size is set to default, 1,
 //value is set to 0
 void BlockTable::endBlock()
-{
+{/*
    cout << "in the endBlock function. " << endl
 	<< "if there's a error,it will be in the next line. " << endl
 	<< "I need to figure out how to erase the vector properly." << endl;
-   cout << "printing the table before deleting it..." << endl;
+	cout << "printing the table before deleting it..." << endl;*/
    printtable();
    //erase all entries in the current block
    table[blockLevel].erase(table[blockLevel].begin(), table[blockLevel].end());
@@ -155,7 +156,7 @@ void BlockTable::endBlock()
 
 void BlockTable::printtable()
 {
-   cout << "printtable, blockLevel: " << blockLevel << endl;
+   /*cout << "printtable, blockLevel: " << blockLevel << endl;*/
    int ind = 0;
    for (int i = 0; i <= blockLevel; i++)
    {
