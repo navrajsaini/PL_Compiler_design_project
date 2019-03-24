@@ -83,7 +83,8 @@ The compile the test program:
    
             The test file is created for the purpose of testing the functions in the scanner and the parser.
             It can also be used to test all the testlang files (test1-test7, testLang) in one run.
-            Since the parser calls the BlockTable there was no need for me to add in any extra code into test.cpp.
+            Since the parser calls the BlockTable there was no need to add any extra code into test.cpp.
+            The testing of the BlockTable is taken care of by the parser.
    
 The code has no compile time errors or any runtime errors.
 
