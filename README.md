@@ -1,6 +1,6 @@
 Compiler Design project working on the language PL
 Group: Navraj Saini and Jordan Kolody
---------------------------------------SCANNER------------------------------------------------------
+-----------------------------------------------Scanner--------------------------------------------
 
 Navraj: 
 I started working on the project bottom up (building the symbol, token and symbol table) while Jordan worked top down (plc, admin, scanner). We both were able to finish our parts and I was able to work on testing the function while helping Jordan implement my sections into his part.
@@ -27,7 +27,7 @@ Hours spent on this assignment:
 
      Jordan: 30
 
---------------------------------PARSER------------------------------------------
+-----------------------------------------------Parser--------------------------------------------
 
 Navraj:
 I was under the assumption the project was due on the 5th, not the 3rd. Under that assumption I was unable to help with some of the stuff Jordan was working on. I was able to fix the hash function to work better and a few other issues from the scanner. For the parser I created the .h file and added in the functions that needed to be implemented. Majority of the work for the Parser was done by Jordan. I was able to make sure any and all issues he had with the scanner, on my part, were fixed. This included adding a function for the returning the token name based on the value (location) of the token in the symbol table, fixing the insert function in symbol table as it kept breaking, and making other miscellaneous changes to token.cpp and symboltable.cpp.
@@ -77,6 +77,9 @@ To compile:
 
    make plc
    
+            The main program gives an option to print out the symbol table, the parsing information, 
+            and the block at each blockLevel.
+   
 The compile the test program: 
 
    make test
@@ -85,11 +88,12 @@ The compile the test program:
             It can also be used to test all the testlang files (test1-test7, testLang) in one run.
             Since the parser calls the BlockTable there was no need to add any extra code into test.cpp.
             The testing of the BlockTable is taken care of by the parser.
+            The test is only meant to test the test suite we have.
    
 The code has no compile time errors or any runtime errors.
 
 Hours spent on this assignment:
 
-      Navraj: 12.5 + 1(as of 3pm)
+      Navraj: 19.5
    
-      Jordan: 11.5 + 2(as of 3pm)
+      Jordan: 19.5
