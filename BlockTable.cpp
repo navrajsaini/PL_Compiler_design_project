@@ -126,7 +126,7 @@ void BlockTable::endBlock()
 void BlockTable::printtable()
 {
    int ind = 0;
-   cout << "blockLevel: " << blockLevel << endl;
+   cout << "blockLevel: " << blockLevel+1 << endl;
    for (vector<TableEntry>::iterator j = table[blockLevel].begin();
 	j != table[blockLevel].end(); ++j)
    {
