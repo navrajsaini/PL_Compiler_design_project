@@ -20,13 +20,14 @@ Parse::Parse(string in)
       ln[i][1]=0;
       ln[i][2]=0;
    }
+   eraseList();
 }
 //assins the test line
 void Parse::asn(int sec, int part, int numb)
 {
    ln[sec][part] = numb;
    //test line
-   cout<<"token/line/num: "<<numb<<" "<<endl;
+   //cout<<"token/line/num: "<<numb<<" "<<endl;
 }
 void Parse::asnS(int sec, string s)
 {
@@ -51,7 +52,7 @@ void Parse::tokens(string val)
 //print function for tokens strings
 void Parse::printToken()
 {
-   for(int i=0; i<156;i++)
+   for(int i=1; i<256;i++)
    {
       cout<<"token '"<<i<<"' is '"<<token[i]<<"' ";
    }
@@ -73,21 +74,22 @@ void Parse::errorReport()
    cout<<ln[tokeNum][0]<<"'"<<endl;
    cout<<"This, has the last function to be called acronymed as: '";
    cout<<where<<"'"<<endl;
-   cout<<"The token of issue is: '"<<NS;
-   cout<<"' with a hashval of: '"<<ln[tokeNum-1][1]<<"'"<<endl; 
+   cout<<"The token of issue is: '"<<LHS;
+   cout<<"' with a hashval of: '"<<ln[tokeNum][1]<<"'"<<endl;
+   cout<<"The token val of: '"<<ln[tokeNum][2]<<"'"<<endl;
 }
 //check for user input to then pring parsing as it occours
 void Parse::check()
 {
    if(yn==1)
    {
-      cout<<endl<<LHS<<" "<<ln[tokeNum-1][1]<<" "<<where<<endl;
+      cout<<endl<<LHS<<" "<<ln[tokeNum][1]<<" "<<where<<endl;
    }
 }
 //outputs the error msg for the scope
 void Parse::scopeError(string s)
 {
-   cout<<s<<endl;
+   cout<<s<<" with index: "<<ln[tokeNum-1][1]<<" at line:  "<<ln[tokeNum][0]<<" with token : "<<NS<<endl;
 }
 //wipe the variables for the next type check
 void Parse::eraseVar()
@@ -97,12 +99,13 @@ void Parse::eraseVar()
    eType = UNIVERSAL;
    checkVal = -1;
    size[0] = 1;
+   listDepth = 0;
 
 }
 
 //checks the scope and inserts into the table
 bool Parse::checkDef()
-{
+{//printScopeType(true);
    if (!bTable.define(index, eKind, eType, size[0], checkVal))
    {
       eraseVar();
@@ -113,47 +116,50 @@ bool Parse::checkDef()
 }
 //assigns both index and checkLex
 void Parse::asnIndexVal(int i)
-{
-   if(i = 0)
-      checkVal = 0;
-   if(i = 1)
-      checkVal = 1;
-   if(i = 2)
-      index = ln[tokeNum][1];
-   if(i = 3)
-      checkVal = ln[tokeNum][2];
+{ 
+   //if(i = 0)
+   //checkVal = 0;
+   //if(i = 1)
+   //  checkVal = 1;
+   //if(i = 2)
+      // index = ln[tokeNum][1];
+   //if(i = 3)
+   // checkVal = ln[tokeNum][2];
+   
+      
+   //cout<<" "<<ln[tokeNum][1]<<" "<<LHS<<endl;
 }
 //this is initializing the list depth level of index and lex to their values.
 void Parse::asnIndexValList(int i)
 {
-   if(LorA == 1)
-   {
-      listDepth = 0;
-      LorA = 0;
-   }
-   if(i = 0)
-      varListVal[listDepth] = 0;
-   if(i = 1)
-      varListVal[listDepth] = 1;
-   if(i = 2)
-      varListIndex[listDepth] = ln[tokeNum][1];
-   if(i = 3)
-      varListVal[listDepth] = ln[tokeNum][2];
+   //if(LorA == 1)
+   //{
+   //   listDepth = 0;
+   //   LorA = 0;
+   //}
+   //if(i = 0)
+   //   varListVal[listDepth] = 0;
+   //if(i = 1)
+   //  varListVal[listDepth] = 1;
+   //if(i = 2)
+
    //if(LorA==0)
-      listDepth++;
+      //listDepth++;
 }
 //this does the same thing as check Deff but parses through a list of pairs of values
 bool Parse::checkDefList()
-{
-   int limit = listDepth;
-   for(listDepth = 0; listDepth <= limit; listDepth++)
+{//printScopeType(false);
+   
+   for(int limit = 0; limit < listDepth; limit++)
    {
-      if (!bTable.define(varListIndex[listDepth], eKind, eType, size[listDepth], varListVal[listDepth]))
+      if (!bTable.define(varListIndex[limit], eKind, eType, size[limit], varListVal[limit]))
       {
+	 
 	 eraseList();
 	 return false;
       }
-   }
+      }
+   //cout<<endl<<endl;
    eraseList();
    return true;
 }
@@ -161,24 +167,48 @@ bool Parse::checkDefList()
 void Parse::eraseList()
 {
    eraseVar();
-   for(listDepth = 0; listDepth <= 10; listDepth++)
+   for(int i = 0; i <= 10; i++)
    {
-      varListIndex[listDepth] = -1;
-      varListVal[listDepth] = -1;
-      size[listDepth] = 1;
+      varListIndex[i] = -1;
+      varListVal[i] = -1;
+      size[i] = 1;
    }
    listDepth = 0;
 }
 
+void Parse::printScopeType(bool y)
+{
+   if(y)
+      cout<<"index: "<<index<<" "<<NS<<endl<<LHS<<"  "<<ln[tokeNum][1]<<endl;
+   if(!y)
+      cout<<"indexAc: "<<varListIndex[listDepth-1]<<" "<<endl<<LHS<<"  "<<ln[tokeNum][1]<<endl;
+}
+
+void Parse::o()
+{ for(int i=1;token[i]!=".";i++)
+   {
+      cout<<"ln["<<i<<"][0]: "<<ln[i][0]<<endl;
+      cout<<"ln["<<i<<"][1]: "<<ln[i][1]<<endl;
+      cout<<"ln["<<i<<"][2]: "<<ln[i][2]<<endl;
+      cout<<"token["<<i<<"]: "<<token[i]<<endl<<endl;
+   }
+
+}
+void Parse::printPop()
+{
+   if(yn2==1)
+      bTable.printtable();
+}
 //--------------------------------------------------------------------------
 //the start of the grammar
 void Parse::parseNow()
-{
-   //test line
+{  //test line
    //printToken();
+   //o();
+   //LHS = token[tokeNum];
    NS=LHS;
+   //cout<<endl<<LHS<<endl;
    Program();
-   
 }
 
 /*This is the start of the PL Grammar Parsing Stage.
@@ -206,10 +236,11 @@ void Parse::Program()
       //call Block    
       Block();
       //pop block
+      printPop();
       bTable.endBlock();
       if(LHS==".")
       {
-	 cout<<endl<<"YOU SUCCESSFULY PARSED, CONGRATS!!!!"<<endl;
+	 cout<<"YOU SUCCESSFULY PARSED, CONGRATS!!!!"<<endl;
       }else
 	 errorReport();
    }else
@@ -259,9 +290,9 @@ void Parse::Def()//definition function
       
    }else if(LHS=="integer"||LHS=="boolean"||LHS=="Boolean")
    {
-      VarDef();     
-      if(!checkDef())
-	 scopeError("Ambiguous definition of Variable");
+      VarDef();
+      if(!checkDefList())
+	 scopeError("Ambiguious declaration in variable list");
    }else if(LHS=="proc")
    {
       ProcDef();
@@ -287,6 +318,7 @@ void Parse::ConstDef()
 }
 void Parse::VarDef()//variable definition
 {where="VD";check();
+   listDepth = 0;
    if(LHS=="boolean"||LHS=="Boolean"||LHS=="integer")
    {  //varKind
       eKind=VAR;
@@ -302,7 +334,7 @@ void Parse::VarDef()//variable definition
 void Parse::VarDefB()//variable definition for multiple itirations
 {where="VDB";check();
    if(LHS=="id")
-   {  asnIndexValList(dx);
+   {
       VarList();
    }else if(LHS=="array")
    {
@@ -313,11 +345,37 @@ void Parse::VarDefB()//variable definition for multiple itirations
       if(LHS=="[")
       { 
 	 match();
-	 //
+	 
+	 if(LHS=="num")
+	    checkVal=ln[tokeNum][2];
+	 else if(LHS=="id")
+	 {	   
+	    index2 = ln[tokeNum][1];
+	    ent = bTable.find(index2, exist);
+	    if(!bTable.inScope)
+	       scopeError("Error, Variable not declared in scope");
+	    en=1;
+	 }
+	 
 	 Const();
 	 
-	 if(ln[tokeNum][2]!=1)
-	    size[listDepth]=ln[tokeNum][2];
+	 if(en=1)
+	 {
+	    for(int i=0; i<listDepth;i++)
+	    {
+	       size[i] = ent.value;
+	    }
+	 }else
+	 {
+	    for(int i=0; i<listDepth;i++)
+	    {
+	       size[i] = checkVal;
+	    }
+	 }
+        
+	 if(!checkDefList())
+	    scopeError("Ambiguous definition of array");
+	 
 	 //i may want to add a check if this val is a name and if so search for it.
 	 if(LHS=="]")
 	 {
@@ -347,7 +405,9 @@ void Parse::TypeSym()//Type Symbol
 void Parse::VarList()//variable list
 {where="VL";check();
    if(LHS=="id")
-   {
+   {  //cout<<ln[tokeNum][1]<<where;
+      varListIndex[listDepth] = ln[tokeNum][1];
+      listDepth++;
       VarName();
       VarListB();
    }else
@@ -358,6 +418,9 @@ void Parse::VarListB()//variable list for multiple itiretions
    if(LHS==",")
    {
       match();
+      //cout<<ln[tokeNum][1]<<where;
+      varListIndex[listDepth] = ln[tokeNum][1];
+      listDepth++;
       VarName();
       VarListB();
    }else
@@ -380,6 +443,7 @@ void Parse::ProcDef()//procedure definition
       
       Block();
       //remove block from stack
+      printPop();
       bTable.endBlock();
    }
 }
@@ -443,14 +507,11 @@ void Parse::ReadStat()//read statement
 
    }
 }
-
 void Parse::VarAcList()//variable access list
 {where="VAL";check();
    if(LHS=="id")
    {
       VarAc();
-      if(!checkDef())
-	 scopeError("Ambiguous definition of variable");
       VarAcListB();
    }else
       errorReport();
@@ -460,9 +521,8 @@ void Parse::VarAcListB()//variable access list for iterations
    if(LHS==",")
    {
       match();
+      
       VarAc();
-      if(!checkDef())
-	 scopeError("Ambiguous definition of variable");
       VarAcListB();
    }else
    {
@@ -479,6 +539,11 @@ void Parse::WriteStat()//write statement
 }
 void Parse::ExpList()//expression list
 {where="EL";check();
+   if(LHS!="-")
+   {
+      
+      
+   }  
       Exp();
       ExpListB();
 }
@@ -628,10 +693,9 @@ void Parse::RelatOp()//relational operator
 }
 void Parse::SimpExp()//simple expression
 {where="SE";check();
-
-      Line();
-      Term();
-      SimpExpB();
+   Line();
+   Term();
+   SimpExpB();
 
 }
 
@@ -707,8 +771,10 @@ void Parse::Factor()//factor
    if(LHS=="num"||LHS=="false"||LHS=="true")
    {
       Const();
+      
    }else if(LHS=="id")
    {
+
       VarAc();
    }else if(LHS=="(")
    {
@@ -728,8 +794,21 @@ void Parse::Factor()//factor
 }
 void Parse::VarAc()//Variable access
 {where="Va";check();
-      VarName();
+   //cout<<endl<<where<<endl;
+   if(LHS=="num")
+   {
       VarAcB();
+   }else if(LHS=="id")
+   {
+      VarName();
+      //ent = bTable.find(index, exist);
+      
+      //cout << endl << "index: "<< ent.idindex << endl << endl;
+      if(!bTable.search(index))
+	 scopeError("list Variable not Defined in VarAc");
+      VarAcB();
+   }else
+      errorReport();
 }
 void Parse::VarAcB()//variable access for mulitple iterations
 {where="VAB";check();
@@ -775,12 +854,12 @@ void Parse::BoolSym()//boolean symbol
 {where="BS";check();
    if(LHS=="false")
    {  //calling to initialize val to 0 for the type
-      asnIndexVal(bl0);
+      checkVal=0;
       //ctd
       match();
    }else if(LHS=="true")
    {  //calling to initialize val to 1 for the type
-      asnIndexVal(bl1);
+      checkVal=1;
       //ctd
       match();
    }else
@@ -790,7 +869,8 @@ void Parse::VarName()//variable name
 {where="VN";check();
    if(LHS=="id")
    {  //initialise index
-      asnIndexVal(dx);
+      //cout<<index;
+      index = ln[tokeNum][1];
       match();
    }
 }
@@ -798,7 +878,8 @@ void Parse::ConstName()//constant name
 {where="CN";check();
    if(LHS=="id")
    {  //initialise index
-      asnIndexVal(dx);
+      index=ln[tokeNum][1];
+      //cout<<endl<<index<<"  "<<LHS<<"  "<<endl;
       match();
    }else
       errorReport();
@@ -807,7 +888,9 @@ void Parse::Num()//number
 {where="N";check();
    if(LHS=="num")
    {  //initialise val of number
-      asnIndexVal(vl);
+      //asnIndexVal(vl);
+      checkVal=ln[tokeNum][2];
+      //cout<<endl<<checkVal<<"  "<<LHS<<"  "<<endl;
       match();
    }else
       errorReport();
@@ -816,10 +899,8 @@ void Parse::ProcName()//procedure name
 {where="PN";check();
    if(LHS=="id")
    {  //initialise index
-      asnIndexVal(dx);
-      
+      index = ln[tokeNum][1];
       match();
    }else
       errorReport();
 }
-   

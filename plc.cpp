@@ -45,7 +45,8 @@ int main ()
    if(stat == 1)
    {
 	cout<< "Scan Complete" << endl;
-	cout<<"would you like us to output the completed syboltable? y/n"<<endl;
+	cout<<"would you like us to output the completed syboltable?";
+	cout<<endl<<"Y(y)/N(n): ";
 	cin>>answer;
 
 	if(answer=='y'||answer=='Y')

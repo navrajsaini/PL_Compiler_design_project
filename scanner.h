@@ -39,7 +39,7 @@ class Scanner
   private:
    
 
-   int TN;// Token number
+   int TN=1;// Token number
    void inc(int);
    ofstream out;//for outputing to file in tokenLine
    string codeFileName;//name of codefile

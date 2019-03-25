@@ -242,8 +242,7 @@ void Scanner::tokenLine(char now[], int y)
       else if(isNumeric(now[i])==true)
       {
 	 while(isNumeric(now[i])==true)
-	 {
-	    
+	 {	    
 	    token.push_back(now[i]);
 	    i++;
 	    ahead=now[i+1];	    
@@ -368,6 +367,6 @@ int Scanner::numericVAl(string s)
       //cout<<", "<<total<<endl; 
       inc++;
    }
-   cout<<total<<endl;
+   //cout<<total<<endl;
    return total;  
 }

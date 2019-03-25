@@ -35,11 +35,11 @@ class Parse
    string token[256];
 //parse vars: tokCount is for match, file is for opening the file,
 //and tokeNum is also for match, the two allow for the flexebility, for error reporting during the parsing stage 
-   int tokCount=0;
+   int tokCount = 0;
    string file;
-   int tokeNum=0;
+   int tokeNum = 0;
 //for outputting the parsing as it occours, mostly a testing variable
-   bool yn=0;
+   bool yn = 0, yn2 = 0;
 //test array for line number, index, and value
    int ln[256][3];
 //------------------------------------------------------------------------
@@ -123,27 +123,35 @@ class Parse
 //value for the initilizing either the value or index, LorA is differentiating
 //between list and list ac.
    int dx = 2, vl = 3, bl0 = 0, bl1 = 1, LorA = 0;
-      
+//varAcL keeps track fo how many left variables are used
+//varAcR keeps track of how many right variables have been used. 
+   int varAcL = 0, varAcR = 0;
+   int varAcName[10];//the array for the names for var ac
+   bool exist = 0, en;
+   void o();
+   void printPop();
   private:
 //indicates type for the block table
    myType eType;
 //indicated the kind for block table
    Kind eKind;
 //indicates the index for the original hash table
-   int index;
+   int index, index2;
 //index= ln[tokeNum][1];
-   int checkVal=0;
+   int checkVal = 0;
 //for size of arrays
-   int size[10];
+   int size[10] = {1};
 //test line for 
 //      if (!bTable.define(cnameindex, CONSTANT, temptype, 1, tempvalue))
 //	 scopeError("Ambiguous definition of constant");
+   void printScopeType(bool);
+   TableEntry ent;
 /*end of scope and type checking variables and functions*/
 //--------------------------------
 //FILE STREAM
    ifstream input;
 //private variables: LHS is look ahead symbol
-   string LHS;
+   string LHS = "";
    string NS;
    int value;
 //when a match is found match is called and match incriments LHS by one.
