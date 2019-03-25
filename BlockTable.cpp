@@ -127,18 +127,15 @@ void BlockTable::endBlock()
 void BlockTable::printtable()
 {
    int ind = 0;
-   for (int i = 0; i <= blockLevel; i++)
+   for (vector<TableEntry>::iterator j = table[blockLevel].begin();
+	j != table[blockLevel].end(); ++j)
    {
-      for (vector<TableEntry>::iterator j = table[i].begin();
-	   j != table[i].end(); ++j)
-      {
-	 cout << "location: " << ind << endl
-	      << "   index: " << j -> idindex << endl
-	      << "   kind: " << j -> kind << endl
-	      << "   type: " << j -> type << endl
-	      << "   size: " << j -> size << endl
-	      << "   value: " << j -> value << endl;
-	 ind++;
-      }
+      cout << "location: " << ind << endl
+	   << "   index: " << j -> idindex << endl
+	   << "   kind: " << j -> kind << endl
+	   << "   type: " << j -> type << endl
+	   << "   size: " << j -> size << endl
+	   << "   value: " << j -> value << endl;
+      ind++;
    }
 }
