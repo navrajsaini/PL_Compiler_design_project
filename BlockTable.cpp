@@ -18,7 +18,7 @@ bool BlockTable::search(int index)
 {
    cout << "in search, block level: " << blockLevel << endl;
    int tempcomp;//temp variable for comparison done in if block
-   for (int i = 0; i < blockLevel; i++)
+   for (int i = 0; i <= blockLevel; i++)
    {
       //for (vector<TableEntry>::iterator j = table[i].begin();
       //  j != table[i].end(); ++j)
