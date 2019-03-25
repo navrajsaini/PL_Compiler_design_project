@@ -71,7 +71,6 @@ TableEntry BlockTable::find (int index, bool &error)
    TableEntry a;
    for (int i = 0; i < table[blockLevel].size(); i++)
    {
-      cout << endl << table[blockLevel][i].idindex << " " << index << endl;
       if (table[blockLevel][i].idindex == index)
       {
 	 error = true;
