@@ -16,6 +16,7 @@ BlockTable::~BlockTable(){}
 //commented out section is for a 2d array
 bool BlockTable::search(int index)
 {
+   cout << "in search, block level: " << blockLevel << endl;
    int tempcomp;//temp variable for comparison done in if block
    for (int i = 0; i < blockLevel; i++)
    {
