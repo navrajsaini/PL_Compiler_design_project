@@ -19,16 +19,17 @@ bool BlockTable::search(int index)
    int tempcomp;//temp variable for comparison done in if block
    for (int i = 0; i < blockLevel; i++)
    {
-      for (vector<TableEntry>::iterator j = table[i].begin();
-	   j != table[i].end(); ++j)
+      //for (vector<TableEntry>::iterator j = table[i].begin();
+      //  j != table[i].end(); ++j)
+      for(int j = 0; j < table[i].size(); j++)
       {
-	 cout << "searching: the idindex is: " << j -> idindex << endl;
+	 cout << "searching: the idindex is: " << table[i][j].idindex << endl;
 	 /*
 	 cout << "in search function. if there's a issue after this" << endl
 	      << "j -> idindex does not place the first member in the struct"
 	      << endl << "to tempcomp..... idindex: "
 	      << j->idindex << endl;*/
-	 tempcomp = j->idindex;
+	 tempcomp = table[i][j].idindex;
 	 if (tempcomp == index)//the comparison that tempcomp is needed for
 	 {
 	    cout << "done with search funciton, found" <<endl;
