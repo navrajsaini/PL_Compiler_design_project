@@ -1,6 +1,8 @@
 Compiler Design project working on the language PL
 Group: Navraj Saini and Jordan Kolody
+
 ## -----------------------------------------------Scanner--------------------------------------------
+
 ### Navraj:
 I started working on the project bottom up (building the symbol, token and symbol table) while Jordan worked top down (plc, admin, scanner). We both were able to finish our parts and I was able to work on testing the function while helping Jordan implement my sections into his part.
 
@@ -55,7 +57,9 @@ Hours spent on this assignment:
      Navraj: 11
 
      Jordan: 25
+
 ## --------------------------------------------Scope and Type Checking---------------------------------
+
 ### Navraj:
 I worked on implementing the BlockTable.h and making it work with types.h. Once my part was complete I did some bug testing and making sure the functions returned what they were should, there wasn't any redundent code in the files, and Jordan was able to call the functions with little to no trouble. I had to change some of the code for find as I was confused about how it was different from search, other than one searching only the current block and the other searching the whole table and why find had to return TableEntry. Once that issue was solved the code was edited to work properly. The parser will call the BlockTable so we did not need to change any code in the test.cpp file.
 
