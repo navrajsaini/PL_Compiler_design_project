@@ -31,7 +31,7 @@ bool BlockTable::search(int index)
 	 tempcomp = j->idindex;
 	 if (tempcomp == index)//the comparison that tempcomp is needed for
 	 {
-	    cout << "done with search funciton" <<endl;
+	    cout << "done with search funciton, found" <<endl;
 	    return true;
 	 }
       }
