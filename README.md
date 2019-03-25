@@ -94,6 +94,6 @@ The code has no compile time errors or any runtime errors.
 
 Hours spent on this assignment:
 
-      Navraj: 19.5
+      Navraj: 21
    
-      Jordan: 19.5
+      Jordan: 21
