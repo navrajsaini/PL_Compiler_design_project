@@ -65,7 +65,7 @@ Navraj:
 I worked on implementing the BlockTable.h and making it work with types.h. Once my part was complete I did some bug testing and making sure the functions returned what they were should, there wasn't any redundent code in the files, and Jordan was able to call the functions with little to no trouble. I had to change some of the code for find as I was confused about how it was different from search, other than one searching only the current block and the other searching the whole table and why find had to return TableEntry. Once that issue was solved the code was edited to work properly. The parser will call the BlockTable so we did not need to change any code in the test.cpp file.
 
 Jordan:
-
+Trying to orginize the scope and type checks was quite difficult. It was hard to rememeber where i was each time we picked up and stopped working on it. I had a lot of trouble trying to bug check since this is stage 3 and there is a lot of other work arround these edits. Finnished up the scope errors and incorperated a print pop to show all of the popped layers. I realize that there is some clean up that needs to be done with the debugging functions. Please note that values are set to 0 for non initialised variables.
 
 Files included: 
 administration.cpp, admininstration.h, scanner.h, 

@@ -16,9 +16,9 @@ Scanner::Scanner(string inCodeName, string outCodeName)//, Symtable &symbolTable
    TN=1;
    while(TN<255)
    {
-      lineToke[TN][0];
-      lineToke[TN][1];
-      lineToke[TN][2];
+      lineToke[TN][0] = 0;
+      lineToke[TN][1] = 0;
+      lineToke[TN][2] = 0;
       TN++;
    }
    TN=1;

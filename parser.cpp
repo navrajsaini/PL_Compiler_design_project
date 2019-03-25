@@ -94,10 +94,10 @@ void Parse::scopeError(string s)
 //wipe the variables for the next type check
 void Parse::eraseVar()
 {
-   index = -1;
+   index = 0;
    eKind = UNDEFINED;
    eType = UNIVERSAL;
-   checkVal = -1;
+   checkVal = 0;
    size[0] = 1;
    listDepth = 0;
 
@@ -113,38 +113,6 @@ bool Parse::checkDef()
    }
    eraseVar();
    return true;
-}
-//assigns both index and checkLex
-void Parse::asnIndexVal(int i)
-{ 
-   //if(i = 0)
-   //checkVal = 0;
-   //if(i = 1)
-   //  checkVal = 1;
-   //if(i = 2)
-      // index = ln[tokeNum][1];
-   //if(i = 3)
-   // checkVal = ln[tokeNum][2];
-   
-      
-   //cout<<" "<<ln[tokeNum][1]<<" "<<LHS<<endl;
-}
-//this is initializing the list depth level of index and lex to their values.
-void Parse::asnIndexValList(int i)
-{
-   //if(LorA == 1)
-   //{
-   //   listDepth = 0;
-   //   LorA = 0;
-   //}
-   //if(i = 0)
-   //   varListVal[listDepth] = 0;
-   //if(i = 1)
-   //  varListVal[listDepth] = 1;
-   //if(i = 2)
-
-   //if(LorA==0)
-      //listDepth++;
 }
 //this does the same thing as check Deff but parses through a list of pairs of values
 bool Parse::checkDefList()
@@ -169,8 +137,8 @@ void Parse::eraseList()
    eraseVar();
    for(int i = 0; i <= 10; i++)
    {
-      varListIndex[i] = -1;
-      varListVal[i] = -1;
+      varListIndex[i] = 0;
+      varListVal[i] = 0;
       size[i] = 1;
    }
    listDepth = 0;
@@ -407,6 +375,7 @@ void Parse::VarList()//variable list
    if(LHS=="id")
    {  //cout<<ln[tokeNum][1]<<where;
       varListIndex[listDepth] = ln[tokeNum][1];
+      varListVal[listDepth] = 0;
       listDepth++;
       VarName();
       VarListB();
@@ -854,12 +823,14 @@ void Parse::BoolSym()//boolean symbol
 {where="BS";check();
    if(LHS=="false")
    {  //calling to initialize val to 0 for the type
-      checkVal=0;
+      checkVal = 0;
+      varListVal[listDepth] = 0;
       //ctd
       match();
    }else if(LHS=="true")
    {  //calling to initialize val to 1 for the type
-      checkVal=1;
+      checkVal = 1;
+      varListVal[listDepth] = 1;
       //ctd
       match();
    }else
