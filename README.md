@@ -58,6 +58,7 @@ Hours spent on this assignment:
 
      Jordan: 25
 
+
 ## --------------------------------------------Scope and Type Checking---------------------------------
 
 ### Navraj:
