@@ -13,32 +13,20 @@ BlockTable::~BlockTable(){}
 
 //search till the current block level
 //if found, return true, else return false
-//commented out section is for a 2d array
 bool BlockTable::search(int index)
 {
-   cout << "in search, block level: " << blockLevel << endl;
    int tempcomp;//temp variable for comparison done in if block
    for (int i = 0; i <= blockLevel; i++)
    {
-      //for (vector<TableEntry>::iterator j = table[i].begin();
-      //  j != table[i].end(); ++j)
       for(int j = 0; j < table[i].size(); j++)
       {
-	 cout << "searching: the idindex is: " << table[i][j].idindex << endl;
-	 /*
-	 cout << "in search function. if there's a issue after this" << endl
-	      << "j -> idindex does not place the first member in the struct"
-	      << endl << "to tempcomp..... idindex: "
-	      << j->idindex << endl;*/
 	 tempcomp = table[i][j].idindex;
 	 if (tempcomp == index)//the comparison that tempcomp is needed for
 	 {
-	    cout << "done with search funciton, found" <<endl;
 	    return true;
 	 }
       }
    }
-   cout << "done with search func" << endl;
    return false;
 }
 
@@ -57,15 +45,10 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
    findtable = find (index, error);
    if (error)
    {
-      cout << "error is true..." << endl;
       return false;
    }
    else
-   {/*
-      cout << "in the define func, if there's a error after this line..."
-	   << endl << "I need to find a better way to assign the stuff..."
-	   << endl;*/
-      
+   {
       //create the Table entry
       a.idindex = index;
       a.kind = nkind;
@@ -74,8 +57,6 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
       a.value = nvalue;
       
       //push it to the new vector
-      /*cout << "if there is a error it will be after this line...." << endl
-	<< "then blockLevel shouldn't be blockLevel-1..." << endl;*/
       table[blockLevel].push_back(a);
       return true;
    }
@@ -88,18 +69,11 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
 TableEntry BlockTable::find (int index, bool &error)
 {   
    TableEntry a;
-   /*cout << "in find function. if there are any issues here..." << endl
-	<< "the comparison or the for loop are not working properly."
-	<< endl << endl;*/
-   //for (vector<TableEntry>::iterator j = table[blockLevel].begin();
-//	j != table[blockLevel].end(); ++j)
    for (int i = 0; i < table[blockLevel].size(); i++)
    {
       cout << endl << table[blockLevel][i].idindex << " " << index << endl;
       if (table[blockLevel][i].idindex == index)
       {
-	 cout << "done with find func" << endl;
-	 
 	 error = true;
 	 inScope = true;
 	 a.idindex = table[blockLevel][i].idindex;
@@ -111,7 +85,6 @@ TableEntry BlockTable::find (int index, bool &error)
 	 return a;
       }
    }
-   cout << "done with find func, couldn't find it" << endl;
    a.idindex = index;
    error = false;
    inScope = false;
@@ -127,13 +100,11 @@ TableEntry BlockTable::find (int index, bool &error)
 //about starting from 1 insead of 0.
 bool BlockTable::newBlock()
 {
-   cout << "making a new block..." << endl << endl;
    if(blockLevel+1 > MAXBLOCK)//check if blockLevel+1 is > 10
       return false;
    else//if it isn't increment blockLevel and return true
    {
       blockLevel++;
-      /*cout << endl << "newBlock, blockLevel: " << blockLevel << endl << endl;*/
       return true;
    }
 }
@@ -144,24 +115,17 @@ bool BlockTable::newBlock()
 //size is set to default, 1,
 //value is set to 0
 void BlockTable::endBlock()
-{/*
-   cout << "in the endBlock function. " << endl
-	<< "if there's a error,it will be in the next line. " << endl
-	<< "I need to figure out how to erase the vector properly." << endl;
-	cout << "printing the table before deleting it..." << endl;*/
-   printtable();
+{
    //erase all entries in the current block
    table[blockLevel].erase(table[blockLevel].begin(), table[blockLevel].end());
    if (blockLevel > -1)
       blockLevel--;
    else
       ;
-   cout << "done with endBlock" << endl;
 }
 
 void BlockTable::printtable()
 {
-   /*cout << "printtable, blockLevel: " << blockLevel << endl;*/
    int ind = 0;
    for (int i = 0; i <= blockLevel; i++)
    {
@@ -177,5 +141,4 @@ void BlockTable::printtable()
 	 ind++;
       }
    }
-   cout << "done with printtable" << endl;
 }
