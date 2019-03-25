@@ -85,6 +85,7 @@ TableEntry BlockTable::find (int index, bool &error)
       }
    }
    a.idindex = index;
+   a.size = 1;
    error = false;
    inScope = false;
    return a;
