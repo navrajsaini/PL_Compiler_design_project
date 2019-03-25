@@ -22,6 +22,7 @@ bool BlockTable::search(int index)
       for (vector<TableEntry>::iterator j = table[i].begin();
 	   j != table[i].end(); ++j)
       {
+	 cout << "searching: the idindex is: " << i -> idindex << endl;
 	 /*
 	 cout << "in search function. if there's a issue after this" << endl
 	      << "j -> idindex does not place the first member in the struct"
