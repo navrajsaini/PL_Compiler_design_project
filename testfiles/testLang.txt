@@ -1,32 +1,35 @@
-$ project languguage
+$Program
 begin
-   const n = 103;
-   integer array A[n];
-   integer i, j, x;
-   Boolean found;
-
-   proc Search
-	begin 
-        integer m;
-$here
-	   i, m := 11 , n;
-	   do i <m ->
-	   	if A[i] =x ->m := i;[]
-		   ~(A[i]=x)->i :=i+ 13;
-	   	fi;
-	   od;
-	found:= A[i] =x;
-   end;
-$Input Table:
-   i:=21;
-   do~(i>n)->read A[i]; i:=i+1; od;
-$Test Search:
-     	read x;
-        do!~(x=120)->
-	   call Search;
-	   if found-> write x, i;[]
-		~found->write x ;
-	   fi;
-	   read x;
-        od;
+	integer i, j, k;
+	integer array f[2];
+	proc p1
+	begin
+		integer i, l;
+		integer array a[2];
+		proc p11
+		begin
+			k := 2;
+		end;
+		proc 12
+		begin
+		end;
+		i := 1;
+	end;
+	proc p2
+	begin
+		integer m;
+		integer l;
+		proc 21
+		begin
+			Boolean b;
+			proc p211
+			begin
+				f[2] := 2;
+				call p211;
+			end;
+			call p21;
+			call p2;
+		end;
+		call p1;
+		call p2;
 end.
