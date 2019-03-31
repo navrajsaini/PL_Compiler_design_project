@@ -41,7 +41,9 @@ class Admin
    void parse();
    //irrelivant function, keeping for testing purposes
    string doTheThing(int);
-   
+   void emit1 (string);
+   void emit2 (string, int);
+   void emit3 (string, int, int);
   private:
    ifstream input;//for input file
    ofstream output;//for output file
@@ -67,6 +69,9 @@ class Admin
    int errorCount;
    //test line array
    int TL[256];
+
+   //bool to make sure we can still input stuff to the output file
+   bool emitting;
    
 };
 #endif

@@ -116,4 +116,26 @@ string Admin::parserAsn(int value)
 return view.symbolTable.giveLex(value);
 }
 
+void Admin::emit1(string OP)
+{
+   if (emitting)
+   {
+      (*outsource) << OP << endl;
+   }
+}
 
+void Admin::emit2 (string OP, int arg1)
+{
+   if (emitting)
+   {
+      (*outsource) << OP << endl << arg1 << endl;
+   }
+}
+
+void Admin::emit3 (string OP, int arg1, int arg2)
+{
+   if (emitting)
+   {
+      (*outsource) << OP << endl << arg1 << endl << arg2 << endl;
+   }
+}
