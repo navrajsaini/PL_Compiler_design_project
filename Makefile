@@ -13,9 +13,9 @@ all : test plc
 # Note: executable lines, ie. $(CCC) ..., always begin with a tab.
 # $^ = this target
 # $@ = this/these dependencies
-test: test.o token.o symboltable.o administration.o scanner.o parser.o BlockTable.o
+test: test.o token.o symboltable.o administration.o scanner.o parser.o BlockTable.o Assembler.o interp.o
 	$(CCC) $(CCCFLAGS) $^ -o $@
-plc: plc.o token.o symboltable.o administration.o scanner.o parser.o BlockTable.o
+plc: plc.o token.o symboltable.o administration.o scanner.o parser.o BlockTable.o Assembler.o interp.o
 	$(CCC) $(CCCFLAGS) $^ -o $@
 
 # if 2 or more problems in assignment, you can compile them all with extra 
@@ -40,6 +40,8 @@ symboltable.o : symboltable.cpp
 test.o : test.cpp
 parser.o :parser.cpp
 BlockTable.o : BlockTable.h
+Assembler.o : Assembler.cpp
+interp.o : interp.cpp
 #etc
 clean:
 	rm -f *.o *~ *% *# .#*
