@@ -42,6 +42,8 @@ class Parse
    bool yn = 0, yn2 = 0;
 //test array for line number, index, and value
    int ln[256][3];
+
+   int NewLaber();
 //------------------------------------------------------------------------
 /*The Grammar Rule functions
   For a more detailed explanation go to parse.cpp  
@@ -162,5 +164,7 @@ class Parse
    void check();
 //states where the parsing is, mostly for error checking and bug testing.
    string where;
+
+   int label;
 };
 #endif

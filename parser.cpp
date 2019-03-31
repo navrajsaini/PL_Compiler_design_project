@@ -875,3 +875,8 @@ void Parse::ProcName()//procedure name
    }else
       errorReport();
 }
+
+int Parse::NewLabel()
+{
+   return label++;
+}
