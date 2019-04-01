@@ -7,7 +7,7 @@ using namespace std;
 
 int main ()
 {
-   
+   /*  
    //TETING SCANNER && ADMIN
    
    cout << endl << endl << endl;
@@ -50,19 +50,24 @@ int main ()
 
    cout << "------------------testing parser-----------" << endl;
    compiler.parse();
-
-
-   
+   */
    cout << "-------------------testing assembler----------" << endl;
    ofstream outfile;
    outfile.open("GenOut");
    ifstream infile;
-   infile.open("psudoGen");
+   infile.open("psudogen");
    Assembler a(infile, outfile);
+   cout << "first run" << endl;
    a.firstPass();
-   a.secondPass();
+   cout << "second run" << endl;
    outfile.close();
    infile.close();
+
+   outfile.open("GenOut");
+   infile.open("psudogen");
+   a.secondPass();
+
+   
    cout << "------------------testing interpreter----------" << endl;
    Interpreter b("GenOut", true);
    return 0;
