@@ -170,6 +170,6 @@ class Parse
    Admin gen;
    int NewLabel();
    int label = 0;
-   int varLabel, startLabel, valLength;
+   int varLabel, startLabel, valLength[10], valLenPtr = 0;
 };
 #endif

@@ -224,6 +224,7 @@ void Parse::Program()
       if(LHS==".")
       {
 	 cout<<"YOU SUCCESSFULY PARSED, CONGRATS!!!!"<<endl;
+	 
       }else
 	 errorReport();
       //
@@ -247,8 +248,7 @@ void Parse::Block()
       DefPtr();
       
       //
-      gen.emit3("DEFARG", vLabel, valLength);
-      valLength = 0;
+      gen.emit3("DEFARG", vLabel, valLength[valLenPtr]);
       gen.emit2("DEFADDR", sLabel);
       //***
       
@@ -256,7 +256,9 @@ void Parse::Block()
       
       if(LHS=="end")
       {
+	 valLength[valLenPtr] = 0;
 	 match();
+	 
       }else
 	 errorReport();
    }else
@@ -272,11 +274,16 @@ void Parse::DefPtr()
    if(LHS=="const"||LHS=="integer"||LHS=="boolean"||LHS=="proc"||LHS=="Boolean")
    {  //calling def
       Def();
-      valLength++;
+      valLength[valLenPtr]++;
+      
       if(LHS==";")
       {
 	 match();
+	 
 	 DefPtr();
+       
+      }else if(LHS==".")
+      {
       }else	 
 	 errorReport();
    }  
@@ -447,7 +454,9 @@ void Parse::ProcDef()//procedure definition
       if(!bTable.newBlock())
 	 scopeError("Exceded Block limit while declaring procedure");
       
+      valLenPtr++;
       Block();
+      valLenPtr--;
       //remove block from stack
       printPop();
       bTable.endBlock();
@@ -456,21 +465,17 @@ void Parse::ProcDef()//procedure definition
 
 void Parse::StatPtr()//statement part
 {where="SP";check();
-   if(LHS=="skip"||LHS=="read"||LHS=="write"||LHS=="id"||LHS=="do"||LHS=="call"||LHS=="if")
-   {
+
       Stat();
       if(LHS==";")
       {
 	 match();
 	 StatPtr();
+      }else if(LHS=="end")
+      {	 
       }else
-      {
-	 where = "SP";
 	 errorReport();
-      }
-   }else
-   {
-   }
+
 }
 void Parse::Stat()//statement
 {where="S";check();
@@ -495,6 +500,8 @@ void Parse::Stat()//statement
    }else if(LHS=="do")
    {
       DoStat();
+   }else if(LHS=="end")
+   {
    }else
       errorReport();
 }
@@ -583,6 +590,7 @@ void Parse::ProcStat()//procedure statement
    {
       match();
       ProcName();
+      
    }
 }
 void Parse::IfStat()//if statements
@@ -598,7 +606,8 @@ void Parse::IfStat()//if statements
 
 void Parse::DoStat()//do statement
 {where="DS";check();
-
+   if(LHS=="do")
+   {
       match();
       GarCmdList();
       if(LHS=="od")
@@ -606,6 +615,7 @@ void Parse::DoStat()//do statement
 	 match();
       }else
 	 errorReport();
+   }
 }
 
 void Parse::GarCmdList()//guarded command list
@@ -801,10 +811,11 @@ void Parse::Factor()//factor
 void Parse::VarAc()//Variable access
 {where="Va";check();
    //cout<<endl<<where<<endl;
-   if(LHS=="num")
-   {
-      VarAcB();
-   }else if(LHS=="id")
+   //if(LHS=="num")
+   //{
+   //   match();
+   //   VarAcB();
+   if(LHS=="id")
    {
       VarName();
       //ent = bTable.find(index, exist);

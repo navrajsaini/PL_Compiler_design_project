@@ -17,16 +17,16 @@ int main ()
 {
    // variables for file names
    /*remove testLang.txt when project complete*/
-   string codeFileName /*= "testLang.txt"*/, tokenFileName /* = "tokenFile"*/;
-   //string codeFileName = "./testfiles/testLang.txt",
-      //   tokenFileName  = "./testfiles/tokenFile";
+   //string codeFileName /*= "testLang.txt"*/, tokenFileName /* = "tokenFile"*/;
+   string codeFileName = "./testfiles/testLang.txt",
+         tokenFileName  = "./testfiles/tokenFile";
 
    //get the file name for input and then declare and open file
    cout<<"Welcome to compiler4600, please enter your code input file name: ";
-   cin>>codeFileName;
+   //cin>>codeFileName;
    //get the file name for output and then declare and open file
    cout<<endl<< "Now, please enter your scanner output file: ";
-   cin>>tokenFileName;
+   //cin>>tokenFileName;
    
    remove(tokenFileName.c_str()); 
 
