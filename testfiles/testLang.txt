@@ -10,7 +10,7 @@ begin
 		begin
 			k := 2;
 		end;
-		proc 12
+		proc p12
 		begin
 		end;
 		i := 1;
@@ -19,7 +19,7 @@ begin
 	begin
 		integer m;
 		integer l;
-		proc 21
+		proc p21
 		begin
 			Boolean b;
 			proc p211
@@ -32,4 +32,5 @@ begin
 		end;
 		call p1;
 		call p2;
+	end;
 end.

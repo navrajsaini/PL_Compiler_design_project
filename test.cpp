@@ -31,7 +31,7 @@ int main ()
 //	 cout << "testing the proper testLang file." << endl
 //	      << "There should not be any errorrs..."
 //	      << endl;
-   //    }
+   // }
    codefile = codef[7];
    tokenfile = tokenf[7];
    //remove(tokenfile.c_str());
@@ -53,8 +53,7 @@ int main ()
    ofstream outfile;
    outfile.open("GenOut");
    ifstream infile;
-   infile.open("./testfiles/testLang.Out");
+   infile.open("psudogen", ios::app);
    Assembler a(infile, outfile);
-   
    return 0;
 }
