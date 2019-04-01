@@ -1,6 +1,7 @@
 #include <iostream>
 #include "administration.h"
 #include "BlockTable.h"
+#include "Assembler.h"
 using namespace std;
 
 int main ()
@@ -23,32 +24,37 @@ int main ()
        "./testfiles/test3.Out", "./testfiles/test4.Out",
        "./testfiles/test5.Out", "./testfiles/test6.Out",
        "./testfiles/test7.Out", "./testfiles/testLang.Out"};
-   for (int i = 0; i < 8; i++)
-   {
-      if (i == 7)
-      {
-	 cout << "testing the proper testLang file." << endl
-	      << "There should not be any errorrs..."
-	      << endl;
-      }
-      codefile = codef[i];
-      tokenfile = tokenf[i];
-      //remove(tokenfile.c_str());
-      cout << endl;
+   //for (int i = 0; i < 8; i++)
+   //{
+   //if (i == 7)
+   // {
+//	 cout << "testing the proper testLang file." << endl
+//	      << "There should not be any errorrs..."
+//	      << endl;
+   //    }
+   codefile = codef[7];
+   tokenfile = tokenf[7];
+   //remove(tokenfile.c_str());
+   cout << endl;
    
-      Scanner scanTest (codefile, tokenfile);
-      Admin compiler(codefile, tokenfile, scanTest);
-      cout << "finished making the compiler..." << endl;
-      int fin = compiler.scan();
-      cout << "compile finished, output is: " << fin << endl;
-      cout << endl << endl << "about to print... " << endl;
-      compiler.print();
+   Scanner scanTest (codefile, tokenfile);
+   Admin compiler(codefile, tokenfile, scanTest);
+   cout << "finished making the compiler..." << endl;
+   int fin = compiler.scan();
+   cout << "compile finished, output is: " << fin << endl;
+   cout << endl << endl << "about to print... " << endl;
+   compiler.print();
 
-      cout << "the location of begin is: " << scanTest.getToken("begin") << endl;
+   //   cout << "the location of begin is: " << scanTest.getToken("begin") << endl;
 
-      cout << "------------------testing parser-----------" << endl;
-      compiler.parse();
-   }
+   cout << "------------------testing parser-----------" << endl;
+   compiler.parse();
+   cout << "-------------------testing assembler----------" << endl;
+   ofstream outfile;
+   outfile.open("GenOut");
+   ifstream infile;
+   infile.open("./testfiles/testLang.Out");
+   Assembler a(infile, outfile);
    
    return 0;
 }
