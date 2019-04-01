@@ -54,7 +54,7 @@ class Admin
    ofstream output, outsource;//for output file
    string in;//name of input file
    string out;//name of output file
-   string codeGen = "psudoGen";
+   string codeGen = "psudogen";
    //scanner
    Scanner view;//created scanner for admin
    //assn test line

@@ -221,14 +221,15 @@ void Parse::Program()
       printPop();
       bTable.endBlock();
       //---
-      	       
-      //***
       if(LHS==".")
       {
 	 cout<<"YOU SUCCESSFULY PARSED, CONGRATS!!!!"<<endl;
       }else
 	 errorReport();
-      gen.emit1("ENDPROG");
+      //
+      gen.emit1("ENDPROG");     
+      //***
+
    }else
       errorReport();
 }
@@ -244,8 +245,10 @@ void Parse::Block()
       match();
       //call defptr then stat ptr
       DefPtr();
+      
       //
-      gen.emit3("DEFARG", vLabel, varLength);
+      gen.emit3("DEFARG", vLabel, valLength);
+      valLength = 0;
       gen.emit2("DEFADDR", sLabel);
       //***
       
@@ -262,9 +265,14 @@ void Parse::Block()
 //-----
 void Parse::DefPtr()
 {where="DP";check();
+// local code gen vars
+   int varLength = 0, nextVarStart = 3;
+   
+   
    if(LHS=="const"||LHS=="integer"||LHS=="boolean"||LHS=="proc"||LHS=="Boolean")
    {  //calling def
       Def();
+      valLength++;
       if(LHS==";")
       {
 	 match();
@@ -276,6 +284,8 @@ void Parse::DefPtr()
 //-----
 void Parse::Def()//definition function
 {where="D";check();
+
+   
    if(LHS=="const")
    {  //into const deff.
       ConstDef();
