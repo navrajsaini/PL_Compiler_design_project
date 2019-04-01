@@ -2,12 +2,13 @@
 #include "administration.h"
 #include "BlockTable.h"
 #include "Assembler.h"
+#include "interp.h"
 using namespace std;
 
 int main ()
 {
-  
-   //TESTING SCANNER && ADMIN
+   
+   //TETING SCANNER && ADMIN
    
    cout << endl << endl << endl;
    cout << "--------testing scanner-----------";
@@ -49,11 +50,20 @@ int main ()
 
    cout << "------------------testing parser-----------" << endl;
    compiler.parse();
+
+
+   
    cout << "-------------------testing assembler----------" << endl;
    ofstream outfile;
    outfile.open("GenOut");
    ifstream infile;
-   infile.open("psudogen", ios::app);
+   infile.open("psudoGen");
    Assembler a(infile, outfile);
+   a.firstPass();
+   a.secondPass();
+   outfile.close();
+   infile.close();
+   cout << "------------------testing interpreter----------" << endl;
+   Interpreter b("GenOut", true);
    return 0;
 }
