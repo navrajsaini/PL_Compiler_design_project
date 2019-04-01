@@ -47,7 +47,6 @@ void Parse::tokens(string val)
    //cout<<" "<<val<<" ";
    token[tokCount]=val;
    tokCount++;
-   
 }
 //print function for tokens strings
 void Parse::printToken()
@@ -69,6 +68,8 @@ void Parse::match()
 //give a decent;y detailed report of the type of error that has been found
 void Parse::errorReport()
 {
+   gen.emitting=0;
+   
    cout<<endl<<"Total tokens parsed: '"<<tokeNum;
    cout<<"' There was an error on Line Number: '";
    cout<<ln[tokeNum][0]<<"'"<<endl;
@@ -90,6 +91,7 @@ void Parse::check()
 void Parse::scopeError(string s)
 {
    cout<<s<<" with index: "<<ln[tokeNum-1][1]<<" at line:  "<<ln[tokeNum][0]<<" with token : "<<NS<<endl;
+   gen.emitting=0;
 }
 //wipe the variables for the next type check
 void Parse::eraseVar()
@@ -193,35 +195,60 @@ void Parse::parseNow()
   match is called then LHS is incrimented to the next look ahead.
 
   the names of the functions are added in in the comments.
- */
+*/
+/*comments for the psudo code gen
+lable is to increment after every token eccept for semicolin
+The Emit called is dependent on what info is needed , the instruction
+plus the info: var len, address, ...
+*/
+//--- depicts that the functions before belong to the scope type check and
+//*** depicts functions related to code genneration
 void Parse::Program()
 {where="P";check();
-   if(LHS=="begin")
-   {
-      //create a new block
+   if(LHS=="begin")     
+   {      
+      //create a new block for scope/type
       if(!bTable.newBlock())
 	 scopeError("Exceded Block limit");
+      //---
+      varLabel = NewLabel();
+      startLabel = NewLabel();
+      gen.emit3("PROG", varLabel, startLabel);
+      //***   
       //call Block    
-      Block();
+      Block();     
       //pop block
       printPop();
       bTable.endBlock();
+      //---
+      	       
+      //***
       if(LHS==".")
       {
 	 cout<<"YOU SUCCESSFULY PARSED, CONGRATS!!!!"<<endl;
       }else
 	 errorReport();
+      gen.emit1("ENDPROG");
    }else
       errorReport();
 }
 //-----
 void Parse::Block()
 {where="B";check();
+   //local variable for code gen
+   int sLabel = startLabel ,vLabel = varLabel;
+   
    if(LHS=="begin")
    {
+      
       match();
       //call defptr then stat ptr
       DefPtr();
+      //
+      gen.emit3("DEFARG", vLabel, varLength);
+      gen.emit2("DEFADDR", sLabel);
+      //***
+      
       StatPtr();
       
       if(LHS=="end")
@@ -876,7 +903,9 @@ void Parse::ProcName()//procedure name
       errorReport();
 }
 
+//the parser code gen function(s)
 int Parse::NewLabel()
 {
-   return label++;
+   label++;
+   return label;
 }

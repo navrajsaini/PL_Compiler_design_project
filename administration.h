@@ -22,6 +22,7 @@ class Admin
 {
   public:
 //set up admin, input and output for the scanning
+   Admin();  
    Admin(string inFile, string outFile, Scanner &sn);
    ~Admin(){}
 
@@ -39,16 +40,21 @@ class Admin
    void print();
    //the parse function
    void parse();
+   //-----------
+   //Specific functions for code Gen part
    //irrelivant function, keeping for testing purposes
    string doTheThing(int);
    void emit1 (string);
    void emit2 (string, int);
    void emit3 (string, int, int);
+   bool emitting = 1;
+   //--------
   private:
    ifstream input;//for input file
-   ofstream output;//for output file
+   ofstream output, outsource;//for output file
    string in;//name of input file
    string out;//name of output file
+   string codeGen = "psudoGen";
    //scanner
    Scanner view;//created scanner for admin
    //assn test line
@@ -71,7 +77,7 @@ class Admin
    int TL[256];
 
    //bool to make sure we can still input stuff to the output file
-   bool emitting;
+
    
 };
 #endif

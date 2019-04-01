@@ -10,6 +10,8 @@
 
 using namespace std;
 //constructing an admin object
+Admin::Admin()
+{}
 Admin::Admin(string inFile, string outFile, Scanner &sn)
 {
    in = inFile;
@@ -115,27 +117,35 @@ string Admin::parserAsn(int value)
 {
 return view.symbolTable.giveLex(value);
 }
-
+//
 void Admin::emit1(string OP)
 {
+   outsource.open(codeGen, ios::app);
+   
    if (emitting)
    {
-      (*outsource) << OP << endl;
+      outsource << OP << endl;
    }
+   outsource.close();
 }
 
 void Admin::emit2 (string OP, int arg1)
 {
+   outsource.open(codeGen, ios::app);
    if (emitting)
    {
-      (*outsource) << OP << endl << arg1 << endl;
+      outsource << OP << endl << arg1 << endl;
    }
+   outsource.close();
 }
 
 void Admin::emit3 (string OP, int arg1, int arg2)
 {
+   outsource.open(codeGen, ios::app);
    if (emitting)
    {
-      (*outsource) << OP << endl << arg1 << endl << arg2 << endl;
+      outsource << OP << endl << arg1 << endl << arg2 << endl;
    }
+   outsource.close();
+   
 }
