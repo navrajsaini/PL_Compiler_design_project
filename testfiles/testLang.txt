@@ -30,7 +30,7 @@ begin
 			call p21;
 			call p2;
 		end;
-	endl;
+	end;
 	call p1;
 	call p2;	
 end.
