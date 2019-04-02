@@ -11,7 +11,10 @@
 using namespace std;
 //constructing an admin object
 Admin::Admin()
-{}
+{
+   outsource.open(codeGen);
+   outsource.close();
+}
 Admin::Admin(string inFile, string outFile, Scanner &sn)
 {
    in = inFile;

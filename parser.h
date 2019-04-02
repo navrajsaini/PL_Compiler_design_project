@@ -168,7 +168,7 @@ class Parse
    string where;
 
    Admin gen;
-   int NewLabel();
+   int newLabel();
    int label = 0;
    int varLabel, startLabel, valLength[10], valLenPtr = 0;
 };

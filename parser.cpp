@@ -21,6 +21,8 @@ Parse::Parse(string in)
       ln[i][2]=0;
    }
    eraseList();
+   for(int i = 0; i<10; i++)
+      valLength[10] = 0;
 }
 //assins the test line
 void Parse::asn(int sec, int part, int numb)
@@ -211,8 +213,8 @@ void Parse::Program()
       if(!bTable.newBlock())
 	 scopeError("Exceded Block limit");
       //---
-      varLabel = NewLabel();
-      startLabel = NewLabel();
+      varLabel = newLabel();
+      startLabel = newLabel();
       gen.emit3("PROG", varLabel, startLabel);
       //***   
       //call Block    
@@ -242,11 +244,12 @@ void Parse::Block()
    
    if(LHS=="begin")
    {
+
+      
       
       match();
       //call defptr then stat ptr
       DefPtr();
-      
       //
       gen.emit3("DEFARG", vLabel, valLength[valLenPtr]);
       gen.emit2("DEFADDR", sLabel);
@@ -274,7 +277,7 @@ void Parse::DefPtr()
    if(LHS=="const"||LHS=="integer"||LHS=="boolean"||LHS=="proc"||LHS=="Boolean")
    {  //calling def
       Def();
-      valLength[valLenPtr]++;
+      
       
       if(LHS==";")
       {
@@ -294,7 +297,11 @@ void Parse::Def()//definition function
 
    
    if(LHS=="const")
-   {  //into const deff.
+   {
+      //add one to the number of variables at the current block
+      valLength[valLenPtr]++;
+
+      //into const deff.
       ConstDef();
       //this adds the constant to the stack
       if(!checkDef())
@@ -302,12 +309,19 @@ void Parse::Def()//definition function
       
    }else if(LHS=="integer"||LHS=="boolean"||LHS=="Boolean")
    {
+      
       VarDef();
       if(!checkDefList())
 	 scopeError("Ambiguious declaration in variable list");
    }else if(LHS=="proc")
    {
+      //incriment to the next block
+      valLenPtr++;
+
       ProcDef();
+
+      //decrement to the previous block since end has been reached for current procedure
+      valLenPtr--;
    }else
       errorReport();
 }
@@ -347,6 +361,7 @@ void Parse::VarDefB()//variable definition for multiple itirations
 {where="VDB";check();
    if(LHS=="id")
    {
+      valLength[valLenPtr]++;
       VarList();
    }else if(LHS=="array")
    {
@@ -359,8 +374,11 @@ void Parse::VarDefB()//variable definition for multiple itirations
 	 match();
 	 
 	 if(LHS=="num")
+	 {
 	    checkVal=ln[tokeNum][2];
-	 else if(LHS=="id")
+	    
+	    
+	 }else if(LHS=="id")
 	 {	   
 	    index2 = ln[tokeNum][1];
 	    ent = bTable.find(index2, exist);
@@ -373,22 +391,24 @@ void Parse::VarDefB()//variable definition for multiple itirations
 	 
 	 if(en=1)
 	 {
-	    for(int i=0; i<listDepth;i++)
+	    for(int i = 0; i < listDepth; i++)
 	    {
 	       size[i] = ent.value;
 	    }
 	 }else
 	 {
-	    for(int i=0; i<listDepth;i++)
+	    for(int i = 0; i<listDepth;i++)
 	    {
 	       size[i] = checkVal;
 	    }
 	 }
-        
+	 size[0] = checkVal;
+	 valLength[valLenPtr] = valLength[valLenPtr] + checkVal;//
 	 if(!checkDefList())
 	    scopeError("Ambiguous definition of array");
 	 
 	 //i may want to add a check if this val is a name and if so search for it.
+
 	 if(LHS=="]")
 	 {
 	    match();
@@ -430,6 +450,7 @@ void Parse::VarListB()//variable list for multiple itiretions
 {where="VLB";check();
    if(LHS==",")
    {
+      valLength[valLenPtr]++;
       match();
       //cout<<ln[tokeNum][1]<<where;
       varListIndex[listDepth] = ln[tokeNum][1];
@@ -453,13 +474,20 @@ void Parse::ProcDef()//procedure definition
       //add to block stack
       if(!bTable.newBlock())
 	 scopeError("Exceded Block limit while declaring procedure");
-      
+      //
+      int procLabel = newLabel();
+      varLabel = newLabel();
+      startLabel = newLabel();  
+      gen.emit2("DEFADDR", procLabel);
+      gen.emit3("PROC", varLabel, startLabel);
+      //***
       valLenPtr++;
       Block();
       valLenPtr--;
       //remove block from stack
       printPop();
       bTable.endBlock();
+      gen.emit1("ENDPROC");
    }
 }
 
@@ -925,7 +953,7 @@ void Parse::ProcName()//procedure name
 }
 
 //the parser code gen function(s)
-int Parse::NewLabel()
+int Parse::newLabel()
 {
    label++;
    return label;
