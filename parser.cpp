@@ -484,7 +484,7 @@ void Parse::ProcDef()//procedure definition
    {
       match();
       ProcName();
-
+      eKind = PROCEDURE;
       int procLabel = newLabel();
       // add to current block 
       if(!checkDef(procLabel))
@@ -562,7 +562,10 @@ void Parse::ReadStat()//read statement
       
       match();
       VarAcList();
+      
       gen.emit2("READ", tempSizeRead);
+      tempSizeRead = 0;
+      
    }else
    {
 
@@ -573,6 +576,7 @@ void Parse::VarAcList()//variable access list
    if(LHS=="id")
    {
       tempSizeRead = tempSizeRead + 1;
+      
       VarAc();
       VarAcListB();
    }else
@@ -598,6 +602,8 @@ void Parse::WriteStat()//write statement
    {
       match();
       ExpList();
+      gen.emit2("READ", tempSizeWrite);
+      tempSizeWrite = 0;
    }
 }
 void Parse::ExpList()//expression list
@@ -860,16 +866,14 @@ void Parse::Factor()//factor
 }
 void Parse::VarAc()//Variable access
 {where="Va";check();
-   //cout<<endl<<where<<endl;
-   //if(LHS=="num")
-   //{
-   //   match();
-   //   VarAcB();
+   
    if(LHS=="id")
    {
+
       VarName();
-      //ent = bTable.find(index, exist);
-      
+      ent = bTable.find_all_level(index);
+      myType tempT;
+      gen.emit3("VARIABLE", bTable.loc(index), ent.disp);
       //cout << endl << "index: "<< ent.idindex << endl << endl;
       if(!bTable.search(index))
 	 scopeError("list Variable not Defined in VarAc");

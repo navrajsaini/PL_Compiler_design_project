@@ -15,7 +15,7 @@ $here
 		   ~(A[i]=x)->i :=i+ 13;
 	   	fi;
 	   od;
-	found:= A[i] =x;
+	found:= A[i] = x;
    end;
 $Input Table:
    i:=21;

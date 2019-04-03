@@ -173,6 +173,6 @@ class Parse
    int label = 0;
    int displacement = 3;
    int varLabel, startLabel, valLength[10], valLenPtr = 0;
-   int tempSizeRead = 1, tempSizeWrite = 1;
+   int tempSizeRead = 0, tempSizeWrite = 0;
 };
 #endif
