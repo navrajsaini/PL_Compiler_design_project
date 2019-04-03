@@ -96,3 +96,43 @@ Hours spent on this assignment:
       Navraj: 21
    
       Jordan: 21
+      
+## -------------------------------------Code Generation---------------------------------
+
+###Navraj
+
+I changed the define function in the blocktable to include the displacement for insertion and for the find function. The rest was mostly working on the parser file which was done by Jordan.
+
+###Jordan
+
+
+### Files included:
+administration.cpp, admininstration.h, scanner.h, 
+scanner.cpp Makefile, Readme, symboltable.h, 
+symboltable.cpp, token.h, token.cpp, parser.h, 
+parser.cpp, types.h, BlockTable.h, BlockTable.cpp,
+interp.h, interp.cpp, Assembler.h, Assembler.cpp
+
+### To compile:
+   make plc
+   
+            The main program gives an option to print out the symbol table, the parsing information, 
+            and the block at each blockLevel.
+   
+The compile the test program: 
+
+   make test
+   
+            The test file is created for the purpose of testing the functions in the scanner and the parser.
+            It can also be used to test all the testlang files (test1-test7, testLang) in one run.
+            Since the parser calls the BlockTable there was no need to add any extra code into test.cpp.
+            The testing of the BlockTable is taken care of by the parser.
+            The test is only meant to test the test suite we have.
+   
+The code has no compile time errors or any runtime errors.
+
+Hours spent on this assignment:
+
+      Navraj: 5
+   
+      Jordan: 
