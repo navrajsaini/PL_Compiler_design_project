@@ -20,7 +20,7 @@ typedef struct {
    myType type; // object type (integer, boolean)
    int size;    // single variable size = 1; for arrays the value in [] 
    int value;   // value of named constants
-   int disp; // the displacenment, the define function inserts
+   //int disp; // the displacenment, the define function inserts
              // the displacement as well
 } TableEntry;
 
@@ -32,7 +32,8 @@ class BlockTable {
    bool search(int index);
    // Inserts a TableEntry with the given field values in parameters. 
    // Returns true when successful, false when previously defined (ambiguous)
-   bool define(int, Kind, myType, int, int, int);
+   bool define (int, Kind, myType, int, int);
+   //bool define(int, Kind, myType, int, int, int);
    // true when found, false when not in the entire block table
    TableEntry find(int index, bool &error);
    // true when new block created, false when over MAXBLOCK
