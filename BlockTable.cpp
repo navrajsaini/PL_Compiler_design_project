@@ -135,11 +135,11 @@ void BlockTable::printtable()
    {
       cout << "location: " << ind+1 << endl
 	   << "   index: " << j -> idindex << endl
-	   << "   kind: " << j -> kind << endl
-	   << "   type: " << j -> type << endl
-	   << "   size: " << j -> size << endl
+	   << "   kind:  " << j -> kind << endl
+	   << "   type:  " << j -> type << endl
+	   << "   size:  " << j -> size << endl
 	   << "   value: " << j -> value << endl
-	   << "   disp: " << j -> disp << endl
+	   << "   disp:  " << j -> disp << endl
 	   << "   Label: " << j -> procLabel << endl;
       ind++;
    }
