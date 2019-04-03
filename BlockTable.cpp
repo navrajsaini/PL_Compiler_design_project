@@ -168,7 +168,7 @@ int BlockTable::currblock()
 TableEntry BlockTable::find_all_level (int index)
 {   
    TableEntry a;
-   for (int i = 0; i <= blockLevel; i++)
+   for (int i = 0; i < blockLevel; i++)
    {
       for (auto it = table[i].begin(); it != table[i].end(); ++it)
       {
