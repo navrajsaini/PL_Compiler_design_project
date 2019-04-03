@@ -107,10 +107,24 @@ void Parse::eraseVar()
 
 }
 
-//checks the scope and inserts into the table
-bool Parse::checkDef()
+bool Parse::checkDefConst()
 {//printScopeType(true);
-   if (!bTable.define(index, eKind, eType, size[0], checkVal))
+   if (!bTable.define(index, eKind, eType, size[0], checkVal, displacement, 0))
+//proc lable and displacement
+   {
+      displacement++;
+      eraseVar();
+      return false;
+   }
+   eraseVar();
+   return true;
+}
+
+//checks the scope and inserts into the table
+bool Parse::checkDef(int procLabel)
+{//printScopeType(true);
+   if (!bTable.define(index, eKind, eType, 0, 0, 0, procLabel))
+//proc lable and displacement
    {
       eraseVar();
       return false;
@@ -124,8 +138,10 @@ bool Parse::checkDefList()
    
    for(int limit = 0; limit < listDepth; limit++)
    {
-      if (!bTable.define(varListIndex[limit], eKind, eType, size[limit], varListVal[limit]))
+      
+      if (!bTable.define(varListIndex[limit], eKind, eType, size[limit], varListVal[limit],displacement, 0))
       {
+	 displacement++;
 	 
 	 eraseList();
 	 return false;
@@ -271,7 +287,7 @@ void Parse::Block()
 void Parse::DefPtr()
 {where="DP";check();
 // local code gen vars
-   int varLength = 0, nextVarStart = 3;
+   int varLength = 0;
    
    
    if(LHS=="const"||LHS=="integer"||LHS=="boolean"||LHS=="proc"||LHS=="Boolean")
@@ -304,7 +320,7 @@ void Parse::Def()//definition function
       //into const deff.
       ConstDef();
       //this adds the constant to the stack
-      if(!checkDef())
+      if(!checkDefConst())
 	 scopeError("Ambiguous definition of constant");
       
    }else if(LHS=="integer"||LHS=="boolean"||LHS=="Boolean")
@@ -468,14 +484,16 @@ void Parse::ProcDef()//procedure definition
    {
       match();
       ProcName();
+
+      int procLabel = newLabel();
       // add to current block 
-      if(!checkDef())
+      if(!checkDef(procLabel))
 	 scopeError("Ambiguous definition of Procedure");
       //add to block stack
       if(!bTable.newBlock())
 	 scopeError("Exceded Block limit while declaring procedure");
       //
-      int procLabel = newLabel();
+
       varLabel = newLabel();
       startLabel = newLabel();  
       gen.emit2("DEFADDR", procLabel);
@@ -541,8 +559,10 @@ void Parse::ReadStat()//read statement
 {where="RS";check();
    if(LHS=="read")
    {
+      
       match();
       VarAcList();
+      gen.emit2("READ", tempSizeRead);
    }else
    {
 
@@ -552,6 +572,7 @@ void Parse::VarAcList()//variable access list
 {where="VAL";check();
    if(LHS=="id")
    {
+      tempSizeRead = tempSizeRead + 1;
       VarAc();
       VarAcListB();
    }else
@@ -561,6 +582,7 @@ void Parse::VarAcListB()//variable access list for iterations
 {where="VALB";check();
    if(LHS==",")
    {
+      tempSizeRead = tempSizeRead + 1;
       match();
       
       VarAc();

@@ -111,7 +111,8 @@ class Parse
    void scopeError(string);
 //initiates and checks the error as to see if its in block table or not it it isnt
 //it inserts if it isnt it returns false and then the scope error fucntion is ran
-   bool checkDef();
+   bool checkDef(int);
+   bool checkDefConst();
 //erases the varaiables for the next check.
    void eraseVar();
 //assigns both index and checkLex
@@ -170,6 +171,8 @@ class Parse
    Admin gen;
    int newLabel();
    int label = 0;
+   int displacement = 3;
    int varLabel, startLabel, valLength[10], valLenPtr = 0;
+   int tempSizeRead = 1, tempSizeWrite = 1;
 };
 #endif
