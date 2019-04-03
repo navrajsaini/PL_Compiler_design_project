@@ -16,7 +16,7 @@ BlockTable::~BlockTable(){}
 bool BlockTable::search(int index)
 {
    int tempcomp;//temp variable for comparison done in if block
-   for (int i = 0; i <= blockLevel; i++)
+   for (int i = 0; i < blockLevel; i++)
    {
       /*for(int j = 0; j < table[i].size(); j++)*/
       for (auto it = table[i].begin(); it != table[i].end(); ++it)
