@@ -45,7 +45,19 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
    findtable = find (index, error);
    if (error)
    {
-      return false;
+      if (loc(index) == 0)
+	 return false;
+      else
+      {
+	 //create the Table entry
+
+//insert into the location that is recieved from loc(index)
+	 
+	 //push it to the new vector
+	 table[blockLevel].push_back(a);
+	 return true;
+      }
+      
    }
    else
    {
@@ -56,7 +68,7 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
       a.size = nsize;
       a.value = nvalue;
       a.disp = disp;
-      a.procLabel = label
+      a.procLabel = label;
       //push it to the new vector
       table[blockLevel].push_back(a);
       return true;
@@ -147,13 +159,18 @@ void BlockTable::printtable()
 
 int BlockTable::loc(int index)
 {
-   int loc = 0; 
+   TableEntry a;
    for (int i = 0; i < table[blockLevel].size(); i++)
    {
       if (table[blockLevel][i].idindex == index)
       {
-	 return ((blockLevel-loc)*-1);
+	 /*
+	 if (blockLevel-i == 0)
+	 {
+	    table[blockLevel][i].
+	    }
+	 */
+	 return (blockLevel-i);
       }
-      loc++;
    }
 }
