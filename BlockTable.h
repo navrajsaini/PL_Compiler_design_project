@@ -40,7 +40,7 @@ class BlockTable {
    // true when new block created, false when over MAXBLOCK
    bool newBlock();
    void endBlock();
-   
+   int loc(int);
    void printtable();
    bool inScope = false;
   private:

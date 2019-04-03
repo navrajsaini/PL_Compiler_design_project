@@ -144,3 +144,16 @@ void BlockTable::printtable()
       ind++;
    }
 }
+
+int BlockTable::loc(int index)
+{
+   int loc = 0; 
+   for (int i = 0; i < table[blockLevel].size(); i++)
+   {
+      if (table[blockLevel][i].idindex == index)
+      {
+	 return ((blockLevel-loc)*-1);
+      }
+      loc++;
+   }
+}
