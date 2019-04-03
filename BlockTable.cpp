@@ -172,6 +172,7 @@ TableEntry BlockTable::find_all_level (int index)
    {
       for (auto it = table[i].begin(); it != table[i].end(); ++it)
       {
+	 cout << "blockLevel: " << i << endl;
 	 if (it -> idindex == index)
 	 {
 	    a.idindex = table[blockLevel][i].idindex;
