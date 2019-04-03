@@ -41,8 +41,11 @@ class BlockTable {
    bool newBlock();
    void endBlock();
    int loc(int);
+   int currblock();
+   //int insert(int, Kind, myType, int, int, int, int);
    void printtable();
    bool inScope = false;
+   TableEntry find_all_level(int);
   private:
    // Use an array of vectors for the block table.
    vector<TableEntry> table[MAXBLOCK];

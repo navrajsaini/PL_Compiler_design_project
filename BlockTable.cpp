@@ -18,9 +18,10 @@ bool BlockTable::search(int index)
    int tempcomp;//temp variable for comparison done in if block
    for (int i = 0; i <= blockLevel; i++)
    {
-      for(int j = 0; j < table[i].size(); j++)
+      /*for(int j = 0; j < table[i].size(); j++)*/
+      for (auto it = table[i].begin(); it != table[i].end(); ++it)
       {
-	 tempcomp = table[i][j].idindex;
+	 tempcomp = it -> idindex;
 	 if (tempcomp == index)//the comparison that tempcomp is needed for
 	 {
 	    return true;
@@ -45,19 +46,13 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
    findtable = find (index, error);
    if (error)
    {
-      if (loc(index) == 0)
-	 return false;
-      else
-      {
-	 //create the Table entry
-
-//insert into the location that is recieved from loc(index)
-	 
-	 //push it to the new vector
-	 table[blockLevel].push_back(a);
-	 return true;
-      }
-      
+      //  if (loc(index) == 0)//this is for searching and finding the differnece between the index location
+      //and the blockLevel.
+      return false;
+   }
+   else if (findtable.kind == PROCEDURE && search(index))
+   {
+      return false;
    }
    else
    {
@@ -98,11 +93,8 @@ TableEntry BlockTable::find (int index, bool &error)
 	 return a;
       }
    }
-   a.idindex = index;
-   a.size = 1;
    error = false;
    inScope = false;
-   return a;
 }
 
 //if the current blockLevel+1 is greater then MAXBLOCK
@@ -157,20 +149,65 @@ void BlockTable::printtable()
    }
 }
 
-int BlockTable::loc(int index)
+int BlockTable::loc (int index)
 {
-   TableEntry a;
    for (int i = 0; i < table[blockLevel].size(); i++)
    {
       if (table[blockLevel][i].idindex == index)
       {
-	 /*
-	 if (blockLevel-i == 0)
-	 {
-	    table[blockLevel][i].
-	    }
-	 */
 	 return (blockLevel-i);
       }
    }
 }
+
+int BlockTable::currblock()
+{
+   return blockLevel;
+}
+
+TableEntry BlockTable::find_all_level (int index)
+{   
+   TableEntry a;
+   for (int i = 0; i <= blockLevel; i++)
+   {
+      for (auto it = table[i].begin(); it != table[i].end(); ++it)
+      {
+	 if (it -> idindex == index)
+	 {
+	    a.idindex = table[blockLevel][i].idindex;
+	    a.kind = table[blockLevel][i].kind;
+	    a.type = table[blockLevel][i].type;
+	    a.size = table[blockLevel][i].size;
+	    a.value = table[blockLevel][i].value;
+	    a.disp = table[blockLevel][i].disp;
+	    a.procLabel = table[blockLevel][i].procLabel;
+	    return a;
+	 }
+      }
+   }
+}
+/*
+int BlockTable::insert(int index, Kind nkind, myType ntype, int nsize, int nvalue, int disp, int label)
+{
+   for (int i = 0; i < blockLevel; i++)
+   {
+      for (auto it = table[i].begin(); it != table[i].end(); ++i)
+      {
+	 if (it -> idindex == index)
+	 {
+	    if ( (blockLevel-i) != 0)
+	    {
+	       it -> idindex = index;
+	       it -> kind = nkind;
+	       it -> type = ntype;
+	       it -> size = nsize;
+	       it -> value = nvalue;
+	       it -> disp = disp;
+	       it -> procLabel = label;
+	       return index;
+	    }
+	 }
+      }
+   }
+}
+*/
