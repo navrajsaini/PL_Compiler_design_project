@@ -36,7 +36,7 @@ bool BlockTable::search(int index)
 //if a new block can be created and the index wasn't found
 //insert into the new block that was created.
 //and return true
-bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nvalue)
+bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nvalue, int disp)
 {
    bool error, newblock_ret;
    TableEntry findtable, a;
@@ -55,7 +55,7 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
       a.type = ntype;
       a.size = nsize;
       a.value = nvalue;
-      
+      a.disp = disp;
       //push it to the new vector
       table[blockLevel].push_back(a);
       return true;
@@ -80,7 +80,7 @@ TableEntry BlockTable::find (int index, bool &error)
 	 a.type = table[blockLevel][i].type;
 	 a.size = table[blockLevel][i].size;
 	 a.value = table[blockLevel][i].value;
-	 
+	 a.disp = table[blockLevel][i].disp;
 	 return a;
       }
    }
@@ -136,7 +136,8 @@ void BlockTable::printtable()
 	   << "   kind: " << j -> kind << endl
 	   << "   type: " << j -> type << endl
 	   << "   size: " << j -> size << endl
-	   << "   value: " << j -> value << endl;
+	   << "   value: " << j -> value << endl
+	   << "   disp: " << j -> disp << endl;
       ind++;
    }
 }
