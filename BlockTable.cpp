@@ -192,11 +192,12 @@ TableEntry BlockTable::find_all_level (int index)
 	    a.value = it -> value;
 	    a.disp = it -> disp;
 	    a.procLabel = it -> procLabel;
+	    inScope = true;
 	    return a;
 	 }
       }
    }
-
+   inScope = false;
    for (auto it = table[blockLevel].begin(); it != table[blockLevel].end(); ++it)
    {
       if (it -> idindex == index)
@@ -208,32 +209,9 @@ TableEntry BlockTable::find_all_level (int index)
 	 a.value = it -> value;
 	 a.disp = it -> disp;
 	 a.procLabel = it -> procLabel;
+	 inScope = true;
 	 return a;
       }
    }
+   inScope = false;
 }
-/*
-int BlockTable::insert(int index, Kind nkind, myType ntype, int nsize, int nvalue, int disp, int label)
-{
-   for (int i = 0; i < blockLevel; i++)
-   {
-      for (auto it = table[i].begin(); it != table[i].end(); ++i)
-      {
-	 if (it -> idindex == index)
-	 {
-	    if ( (blockLevel-i) != 0)
-	    {
-	       it -> idindex = index;
-	       it -> kind = nkind;
-	       it -> type = ntype;
-	       it -> size = nsize;
-	       it -> value = nvalue;
-	       it -> disp = disp;
-	       it -> procLabel = label;
-	       return index;
-	    }
-	 }
-      }
-   }
-}
-*/
