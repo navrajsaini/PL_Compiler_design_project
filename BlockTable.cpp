@@ -154,6 +154,8 @@ void BlockTable::printtable()
    }
 }
 
+//search all the blocks and if the index is found
+//return the block level relative to the current block
 int BlockTable::loc (int index)
 {
    for (int i = blockLevel; i >= 0; i--)
@@ -167,13 +169,14 @@ int BlockTable::loc (int index)
    }
 }
 
-
-
+//return the current block level
 int BlockTable::currblock()
 {
    return blockLevel;
 }
 
+//search through all the blocks and
+//if the index is found return it's information
 TableEntry BlockTable::find_all_level (int index)
 {   
    TableEntry a;
