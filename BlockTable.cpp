@@ -157,14 +157,18 @@ void BlockTable::printtable()
 
 int BlockTable::loc (int index)
 {
-   for (int i = 0; i < table[blockLevel].size(); i++)
+   for (int i = blockLevel; i >= 0; i--)
    {
-      if (table[blockLevel][i].idindex == index)
-      {
-	 return (blockLevel-i);
-      }
+      for (auto it = table[i].begin(); it != table[i].end(); ++it)
+	 if (it -> idindex == index)
+	 {
+	    // code test line, press enter here:cout<<endl<<blockLevel<<"'"<<i<<endl;
+	    return (blockLevel - i);
+	 }
    }
 }
+
+
 
 int BlockTable::currblock()
 {
