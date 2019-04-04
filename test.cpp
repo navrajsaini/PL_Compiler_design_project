@@ -53,9 +53,9 @@ int main ()
 
    cout << "-------------------testing assembler----------" << endl;
    ofstream outfile;
-   outfile.open("GenOut");
+   outfile.open("./testfiles/testLangGen.Out");
    ifstream infile;
-   infile.open("./testfiles/testLang.Out");
+   infile.open("psudogen");
    Assembler a(infile, outfile);
 
    cout << "first run" << endl;
@@ -65,13 +65,13 @@ int main ()
    outfile.close();
    infile.close();
 
-   outfile.open("GenOut");
+   outfile.open("./testfiles/testLangGen.Out");
    infile.open("psudogen");
    a.secondPass();
 
 
    cout << "------------------testing interpreter----------" << endl;
-   Interpreter b("GenOut", true);
+   Interpreter b("./testfiles/testLangGen.Out", true);
 
    return 0;
 }
