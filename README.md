@@ -101,7 +101,7 @@ Hours spent on this assignment:
 
 ###Navraj
 
-I changed the define function in the blocktable to include the displacement for insertion and for the find function. The rest was mostly working on the parser file which was done by Jordan.
+I changed the define function in the blocktable to include the displacement for insertion and for the find function. Also added in functions to return the current blockLevel and which level a id is compared to the current level. fine_all_level function was created for the purpose of finding a id from the block table and returning it's TableEntry. The rest was mostly working on the parser file which was done by Jordan.
 
 ###Jordan
 
@@ -133,6 +133,6 @@ The code has no compile time errors or any runtime errors.
 
 Hours spent on this assignment:
 
-      Navraj: 5
+      Navraj: 7
    
       Jordan: 
