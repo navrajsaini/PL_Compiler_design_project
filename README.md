@@ -128,6 +128,7 @@ The compile the test program:
             Since the parser calls the BlockTable there was no need to add any extra code into test.cpp.
             The testing of the BlockTable is taken care of by the parser.
             The test is only meant to test the test suite we have.
+            The test program also tests the assembler and the interpreter, only on the last testLang file.
    
 The code has no compile time errors or any runtime errors.
 
