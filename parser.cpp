@@ -116,8 +116,8 @@ bool Parse::checkDefConst()
       eraseVar();
       return false;
    }
-   levelOfCurrentBlock[currentLevel]++;
    cout<<endl<<"'"<<levelOfCurrentBlock[currentLevel]<<"'"<<currentLevel<<"'"<<endl;
+   levelOfCurrentBlock[currentLevel]++;
    eraseVar();
    return true;
 }
@@ -144,12 +144,10 @@ bool Parse::checkDefList()
       {
 	 eraseList();
 	 return false;
-      }	 
+      }
+      cout<<endl<<"'"<<levelOfCurrentBlock[currentLevel]<<"'"<<currentLevel<<"'"<<endl;
+      levelOfCurrentBlock[currentLevel]++;
    }
-   displacement++;
-   levelOfCurrentBlock[currentLevel]++;
-   cout<<endl<<"'"<<levelOfCurrentBlock[currentLevel]<<"'"<<currentLevel<<"'"<<endl;
-
    eraseList();
    return true;
 }
@@ -421,10 +419,11 @@ void Parse::VarDefB()//variable definition for multiple itirations
 	    }
 	 }
 	 size[0] = checkVal;
+	 int tmp = checkVal;
 	 valLength[valLenPtr] = valLength[valLenPtr] + checkVal;//
-	 levelOfCurrentBlock[currentLevel] = levelOfCurrentBlock[currentLevel] + (checkVal - 1);
 	 if(!checkDefList())
 	    scopeError("Ambiguous definition of array");
+	 levelOfCurrentBlock[currentLevel] = levelOfCurrentBlock[currentLevel] + (tmp - 1);
 	 
 	 //i may want to add a check if this val is a name and if so search for it.
 
