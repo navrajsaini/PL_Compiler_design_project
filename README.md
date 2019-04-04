@@ -104,9 +104,10 @@ Hours spent on this assignment:
 
 ### Navraj
 
-I changed the define function in the blocktable to include the displacement for insertion and for the find function. Also added in functions to return the current blockLevel and which level a id is compared to the current level. fine_all_level function was created for the purpose of finding a id from the block table and returning it's TableEntry. The rest was mostly working on the parser file which was done by Jordan. The test file was edited to include the Assemble and Interpreter testing as well.
+I changed the define function in the blocktable to include the displacement for insertion and for the find function. Also added in functions to return the current blockLevel and which level a id is compared to the current level. find_all_level function was created for the purpose of finding a id from the block table and returning it's TableEntry. The rest was mostly working on the parser file which was done by Jordan. The test file was edited to include the Assemble and Interpreter testing as well.
 
 ### Jordan
+
 
 
 ### Files included:
@@ -122,7 +123,7 @@ interp.h, interp.cpp, Assembler.h, Assembler.cpp
             The main program gives an option to print out the symbol table, the parsing information, 
             and the block at each blockLevel.
    
-The compile the test program: 
+   test program: 
 
    make test
    
