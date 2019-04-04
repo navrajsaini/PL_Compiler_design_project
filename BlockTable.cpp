@@ -139,7 +139,6 @@ void BlockTable::endBlock()
 void BlockTable::printtable()
 {
    int ind = 0;
-   cout << "blockLevel: " << blockLevel+1 << endl;
    for (vector<TableEntry>::iterator j = table[blockLevel].begin();
 	j != table[blockLevel].end(); ++j)
    {
@@ -182,7 +181,6 @@ TableEntry BlockTable::find_all_level (int index)
    {
       for (auto it = table[i].begin(); it != table[i].end(); ++it)
       {
-	 cout << "blockLevel: " << i << endl;
 	 if (it -> idindex == index)
 	 {
 	    a.idindex = it -> idindex;
