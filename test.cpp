@@ -7,9 +7,9 @@ using namespace std;
 
 int main ()
 {
-   
+
    //TESING SCANNER && ADMIN
-   
+
    cout << endl << endl << endl;
    cout << "--------testing scanner-----------";
    string codefile, tokenfile;
@@ -19,7 +19,7 @@ int main ()
 	 "./testfiles/test3.txt", "./testfiles/test4.txt",
 	 "./testfiles/test5.txt", "./testfiles/test6.txt",
 	 "./testfiles/test7.txt", "./testfiles/testLang.txt"};
-   
+
    string tokenf[8] =
       {"./testfiles/test1.Out", "./testfiles/test2.Out",
        "./testfiles/test3.Out", "./testfiles/test4.Out",
@@ -36,7 +36,7 @@ int main ()
       codefile = codef[i];
       tokenfile = tokenf[i];
       cout << endl;
-   
+
       Scanner scanTest (codefile, tokenfile);
       Admin compiler(codefile, tokenfile, scanTest);
       cout << "finished making the compiler..." << endl;
@@ -44,34 +44,34 @@ int main ()
       cout << "compile finished, output is: " << fin << endl;
       cout << endl << endl << "about to print... " << endl;
       compiler.print();
-   
+
       //   cout << "the location of begin is: " << scanTest.getToken("begin") << endl;
 
       cout << "------------------testing parser-----------" << endl;
       compiler.parse();
    }
-   
+
    cout << "-------------------testing assembler----------" << endl;
    ofstream outfile;
    outfile.open("GenOut");
    ifstream infile;
-   infile.open("psudogen");
+   infile.open("./testfiles/testLang.Out");
    Assembler a(infile, outfile);
 
    cout << "first run" << endl;
    a.firstPass();
-   
+
    cout << "second run" << endl;
    outfile.close();
    infile.close();
-   
+
    outfile.open("GenOut");
    infile.open("psudogen");
    a.secondPass();
-   
-   
+
+
    cout << "------------------testing interpreter----------" << endl;
    Interpreter b("GenOut", true);
-   
+
    return 0;
 }
