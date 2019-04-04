@@ -174,6 +174,7 @@ class Parse
    int displacement = 3;
    int varLabel, startLabel, valLength[10], valLenPtr = 0;
    int tempSizeRead = 0, tempSizeWrite = 0;
-   int levelOfCurrentBlock[10];
+   int levelOfCurrentBlock[10], currentLevel = 0;
+   //levelOfCurrentBlock[currentLevel]++;
 };
 #endif

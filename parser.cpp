@@ -24,7 +24,7 @@ Parse::Parse(string in)
    for(int i = 0; i<10; i++)
       valLength[10] = 0;
    for(int i = 0; i<10; i++)
-      levelOfCurrentBlock[i] = 0;
+      levelOfCurrentBlock[i] = 3;
 }
 //assins the test line
 void Parse::asn(int sec, int part, int numb)
@@ -111,12 +111,13 @@ void Parse::eraseVar()
 
 bool Parse::checkDefConst()
 {//printScopeType(true);
-   if (!bTable.define(index, eKind, eType, size[0], checkVal, displacement, 0))//proc label and displacement
+   if (!bTable.define(index, eKind, eType, size[0], checkVal, levelOfCurrentBlock[currentLevel], 0))//proc label and displacement
    {
-      displacement++;
       eraseVar();
       return false;
    }
+   levelOfCurrentBlock[currentLevel]++;
+   cout<<endl<<"'"<<levelOfCurrentBlock[currentLevel]<<"'"<<currentLevel<<"'"<<endl;
    eraseVar();
    return true;
 }
@@ -139,15 +140,16 @@ bool Parse::checkDefList()
    for(int limit = 0; limit < listDepth; limit++)
    {
       
-      if (!bTable.define(varListIndex[limit], eKind, eType, size[limit], varListVal[limit], displacement, 0))//incriment displacment by 1
+      if (!bTable.define(varListIndex[limit], eKind, eType, size[limit], varListVal[limit],levelOfCurrentBlock[currentLevel], 0))//incriment displacment by 1
       {
-	 displacement++;
-	 
 	 eraseList();
 	 return false;
-      }
-      }
-   //cout<<endl<<endl;
+      }	 
+   }
+   displacement++;
+   levelOfCurrentBlock[currentLevel]++;
+   cout<<endl<<"'"<<levelOfCurrentBlock[currentLevel]<<"'"<<currentLevel<<"'"<<endl;
+
    eraseList();
    return true;
 }
@@ -420,6 +422,7 @@ void Parse::VarDefB()//variable definition for multiple itirations
 	 }
 	 size[0] = checkVal;
 	 valLength[valLenPtr] = valLength[valLenPtr] + checkVal;//
+	 levelOfCurrentBlock[currentLevel] = levelOfCurrentBlock[currentLevel] + (checkVal - 1);
 	 if(!checkDefList())
 	    scopeError("Ambiguous definition of array");
 	 
@@ -501,8 +504,11 @@ void Parse::ProcDef()//procedure definition
       //***
       valLenPtr++;
       valLength[valLenPtr] = 0;
+      currentLevel++;
       Block();
       valLenPtr--;
+      levelOfCurrentBlock[currentLevel] = 3;
+      currentLevel--;
       //remove block from stack
       printPop();
       bTable.endBlock();
