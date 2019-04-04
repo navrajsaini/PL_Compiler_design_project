@@ -25,7 +25,7 @@ begin
 			proc p211
 			begin
 				f[2] := 2;
-				$call p211;
+				call p211;
 			end;
 			call p21;
 			call p2;

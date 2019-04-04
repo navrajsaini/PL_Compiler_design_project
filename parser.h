@@ -170,7 +170,7 @@ class Parse
 
    Admin gen;
    int newLabel();
-   int label = 0;
+   int label = 0, ary = 0;
    int displacement = 3;
    int varLabel, startLabel, valLength[10], valLenPtr = 0;
    int tempSizeRead = 0, tempSizeWrite = 0;

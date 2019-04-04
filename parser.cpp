@@ -609,7 +609,7 @@ void Parse::WriteStat()//write statement
    {
       match();
       ExpList();
-      gen.emit2("READ", tempSizeWrite);
+      gen.emit2("WRITE", tempSizeWrite);
       tempSizeWrite = 0;
    }
 }
@@ -619,7 +619,8 @@ void Parse::ExpList()//expression list
    {
       
       
-   }  
+   }
+   tempSizeWrite++;
       Exp();
       ExpListB();
 }
@@ -627,6 +628,7 @@ void Parse::ExpListB()//expression list for multiple iterations
 {where="ELB";check();
    if(LHS==",")
    {
+      tempSizeWrite++;
       match();
       Exp();
       ExpListB();
@@ -654,7 +656,14 @@ void Parse::ProcStat()//procedure statement
       match();
       if(!bTable.search(index))
 	 scopeError("Procedure Not Defined in ProcStat");
+
+      ent = bTable.find_all_level(index);
+      cout<<endl<<ln[tokeNum][0]<<", with label";
+      cout<<" "<<ent.procLabel<<", ";
+      gen.emit3("CALL", bTable.loc(index), ent.procLabel);
+      
       ProcName();
+
       
    }
 }
@@ -882,12 +891,17 @@ void Parse::VarAc()//Variable access
 
       VarName();
       ent = bTable.find_all_level(index);
-      cout<<endl<<ent.disp<<endl;
+      //cout<<endl<<ent.disp<<endl;
       gen.emit3("VARIABLE", bTable.loc(index), ent.disp);
       //cout << endl << "index: "<< ent.idindex << endl << endl;
       if(!bTable.search(index))
 	 scopeError("list Variable not Defined in VarAc");
       VarAcB();
+      if(ary == 1)
+      {
+	 gen.emit3("INDEX", ent.size, ln[tokeNum][0]);
+	 ary = 0;
+      }
    }else
       errorReport();
 }
@@ -895,7 +909,7 @@ void Parse::VarAcB()//variable access for mulitple iterations
 {where="VAB";check();
    if(LHS=="[")
    {
-      
+      ary = 1;
       IndexSelect();
    }else
    {
@@ -907,7 +921,6 @@ void Parse::IndexSelect()
    if(LHS=="[")
    {
       match();
-      gen.emit3("INDEX", ent.size , ln[tokeNum][0]);
       
       Exp();
       if(LHS=="]")
