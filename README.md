@@ -1,4 +1,5 @@
 Compiler Design project working on the language PL
+The technical document can be found at: https://bit.ly/2WGUwvG
 Group: Navraj Saini and Jordan Kolody
 
 ## -----------------------------------------------Scanner--------------------------------------------
