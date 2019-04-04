@@ -23,6 +23,8 @@ Parse::Parse(string in)
    eraseList();
    for(int i = 0; i<10; i++)
       valLength[10] = 0;
+   for(int i = 0; i<10; i++)
+      levelOfCurrentBlock[i] = 0;
 }
 //assins the test line
 void Parse::asn(int sec, int part, int numb)
@@ -109,8 +111,7 @@ void Parse::eraseVar()
 
 bool Parse::checkDefConst()
 {//printScopeType(true);
-   if (!bTable.define(index, eKind, eType, size[0], checkVal, displacement, 0))
-//proc lable and displacement
+   if (!bTable.define(index, eKind, eType, size[0], checkVal, displacement, 0))//proc label and displacement
    {
       displacement++;
       eraseVar();
@@ -124,7 +125,6 @@ bool Parse::checkDefConst()
 bool Parse::checkDef(int procLabel)
 {//printScopeType(true);
    if (!bTable.define(index, eKind, eType, 0, 0, 0, procLabel))
-//proc lable and displacement
    {
       eraseVar();
       return false;
@@ -139,7 +139,7 @@ bool Parse::checkDefList()
    for(int limit = 0; limit < listDepth; limit++)
    {
       
-      if (!bTable.define(varListIndex[limit], eKind, eType, size[limit], varListVal[limit],displacement, 0))
+      if (!bTable.define(varListIndex[limit], eKind, eType, size[limit], varListVal[limit], displacement, 0))//incriment displacment by 1
       {
 	 displacement++;
 	 
@@ -500,6 +500,7 @@ void Parse::ProcDef()//procedure definition
       gen.emit3("PROC", varLabel, startLabel);
       //***
       valLenPtr++;
+      valLength[valLenPtr] = 0;
       Block();
       valLenPtr--;
       //remove block from stack
@@ -872,6 +873,7 @@ void Parse::VarAc()//Variable access
 
       VarName();
       ent = bTable.find_all_level(index);
+      cout<<endl<<ent.disp<<endl;
       myType tempT;
       gen.emit3("VARIABLE", bTable.loc(index), ent.disp);
       //cout << endl << "index: "<< ent.idindex << endl << endl;
