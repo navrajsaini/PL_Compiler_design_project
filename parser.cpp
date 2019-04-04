@@ -72,7 +72,7 @@ void Parse::match()
 //give a decent;y detailed report of the type of error that has been found
 void Parse::errorReport()
 {
-   gen.emitting=0;
+   gen.emitting = 0;
    
    cout<<endl<<"Total tokens parsed: '"<<tokeNum;
    cout<<"' There was an error on Line Number: '";
@@ -88,7 +88,7 @@ void Parse::check()
 {
    if(yn==1)
    {
-      cout<<endl<<LHS<<" "<<ln[tokeNum][1]<<" "<<where<<endl;
+      cout<<endl<<LHS<<" "<<ln[tokeNum][1]<<" "<<where<<" line "<<ln[tokeNum][0]<<endl;
    }
 }
 //outputs the error msg for the scope
@@ -116,7 +116,7 @@ bool Parse::checkDefConst()
       eraseVar();
       return false;
    }
-   cout<<endl<<"'"<<levelOfCurrentBlock[currentLevel]<<"'"<<currentLevel<<"'"<<endl;
+   //cout<<endl<<"'"<<levelOfCurrentBlock[currentLevel]<<"'"<<currentLevel<<"'"<<endl;
    levelOfCurrentBlock[currentLevel]++;
    eraseVar();
    return true;
@@ -145,7 +145,7 @@ bool Parse::checkDefList()
 	 eraseList();
 	 return false;
       }
-      cout<<endl<<"'"<<levelOfCurrentBlock[currentLevel]<<"'"<<currentLevel<<"'"<<endl;
+      //cout<<endl<<"'"<<levelOfCurrentBlock[currentLevel]<<"'"<<currentLevel<<"'"<<endl;
       levelOfCurrentBlock[currentLevel]++;
    }
    eraseList();
@@ -241,6 +241,7 @@ void Parse::Program()
       //---
       if(LHS==".")
       {
+	 where="P";check();
 	 cout<<"YOU SUCCESSFULY PARSED, CONGRATS!!!!"<<endl;
 	 
       }else
@@ -397,7 +398,7 @@ void Parse::VarDefB()//variable definition for multiple itirations
 	 }else if(LHS=="id")
 	 {	   
 	    index2 = ln[tokeNum][1];
-	    ent = bTable.find(index2, exist);
+	    ent = bTable.find_all_level(index2);
 	    if(!bTable.inScope)
 	       scopeError("Error, Variable not declared in scope");
 	    en=1;
@@ -651,6 +652,8 @@ void Parse::ProcStat()//procedure statement
    if(LHS=="call")
    {
       match();
+      if(!bTable.search(index))
+	 scopeError("Procedure Not Defined in ProcStat");
       ProcName();
       
    }
@@ -849,6 +852,7 @@ void Parse::Factor()//factor
    if(LHS=="num"||LHS=="false"||LHS=="true")
    {
       Const();
+      gen.emit2("CONSTANT", tpVl);
       
    }else if(LHS=="id")
    {
@@ -879,7 +883,6 @@ void Parse::VarAc()//Variable access
       VarName();
       ent = bTable.find_all_level(index);
       cout<<endl<<ent.disp<<endl;
-      myType tempT;
       gen.emit3("VARIABLE", bTable.loc(index), ent.disp);
       //cout << endl << "index: "<< ent.idindex << endl << endl;
       if(!bTable.search(index))
@@ -892,6 +895,7 @@ void Parse::VarAcB()//variable access for mulitple iterations
 {where="VAB";check();
    if(LHS=="[")
    {
+      
       IndexSelect();
    }else
    {
@@ -903,6 +907,8 @@ void Parse::IndexSelect()
    if(LHS=="[")
    {
       match();
+      gen.emit3("INDEX", ent.size , ln[tokeNum][0]);
+      
       Exp();
       if(LHS=="]")
       {
@@ -918,13 +924,20 @@ void Parse::Const()//constant
       eType = INT;
       
       Num();
+  
    }else if(LHS=="true"||LHS=="false")
    {  //
       eType = BOOL;
       BoolSym();
    }else if(LHS=="id")
    {
+      tempEnt = bTable.find_all_level(index);
+      tpVl = tempEnt.value;
+      
+      if(!bTable.inScope)
+	       scopeError("Error, Variable not declared in scope");
       ConstName();
+
    }else
       errorReport();
 }
@@ -934,12 +947,14 @@ void Parse::BoolSym()//boolean symbol
    {  //calling to initialize val to 0 for the type
       checkVal = 0;
       varListVal[listDepth] = 0;
+      tpVl=checkVal;
       //ctd
       match();
    }else if(LHS=="true")
    {  //calling to initialize val to 1 for the type
       checkVal = 1;
       varListVal[listDepth] = 1;
+      tpVl=checkVal;
       //ctd
       match();
    }else
@@ -970,6 +985,7 @@ void Parse::Num()//number
    {  //initialise val of number
       //asnIndexVal(vl);
       checkVal=ln[tokeNum][2];
+      tpVl=checkVal;
       //cout<<endl<<checkVal<<"  "<<LHS<<"  "<<endl;
       match();
    }else

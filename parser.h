@@ -150,7 +150,7 @@ class Parse
 //      if (!bTable.define(cnameindex, CONSTANT, temptype, 1, tempvalue))
 //	 scopeError("Ambiguous definition of constant");
    void printScopeType(bool);
-   TableEntry ent;
+   TableEntry ent, tempEnt;
 /*end of scope and type checking variables and functions*/
 //--------------------------------
 //FILE STREAM
@@ -174,7 +174,7 @@ class Parse
    int displacement = 3;
    int varLabel, startLabel, valLength[10], valLenPtr = 0;
    int tempSizeRead = 0, tempSizeWrite = 0;
-   int levelOfCurrentBlock[10], currentLevel = 0;
+   int levelOfCurrentBlock[10], currentLevel = 0, tpVl = 0;
    //levelOfCurrentBlock[currentLevel]++;
 };
 #endif

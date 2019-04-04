@@ -97,7 +97,7 @@ void Admin::parse()
    string tempStr;
    for(int i=1; i<256; i++)
    {
-      parser.asn(i, 0, view.lineToke[i][0]);
+      parser.asn(i, 0, (view.lineToke[i][0] + 1));
       parser.asn(i, 1, view.lineToke[i][1]);
       parser.asn(i, 2, view.lineToke[i][2]);
       //tempStr = view.symbolTable.htable[(view.lineToke[i][1])].getLexeme();
