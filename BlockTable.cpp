@@ -28,6 +28,12 @@ bool BlockTable::search(int index)
 	 }
       }
    }
+   
+   for (auto it = table[blockLevel].begin(); it != table[blockLevel].end(); ++it)
+   {
+      if (it -> idindex == index)
+	 return true;
+   }
    return false;
 }
 
@@ -175,15 +181,30 @@ TableEntry BlockTable::find_all_level (int index)
 	 cout << "blockLevel: " << i << endl;
 	 if (it -> idindex == index)
 	 {
-	    a.idindex = table[blockLevel][i].idindex;
-	    a.kind = table[blockLevel][i].kind;
-	    a.type = table[blockLevel][i].type;
-	    a.size = table[blockLevel][i].size;
-	    a.value = table[blockLevel][i].value;
-	    a.disp = table[blockLevel][i].disp;
-	    a.procLabel = table[blockLevel][i].procLabel;
+	    a.idindex = it -> idindex;
+	    a.kind = it -> kind;
+	    a.type = it -> type;
+	    a.size = it -> size;
+	    a.value = it -> value;
+	    a.disp = it -> disp;
+	    a.procLabel = it -> procLabel;
 	    return a;
 	 }
+      }
+   }
+
+   for (auto it = table[blockLevel].begin(); it != table[blockLevel].end(); ++it)
+   {
+      if (it -> idindex == index)
+      {
+	 a.idindex = it -> idindex;
+	 a.kind = it -> kind;
+	 a.type = it -> type;
+	 a.size = it -> size;
+	 a.value = it -> value;
+	 a.disp = it -> disp;
+	 a.procLabel = it -> procLabel;
+	 return a;
       }
    }
 }
