@@ -180,6 +180,23 @@ int BlockTable::currblock()
 TableEntry BlockTable::find_all_level (int index)
 {   
    TableEntry a;
+
+   for (auto it = table[blockLevel].begin(); it != table[blockLevel].end(); ++it)
+   {
+      if (it -> idindex == index)
+      {
+	 a.idindex = it -> idindex;
+	 a.kind = it -> kind;
+	 a.type = it -> type;
+	 a.size = it -> size;
+	 a.value = it -> value;
+	 a.disp = it -> disp;
+	 a.procLabel = it -> procLabel;
+	 inScope = true;
+	 return a;
+      }
+   }
+   inScope = false;
    for (int i = 0; i < blockLevel; i++)
    {
       for (auto it = table[i].begin(); it != table[i].end(); ++it)
@@ -196,22 +213,6 @@ TableEntry BlockTable::find_all_level (int index)
 	    inScope = true;
 	    return a;
 	 }
-      }
-   }
-   inScope = false;
-   for (auto it = table[blockLevel].begin(); it != table[blockLevel].end(); ++it)
-   {
-      if (it -> idindex == index)
-      {
-	 a.idindex = it -> idindex;
-	 a.kind = it -> kind;
-	 a.type = it -> type;
-	 a.size = it -> size;
-	 a.value = it -> value;
-	 a.disp = it -> disp;
-	 a.procLabel = it -> procLabel;
-	 inScope = true;
-	 return a;
       }
    }
    inScope = false;
