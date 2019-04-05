@@ -750,7 +750,6 @@ void Parse::ExpB()//expression for multiple iterations
 {where="EB";check();
    if(LHS=="|"||LHS=="&")
    {
-      
       PrimOp();
       PrimExp();
       ExpB();
