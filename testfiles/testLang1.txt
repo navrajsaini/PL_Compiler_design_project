@@ -14,6 +14,7 @@ $here
 	   	if A[i] =x ->m := i;[]
 		   ~(A[i]=x)->i :=i+ 13;
 	   	fi;
+		integer food = i;
 	   od;
 	found:= A[i] = x;
    end;

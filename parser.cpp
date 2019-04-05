@@ -73,15 +73,18 @@ void Parse::match()
 void Parse::errorReport()
 {
    gen.emitting = 0;
-   
-   cout<<endl<<"Total tokens parsed: '"<<tokeNum;
-   cout<<"' There was an error on Line Number: '";
-   cout<<ln[tokeNum][0]<<"'"<<endl;
-   cout<<"This, has the last function to be called acronymed as: '";
-   cout<<where<<"'"<<endl;
-   cout<<"The token of issue is: '"<<LHS;
-   cout<<"' with a hashval of: '"<<ln[tokeNum][1]<<"'"<<endl;
-   cout<<"The token val of: '"<<ln[tokeNum][2]<<"'"<<endl;
+   if(isErr == 0)
+   {
+      isErr = 1;
+      cout<<endl<<"Total tokens parsed: '"<<tokeNum;
+      cout<<"' There was an error on Line Number: '";
+      cout<<ln[tokeNum][0]<<"'"<<endl;
+      cout<<"This, has the last function to be called acronymed as: '";
+      cout<<where<<"'"<<endl;
+      cout<<"The token of issue is: '"<<LHS;
+      cout<<"' with a hashval of: '"<<ln[tokeNum][1]<<"'"<<endl;
+      cout<<"The token val of: '"<<ln[tokeNum][2]<<"'"<<endl;
+   }
 }
 //check for user input to then pring parsing as it occours
 void Parse::check()
@@ -582,8 +585,8 @@ void Parse::VarAcList()//variable access list
 {where="VAL";check();
    if(LHS=="id")
    {
-      tempSizeRead = tempSizeRead + 1;
-      
+      tempSizeRead++;
+      tempSizeAsn++;
       VarAc();
       VarAcListB();
    }else
@@ -593,7 +596,8 @@ void Parse::VarAcListB()//variable access list for iterations
 {where="VALB";check();
    if(LHS==",")
    {
-      tempSizeRead = tempSizeRead + 1;
+      tempSizeRead++;
+      tempSizeAsn++;
       match();
       
       VarAc();
@@ -640,96 +644,113 @@ void Parse::ExpListB()//expression list for multiple iterations
 void Parse::AsnStat()//assignment statement
 {where="AS";check();
  
-      VarAcList();
-      if(LHS==":=")
-      {
-	 match();
-	 ExpList();
-      }else
-	 errorReport();
+   VarAcList();
+   
+   if(LHS==":=")
+   {
+      match();
+      ExpList();
+   }else
+      errorReport();
+   gen.emit2("ASSIGN", tempSizeAsn);
+   
+   tempSizeAsn = 0;
 
 }
 void Parse::ProcStat()//procedure statement
 {where="PS";check();
    if(LHS=="call")
    {
-      match();
-      if(!bTable.search(index))
+      match();      
+      ProcName();
+            if(!bTable.search(index))
 	 scopeError("Procedure Not Defined in ProcStat");
 
       ent = bTable.find_all_level(index);
-      cout<<endl<<ln[tokeNum][0]<<", with label";
-      cout<<" "<<ent.procLabel<<", ";
+      //cout<<endl<<ln[tokeNum-1][0]<<", with label";
+      //cout<<" "<<ent.procLabel<<", ";
       gen.emit3("CALL", bTable.loc(index), ent.procLabel);
-      
-      ProcName();
 
       
    }
 }
 void Parse::IfStat()//if statements
 {where="IS";check();
+
+   match();
+   int startL = newLabel(), doneL= newLabel(), pass1 = startL, pass2 = doneL;
+   GarCmdList(pass1, pass2);
+   gen.emit2("DEFFADR $IfStat", startL);
+   if(LHS=="fi")
+   {
+      gen.emit2("FI", ln[tokeNum][0]);
       match();
-      GarCmdList();
-      if(LHS=="fi")
-      {
-	 match();
-      }else
-	 errorReport();
+      gen.emit2("DEFFADR", doneL);
+   }else
+      errorReport();
 }
 
 void Parse::DoStat()//do statement
 {where="DS";check();
-   if(LHS=="do")
+   int startL = newLabel(), loopL= newLabel(), pass1 = startL, pass2 = loopL;
+   
+   match();
+   gen.emit2("DEFFADR $DoStat", loopL);
+   GarCmdList(pass1, pass2);
+   if(LHS=="od")
    {
+      gen.emit2("OD", ln[tokeNum][0]);
       match();
-      GarCmdList();
-      if(LHS=="od")
-      {
-	 match();
-      }else
+       gen.emit2("DEFFADR", startL);
+   }else
 	 errorReport();
-   }
 }
 
-void Parse::GarCmdList()//guarded command list
+void Parse::GarCmdList(int &l1, int l2)//guarded command list
 {where="GCL";check();
-   GarCmd();
-   GarCmdListB();
+   
+   GarCmd(l1, l2);
+   GarCmdListB(l1, l2);
 }
-void Parse::GarCmdListB()//guarded command list for multiple iterations
+void Parse::GarCmdListB(int &l1, int l2)//guarded command list for multiple iterations
 {where="GCLB";check();
    if(LHS=="[]")
    {
       match();
-      GarCmd();
-      GarCmdListB();
+      GarCmd(l1, l2);
+      GarCmdListB(l1, l2);
    }else
    {
       
    }
 }
 
-void Parse::GarCmd()//guarded command
+void Parse::GarCmd(int &l1, int l2)//guarded command
 {where="GC";check();
-   Exp();
+
+   gen.emit2("DEFADDR $GarGmd", l1);
+      Exp();
+   l1 = newLabel();
    if(LHS=="->")
    {
+      gen.emit2("ARROW", l1);
       match();
       StatPtr();
+      gen.emit2("BAR", l2);
    }else
       errorReport();
 }
 void Parse::Exp()//expression
-{where="E";check();
-      PrimExp();
-      ExpB();
+{where="E";check(); 
+   PrimExp();
+   ExpB();
 }
 
 void Parse::ExpB()//expression for multiple iterations
 {where="EB";check();
    if(LHS=="|"||LHS=="&")
    {
+      
       PrimOp();
       PrimExp();
       ExpB();
@@ -742,9 +763,11 @@ void Parse::PrimOp()//primary operations
 {where="PO";check();
    if(LHS=="&")
    {
+      gen.emit1("AND");
       match();
    }else if(LHS=="|")
    {
+      gen.emit1("OR");
       match();
    }else
       errorReport();
@@ -771,12 +794,15 @@ void Parse::RelatOp()//relational operator
 {where="RO";check();
    if(LHS=="<")
    {
+      gen.emit1("LESS");
       match();
    }else if(LHS=="=")
    {
+      gen.emit1("EQUAL");
       match();
    }else if(LHS==">")
    {
+      gen.emit1("GREATER");
       match();
    }else
       errorReport();
@@ -793,6 +819,7 @@ void Parse::Line()
 {where="L";check();
    if(LHS=="-")
    {
+      
       match();
    }else
    {
@@ -816,9 +843,11 @@ void Parse::AddOp()//Add/subtract operator
 {where="AO";check();
    if(LHS=="+")
    {
+      gen.emit1("ADD");
       match();
    }else if(LHS=="-")
    {
+      gen.emit1("SUBTRACT");
       match();
    }else
       errorReport();
@@ -846,12 +875,15 @@ void Parse::MultOp()//multiplying, div, and mod operator
 {where="MO";check();
    if(LHS=="*")
    {
+      gen.emit1("TIMES");
       match();
    }else if(LHS=="%")
    {
+      gen.emit1("MODULO");
       match();
    }else if(LHS=="/")
    {
+      gen.emit1("DIVIDE");
       match();
    }else
       errorReport();
@@ -865,8 +897,8 @@ void Parse::Factor()//factor
       
    }else if(LHS=="id")
    {
-
       VarAc();
+      gen.emit1("VALUE");
    }else if(LHS=="(")
    {
       match();
@@ -878,6 +910,7 @@ void Parse::Factor()//factor
 	 errorReport();
    }else if(LHS=="~")
    {
+      gen.emit1("NOT");
       match();
       Factor();
    }else

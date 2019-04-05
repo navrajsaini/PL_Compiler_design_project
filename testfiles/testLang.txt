@@ -27,9 +27,9 @@ begin
 				f[2] := 2;
 				call p211;
 			end;
-			call p21;
-			call p2;
 		end;
+		call p21;
+		call p2;	
 	end;
 	call p1;
 	call p2;	

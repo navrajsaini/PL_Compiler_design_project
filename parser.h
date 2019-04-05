@@ -70,9 +70,9 @@ class Parse
    void ProcStat();
    void IfStat();
    void DoStat();
-   void GarCmdList();
-   void GarCmdListB();
-   void GarCmd();
+   void GarCmdList(int &, int);
+   void GarCmdListB(int &, int);
+   void GarCmd(int &, int);
    void Exp();
    void ExpB();
    void PrimOp();
@@ -167,13 +167,13 @@ class Parse
    void check();
 //states where the parsing is, mostly for error checking and bug testing.
    string where;
-
+   bool isErr = 0;
    Admin gen;
    int newLabel();
    int label = 0, ary = 0;
    int displacement = 3;
    int varLabel, startLabel, valLength[10], valLenPtr = 0;
-   int tempSizeRead = 0, tempSizeWrite = 0;
+   int tempSizeRead = 0, tempSizeWrite = 0, tempSizeAsn = 0;
    int levelOfCurrentBlock[10], currentLevel = 0, tpVl = 0;
    //levelOfCurrentBlock[currentLevel]++;
 };
