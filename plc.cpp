@@ -18,7 +18,7 @@ int main ()
    // variables for file names
    /*remove testLang.txt when project complete*/
    //string codeFileName /*= "testLang.txt"*/, tokenFileName /* = "tokenFile"*/;
-   string codeFileName = "./testfiles/testLang.txt",
+   string codeFileName = "./testfiles/testLang1.txt",
          tokenFileName  = "./testfiles/tokenFile";
 
    //get the file name for input and then declare and open file

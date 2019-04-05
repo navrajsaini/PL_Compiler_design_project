@@ -97,7 +97,7 @@ void Parse::check()
 //outputs the error msg for the scope
 void Parse::scopeError(string s)
 {
-   cout<<s<<" with index: "<<ln[tokeNum-1][1]<<" at line:  "<<ln[tokeNum][0]<<" with token : "<<NS<<endl;
+   cout<<s<<" with index: "<<ln[tokeNum][1]<<" at line:  "<<ln[tokeNum][0]<<" with token : "<<LHS<<endl;
    gen.emitting=0;
 }
 //wipe the variables for the next type check
@@ -401,10 +401,13 @@ void Parse::VarDefB()//variable definition for multiple itirations
 	 }else if(LHS=="id")
 	 {	   
 	    index2 = ln[tokeNum][1];
-	    ent = bTable.find_all_level(index2);
-	    if(!bTable.inScope)
+	    bool l = bTable.search(index2);
+	    
+	    //cout<<bTable.inScope;
+	    if(!l)
 	       scopeError("Error, Variable not declared in scope");
 	    en=1;
+	    bTable.inScope = 0;
 	 }
 	 
 	 Const();
@@ -434,7 +437,8 @@ void Parse::VarDefB()//variable definition for multiple itirations
 	 if(LHS=="]")
 	 {
 	    match();
-	 }
+	 }else
+	    errorReport();
       }
    }else
    {
@@ -527,15 +531,17 @@ void Parse::StatPtr()//statement part
       {
 	 match();
 	 StatPtr();
-      }else if(LHS=="end")
-      {	 
+      }else if(LHS=="end"||LHS=="[]"||LHS=="fi"||LHS=="od")
+      {
       }else
 	 errorReport();
 
 }
 void Parse::Stat()//statement
 {where="S";check();
-   if(LHS=="read")
+   if(LHS=="[]"||LHS=="fi"||LHS=="od")
+   {     
+   }else if(LHS=="read")
    {
       ReadStat();
    }else if(LHS=="skip")
@@ -714,11 +720,16 @@ void Parse::GarCmdList(int &l1, int l2)//guarded command list
 }
 void Parse::GarCmdListB(int &l1, int l2)//guarded command list for multiple iterations
 {where="GCLB";check();
-   if(LHS=="[]")
+   if(LHS=="["||LHS=="[]")
    {
       match();
-      GarCmd(l1, l2);
-      GarCmdListB(l1, l2);
+      if(LHS=="]"||NS=="[]")
+      {
+	 match();
+	 GarCmd(l1, l2);
+	 GarCmdListB(l1, l2);
+      }else
+	 errorReport();
    }else
    {
       
@@ -976,13 +987,13 @@ void Parse::Const()//constant
       BoolSym();
    }else if(LHS=="id")
    {
+
+      ConstName();
       tempEnt = bTable.find_all_level(index);
       tpVl = tempEnt.value;
-      
-      if(!bTable.inScope)
-	       scopeError("Error, Variable not declared in scope");
-      ConstName();
 
+      if(!bTable.inScope)
+	 scopeError("Error, Variable not declared in scope");
    }else
       errorReport();
 }
