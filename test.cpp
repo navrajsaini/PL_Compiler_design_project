@@ -9,7 +9,8 @@ int main ()
 {
 
    //TESING SCANNER && ADMIN
-
+   ifstream infile;
+   ofstream outfile;
    cout << endl << endl << endl;
    cout << "--------testing scanner-----------";
    string codefile, tokenfile;
@@ -49,29 +50,27 @@ int main ()
 
       cout << "------------------testing parser-----------" << endl;
       compiler.parse();
+
+      cout << "-------------------testing assembler----------" << endl;
+      outfile.open(tokenfile);
+      infile.open("psudogen");
+      Assembler a(infile, outfile);
+
+      cout << "first run" << endl;
+      a.firstPass();
+
+      cout << "second run" << endl;
+      outfile.close();
+      infile.close();
+
+      outfile.open(tokenfile);
+      infile.open("psudogen");
+      a.secondPass();
+
+
+      cout << "------------------testing interpreter----------" << endl;
+      Interpreter b(tokenfile, true);
+
+      return 0;
    }
-
-   cout << "-------------------testing assembler----------" << endl;
-   ofstream outfile;
-   outfile.open("./testfiles/testLangGen.Out");
-   ifstream infile;
-   infile.open("psudogen");
-   Assembler a(infile, outfile);
-
-   cout << "first run" << endl;
-   a.firstPass();
-
-   cout << "second run" << endl;
-   outfile.close();
-   infile.close();
-
-   outfile.open("./testfiles/testLangGen.Out");
-   infile.open("psudogen");
-   a.secondPass();
-
-
-   cout << "------------------testing interpreter----------" << endl;
-   Interpreter b("./testfiles/testLangGen.Out", true);
-
-   return 0;
 }
