@@ -413,7 +413,7 @@ void Parse::VarDefB()//variable definition for multiple itirations
 	 }
 	 
 	 Const();
-	 if(!sVAl)
+	 if(!sVal)
 	 {
 	    scopeError("Error, Variable not declared in scope");
 	    en=1;
