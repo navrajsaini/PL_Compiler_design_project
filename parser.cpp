@@ -686,7 +686,7 @@ void Parse::IfStat()//if statements
    match();
    int startL = newLabel(), doneL= newLabel(), pass1 = startL, pass2 = doneL;
    GarCmdList(pass1, pass2);
-   gen.emit2("DEFFADR $IfStat", startL);
+   gen.emit2("DEFFADR", startL);
    if(LHS=="fi")
    {
       gen.emit2("FI", ln[tokeNum][0]);
@@ -701,7 +701,7 @@ void Parse::DoStat()//do statement
    int startL = newLabel(), loopL= newLabel(), pass1 = startL, pass2 = loopL;
    
    match();
-   gen.emit2("DEFFADR $DoStat", loopL);
+   gen.emit2("DEFFADR", loopL);
    GarCmdList(pass1, pass2);
    if(LHS=="od")
    {
@@ -739,7 +739,7 @@ void Parse::GarCmdListB(int &l1, int l2)//guarded command list for multiple iter
 void Parse::GarCmd(int &l1, int l2)//guarded command
 {where="GC";check();
 
-   gen.emit2("DEFADDR $GarGmd", l1);
+   gen.emit2("DEFADDR", l1);
       Exp();
    l1 = newLabel();
    if(LHS=="->")
