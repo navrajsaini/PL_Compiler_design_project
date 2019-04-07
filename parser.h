@@ -98,7 +98,7 @@ class Parse
    void ProcName();
 
 
-
+bool ctd = 1, stopType = 0;
    
 //---------------------------------------------
 //Scope/Type
@@ -176,7 +176,7 @@ class Parse
    int varLabel, startLabel, valLength[10], valLenPtr = 0;
    int tempSizeRead = 0, tempSizeWrite = 0, tempSizeAsn = 0;
    int levelOfCurrentBlock[10], currentLevel = 0, tpVl = 0;
-   bool ctd = 1, stopType = 0;
+   
    //levelOfCurrentBlock[currentLevel]++;
 };
 #endif
