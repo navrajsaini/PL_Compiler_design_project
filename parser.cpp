@@ -707,7 +707,7 @@ void Parse::DoStat()//do statement
    {
       gen.emit2("OD", ln[tokeNum][0]);
       match();
-       gen.emit2("DEFFADR", startL);
+       gen.emit2("DEFFADDR", startL);
    }else
 	 errorReport();
 }
