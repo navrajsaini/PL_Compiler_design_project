@@ -28,7 +28,7 @@ bool BlockTable::search(int index)
 	 }
       }
    }
-   
+
    for (auto it = table[blockLevel].begin(); it != table[blockLevel].end(); ++it)
    {
       if (it -> idindex == index)
@@ -81,7 +81,7 @@ bool BlockTable::define (int index, Kind nkind, myType ntype, int nsize, int nva
 // set error to false
 //else error is set to true
 TableEntry BlockTable::find (int index, bool &error)
-{   
+{
    TableEntry a;
    for (int i = 0; i < table[blockLevel].size(); i++)
    {
@@ -135,7 +135,8 @@ void BlockTable::endBlock()
    else
       ;
 }
-
+//to print the blocktable at the current block level
+//for testing purposes only
 void BlockTable::printtable()
 {
    int ind = 0;
@@ -159,13 +160,15 @@ void BlockTable::printtable()
 int BlockTable::loc (int index)
 {
    for (int i = blockLevel; i >= 0; i--)
+   //go through all the blocks from the current block
    {
       for (auto it = table[i].begin(); it != table[i].end(); ++it)
-	 if (it -> idindex == index)
-	 {
-	    // code test line, press enter here:cout<<endl<<blockLevel<<"'"<<i<<endl;
-	    return (blockLevel - i);
-	 }
+      //check all the entries in the block level
+    	 if (it -> idindex == index)
+       //if it matches return the differnece in the block levels
+    	 {
+    	    return (blockLevel - i);
+    	 }
    }
 }
 
@@ -178,41 +181,46 @@ int BlockTable::currblock()
 //search through all the blocks and
 //if the index is found return it's information
 TableEntry BlockTable::find_all_level (int index)
-{   
+{
    TableEntry a;
 
    for (auto it = table[blockLevel].begin(); it != table[blockLevel].end(); ++it)
+   //looks through the current block level
    {
       if (it -> idindex == index)
+      //if the index is found returns the table entry
+      //and set inScope to true to make sure the variable is declared
       {
-	 a.idindex = it -> idindex;
-	 a.kind = it -> kind;
-	 a.type = it -> type;
-	 a.size = it -> size;
-	 a.value = it -> value;
-	 a.disp = it -> disp;
-	 a.procLabel = it -> procLabel;
-	 inScope = true;
-	 return a;
+	       a.idindex = it -> idindex;
+	       a.kind = it -> kind;
+	       a.type = it -> type;
+	       a.size = it -> size;
+	       a.value = it -> value;
+	       a.disp = it -> disp;
+	       a.procLabel = it -> procLabel;
+	       inScope = true;
+	       return a;
       }
    }
    inScope = false;
+   //if the variable is not found in the current block level
+   //search all the block levels up to the current one
    for (int i = 0; i < blockLevel; i++)
    {
       for (auto it = table[i].begin(); it != table[i].end(); ++it)
       {
-	 if (it -> idindex == index)
-	 {
-	    a.idindex = it -> idindex;
-	    a.kind = it -> kind;
-	    a.type = it -> type;
-	    a.size = it -> size;
-	    a.value = it -> value;
-	    a.disp = it -> disp;
-	    a.procLabel = it -> procLabel;
-	    inScope = true;
-	    return a;
-	 }
+    	 if (it -> idindex == index)
+    	 {
+    	    a.idindex = it -> idindex;
+    	    a.kind = it -> kind;
+    	    a.type = it -> type;
+    	    a.size = it -> size;
+    	    a.value = it -> value;
+    	    a.disp = it -> disp;
+    	    a.procLabel = it -> procLabel;
+    	    inScope = true;
+    	    return a;
+    	 }
       }
    }
    inScope = false;
