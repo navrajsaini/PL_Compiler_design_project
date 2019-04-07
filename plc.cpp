@@ -52,28 +52,30 @@ int main ()
    
    //Time to parse
    compiler.parse();
+   if (compiler.ctd)
+   {
+      //--------------------------assembler-------------------
+      //open the psudogen and create the output file for the interpreter
+      ifstream infile;//psudogen is given to the assembler
+      infile.open ("psudogen");
+
+      //psudogen.Out file is given to the assember then passed to the interpreter
+      ofstream outfile;
+      outfile.open ("psudogen.Out");
    
-   //--------------------------assembler-------------------
-   //open the psudogen and create the output file for the interpreter
-   ifstream infile;//psudogen is given to the assembler
-   infile.open ("psudogen");
+      Assembler assemble(infile, outfile);
 
-   //psudogen.Out file is given to the assember then passed to the interpreter
-   ofstream outfile;
-   outfile.open ("psudogen.Out");
-   
-   Assembler assemble(infile, outfile);
+      cout << "Assembler first pass: "<<endl;
+      assemble.firstPass();
 
-   cout << "Assembler first pass: "<<endl;
-   assemble.firstPass();
+      infile.close();
+      infile.open ("psudogen");
 
-   infile.close();
-   infile.open ("psudogen");
-
-   cout << "Assembler second pass: " << endl;
-   assemble.secondPass();
-   cout << "Assembler output file is: psudogen.Out. This will be passed"
-	<< " to the interpreter now." << endl;
-   Interpreter interp("psudogen.Out", true);
+      cout << "Assembler second pass: " << endl;
+      assemble.secondPass();
+      cout << "Assembler output file is: psudogen.Out. This will be passed"
+	   << " to the interpreter now." << endl;
+      Interpreter interp("psudogen.Out", true);
+   }
    return 0;
 }
