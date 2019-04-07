@@ -400,22 +400,20 @@ void Parse::VarDefB()//variable definition for multiple itirations
       if(LHS=="[")
       { 
 	 match();
-	 
+	 bool sVal = 1;
 	 if(LHS=="num")
 	 {
-	    checkVal=ln[tokeNum][2];
-	    
-	    
+	    checkVal=ln[tokeNum][2];	    
 	 }else if(LHS=="id")
 	 {	   
 	    index2 = ln[tokeNum][1];
-	    bool l = bTable.search(index2);
-	    
-	    //cout<<bTable.inScope;
+	    bool lVal = bTable.search(index2);
+	    sVal=lVal;
+	    //cout<<bTable.inScope; 
 	 }
 	 
 	 Const();
-	 if(!l)
+	 if(!sVAl)
 	 {
 	    scopeError("Error, Variable not declared in scope");
 	    en=1;
