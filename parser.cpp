@@ -686,12 +686,12 @@ void Parse::IfStat()//if statements
    match();
    int startL = newLabel(), doneL= newLabel(), pass1 = startL, pass2 = doneL;
    GarCmdList(pass1, pass2);
-   gen.emit2("DEFFADR", startL);
+   gen.emit2("DEFFADDR", startL);
    if(LHS=="fi")
    {
       gen.emit2("FI", ln[tokeNum][0]);
       match();
-      gen.emit2("DEFFADR", doneL);
+      gen.emit2("DEFFADDR", doneL);
    }else
       errorReport();
 }
@@ -701,7 +701,7 @@ void Parse::DoStat()//do statement
    int startL = newLabel(), loopL= newLabel(), pass1 = startL, pass2 = loopL;
    
    match();
-   gen.emit2("DEFFADR", loopL);
+   gen.emit2("DEFFADDR", loopL);
    GarCmdList(pass1, pass2);
    if(LHS=="od")
    {
