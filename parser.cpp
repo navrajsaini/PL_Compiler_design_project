@@ -85,7 +85,7 @@ void Parse::errorReport()
       cout<<"' with a hashval of: '"<<ln[tokeNum][1]<<"'"<<endl;
       cout<<"The token val of: '"<<ln[tokeNum][2]<<"'"<<endl;
       stopType = 1;
-      ctd = 1;
+      ctd = 0;
    }
 }
 //check for user input to then pring parsing as it occours
@@ -104,7 +104,7 @@ void Parse::scopeError(string s)
    {
       isErr = 1;
       cout<<s<<" with index: "<<ln[tokeNum][1]<<" at line:  "<<ln[tokeNum][0]<<" with token : "<<LHS<<endl;
-      ctd = 1;
+      ctd = 0;
    }
 }
 //wipe the variables for the next type check
