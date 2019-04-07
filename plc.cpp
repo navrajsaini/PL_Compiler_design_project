@@ -4,12 +4,8 @@
 
 #include <iostream>
 #include <fstream>
-//#include "scanner.h"
 #include "administration.h"
-//#include "symboltable.h"
-//#include "token.h"
 #include <stdio.h>
-
 using namespace std;
 
 
@@ -20,7 +16,6 @@ int main ()
    //string codeFileName /*= "testLang.txt"*/, tokenFileName /* = "tokenFile"*/;
    string codeFileName = "./testfiles/testLang1.txt",
          tokenFileName  = "./testfiles/tokenFile";
-
    //get the file name for input and then declare and open file
    cout<<"Welcome to compiler4600, please enter your code input file name: ";
    //cin>>codeFileName;
@@ -56,6 +51,7 @@ int main ()
       cout << "Scan errors have occoured" <<endl;
    
    //Time to parse
-   compiler.parse(); 
+   compiler.parse();
+   Interpreter interp("psudogen", true);
    return 0;
 }

@@ -7,7 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include "scanner.h"
-//#include "parser.h"
+#include "interp.h"
 
 #define MAXERRORS 10
 
