@@ -69,7 +69,8 @@ void Parse::match()
    //test line
    //cout<<"token '"<<LHS<<"' is the '"<<tokeNum-1<<"' token parsed"<<endl;
 }
-//give a decent;y detailed report of the type of error that has been found
+//give a decent detailed report of the type of error that has been found
+//additionaly it stops outputting errors after the first one
 void Parse::errorReport()
 {
    gen.emitting = 0;
@@ -100,7 +101,7 @@ void Parse::check()
 void Parse::scopeError(string s)
 {
    gen.emitting = 0;
-   if(isErr == 0)
+   if(stopType == 0)
    {
       isErr = 1;
       cout<<s<<" with index: "<<ln[tokeNum][1]<<" at line:  "<<ln[tokeNum][0]<<" with token : "<<LHS<<endl;
