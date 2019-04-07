@@ -48,7 +48,8 @@ class Admin
    void emit2 (string, int);
    void emit3 (string, int, int);
    bool emitting = 1;
-   bool ctd = true;
+   bool ctd = true, tst = 0;
+   
    //--------
   private:
    ifstream input;//for input file

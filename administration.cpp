@@ -82,17 +82,20 @@ void Admin::lineAsn()
 void Admin::parse()
 {
    Parse parser(out);
-   cout<<"Would you like to see the parser functions and info as they are called?";
-   cout<<endl<<"Y(y)/N(n): ";
-   string yn, yn2;
-   cin>>yn;
-   cout<<"Would you like to see completed block table before it is popped";
-   cout<<endl<<"Y(y)/N(n): ";
-   cin>>yn2;
-   if(yn=="Y"||yn=="y")
-      parser.yn=1;
-   if(yn2=="Y"||yn2=="y")
-      parser.yn2=1;
+   if(tst == 0);
+   {
+      cout<<"Would you like to see the parser functions and info as they are called?";
+      cout<<endl<<"Y(y)/N(n): ";
+      string yn, yn2;
+      cin>>yn;
+      cout<<"Would you like to see completed block table before it is popped";
+      cout<<endl<<"Y(y)/N(n): ";
+      cin>>yn2;
+      if(yn=="Y"||yn=="y")
+	 parser.yn=1;
+      if(yn2=="Y"||yn2=="y")
+	 parser.yn2=1;
+   }
    string tempStr;
    for(int i=1; i<256; i++)
    {
