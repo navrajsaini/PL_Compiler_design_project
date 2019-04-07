@@ -50,27 +50,29 @@ int main ()
 
       cout << "------------------testing parser-----------" << endl;
       compiler.parse();
-
-      cout << "-------------------testing assembler----------" << endl;
-      outfile.open(tokenfile);
-      infile.open("psudogen");
-      Assembler a(infile, outfile);
-
-      cout << "first run" << endl;
-      a.firstPass();
-
-      cout << "second run" << endl;
-      outfile.close();
-      infile.close();
-
-      outfile.open(tokenfile);
-      infile.open("psudogen");
-      a.secondPass();
-
-
-      cout << "------------------testing interpreter----------" << endl;
-      Interpreter b(tokenfile, true);
-
+      // if ctd is false there is a error in the parser
+      // so the assembler will not run.
+      if (compiler.ctd == true)
+      {
+	 cout << "-------------------testing assembler----------" << endl;
+	 outfile.open(tokenfile);
+	 infile.open("psudogen");
+	 Assembler a(infile, outfile);
+	 
+	 cout << "first run" << endl;
+	 a.firstPass();
+	 
+	 cout << "second run" << endl;
+	 outfile.close();
+	 infile.close();
+	 
+	 outfile.open(tokenfile);
+	 infile.open("psudogen");
+	 a.secondPass();
+	 
+	 cout << "------------------testing interpreter----------" << endl;
+	 Interpreter b(tokenfile, true);
+      }
       return 0;
    }
 }

@@ -112,7 +112,7 @@ void Admin::parse()
    }
    input.close();
    parser.parseIt();
-
+   ctd = parser.ctd;
 }
 //for test line
 string Admin::parserAsn(int value)
