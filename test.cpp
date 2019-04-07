@@ -28,6 +28,8 @@ int main ()
        "./testfiles/test7.Out", "./testfiles/testLang.Out"};
    for (int i = 0; i < 8; i++)
    {
+      cout << "testing file: " << i+1 << endl;
+
       if (i == 7)
       {
 	 cout << "testing the proper testLang file." << endl
@@ -73,6 +75,8 @@ int main ()
 	 cout << "------------------testing interpreter----------" << endl;
 	 Interpreter b(tokenfile, true);
       }
-      return 0;
+      else
+	 cout << "compiling error, exiting..." << endl;
    }
+   return 0;
 }
