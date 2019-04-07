@@ -16,6 +16,8 @@ Admin::Admin()
 }
 Admin::Admin(string inFile, string outFile, Scanner &sn)
 {
+   output.open(outFile.c_str());
+   output.close();
    in = inFile;
    out = outFile;
    //scnr = &scan;
@@ -46,7 +48,6 @@ int Admin::scan()
 {
    char now[256];
    input.open(in.c_str());
-
    do{
       //clearing the array of characters
       for(int j=0;j<255;j++)
