@@ -104,7 +104,7 @@ void Parse::scopeError(string s)
    if(stopType == 0)
    {
       isErr = 1;
-      cout<<s<<" with index: "<<ln[tokeNum][1]<<" at line:  "<<ln[tokeNum][0]<<" with token : "<<LHS<<endl;
+      cout<<s<<" with index: "<<ln[tokeNum][1]<<" at line:  "<<ln[tokeNum][0]<<" with token : "<<NS<<endl;
       ctd = 0;
    }
 }
@@ -412,13 +412,16 @@ void Parse::VarDefB()//variable definition for multiple itirations
 	    bool l = bTable.search(index2);
 	    
 	    //cout<<bTable.inScope;
-	    if(!l)
-	       scopeError("Error, Variable not declared in scope");
-	    en=1;
-	    bTable.inScope = 0;
 	 }
 	 
 	 Const();
+	 if(!l)
+	 {
+	    scopeError("Error, Variable not declared in scope");
+	    en=1;
+	    bTable.inScope = 0;
+	 }
+
 	 
 	 if(en=1)
 	 {
