@@ -84,6 +84,8 @@ void Parse::errorReport()
       cout<<"The token of issue is: '"<<LHS;
       cout<<"' with a hashval of: '"<<ln[tokeNum][1]<<"'"<<endl;
       cout<<"The token val of: '"<<ln[tokeNum][2]<<"'"<<endl;
+      stopType = 1;
+      ctd = 1;
    }
 }
 //check for user input to then pring parsing as it occours
@@ -97,8 +99,13 @@ void Parse::check()
 //outputs the error msg for the scope
 void Parse::scopeError(string s)
 {
-   cout<<s<<" with index: "<<ln[tokeNum][1]<<" at line:  "<<ln[tokeNum][0]<<" with token : "<<LHS<<endl;
-   gen.emitting=0;
+   gen.emitting = 0;
+   if(isErr == 0)
+   {
+      isErr = 1;
+      cout<<s<<" with index: "<<ln[tokeNum][1]<<" at line:  "<<ln[tokeNum][0]<<" with token : "<<LHS<<endl;
+      ctd = 1;
+   }
 }
 //wipe the variables for the next type check
 void Parse::eraseVar()

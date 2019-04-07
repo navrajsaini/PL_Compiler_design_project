@@ -168,6 +168,7 @@ class Parse
 //states where the parsing is, mostly for error checking and bug testing.
    string where;
    bool isErr = 0;
+//These are the functions and the variables for the code gennoration phase.
    Admin gen;
    int newLabel();
    int label = 0, ary = 0;
@@ -175,6 +176,7 @@ class Parse
    int varLabel, startLabel, valLength[10], valLenPtr = 0;
    int tempSizeRead = 0, tempSizeWrite = 0, tempSizeAsn = 0;
    int levelOfCurrentBlock[10], currentLevel = 0, tpVl = 0;
+   bool ctd = 1, stopType = 0;
    //levelOfCurrentBlock[currentLevel]++;
 };
 #endif
