@@ -14,7 +14,7 @@ int main ()
    // variables for file names
    /*remove testLang.txt when project complete*/
    //string codeFileName /*= "testLang.txt"*/, tokenFileName /* = "tokenFile"*/;
-   string codeFileName = "./testfiles/testLang1.txt",
+   string codeFileName = "./testfiles/testLang.txt",
          tokenFileName  = "./testfiles/tokenFile";
    //get the file name for input and then declare and open file
    cout<<"Welcome to compiler4600, please enter your code input file name: ";
@@ -52,6 +52,28 @@ int main ()
    
    //Time to parse
    compiler.parse();
-   Interpreter interp("psudogen", true);
+   
+   //--------------------------assembler-------------------
+   //open the psudogen and create the output file for the interpreter
+   ifstream infile;//psudogen is given to the assembler
+   infile.open ("psudogen");
+
+   //psudogen.Out file is given to the assember then passed to the interpreter
+   ofstream outfile;
+   outfile.open ("psudogen.Out");
+   
+   Assembler assemble(infile, outfile);
+
+   cout << "Assembler first pass: "<<endl;
+   assemble.firstPass();
+
+   infile.close();
+   infile.open ("psudogen");
+
+   cout << "Assembler second pass: " << endl;
+   assemble.secondPass();
+   cout << "Assembler output file is: psudogen.Out. This will be passed"
+	<< " to the interpreter now." << endl;
+   Interpreter interp("psudogen.Out", true);
    return 0;
 }

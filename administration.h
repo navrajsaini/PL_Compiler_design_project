@@ -8,7 +8,7 @@
 #include <fstream>
 #include "scanner.h"
 #include "interp.h"
-
+#include "Assembler.h"
 #define MAXERRORS 10
 
 using namespace std;

@@ -29,6 +29,7 @@ void Assembler::firstPass()
    (*insource) >> nextop;
    // Loop until we find the ENDPROG operation.
    for (;;) {
+      cout << nextop << " ";
       // Record the current address in the label table.
       if (nextop == "DEFADDR") {
 	 int index;
