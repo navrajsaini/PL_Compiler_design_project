@@ -133,7 +133,7 @@ bool ctd = 1, stopType = 0;
    int varAcL = 0, varAcR = 0;
    int varAcName[10];//the array for the names for var ac
    bool exist = 0, en;
-   void o();
+   void o();// oh?
    void printPop();
   private:
 //indicates type for the block table
