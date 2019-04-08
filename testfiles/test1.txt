@@ -13,5 +13,4 @@ begin
 			fi;
 		od;
 		found:= A[i] =x;
-	end;
 end.

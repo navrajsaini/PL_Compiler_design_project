@@ -25,11 +25,11 @@ begin
 			proc p211
 			begin
 				f[2] := 2;
-				call p1;
+				call p211;
 			end;
 		end;
-		call p1;
-		call p1;	
+		call p21;
+		call p2;	
 	end;
 	call p1;
 	call p2;	
