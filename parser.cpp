@@ -27,14 +27,14 @@ Parse::Parse(string in)
       levelOfCurrentBlock[i] = 3;
    
    label = 0;
-   displacment = 3;
+   displacement = 3;
    tpVl = 0;
    currentLevel = 0;
    tempSizeRead = 0;
    tempSizeWrite = 0;
    tempSizeAsn = 0;
-   startLable = 0;
-   varLable = 0;
+   startLabel = 0;
+   varLabel = 0;
    listDepth = 0;
    for(int i = 0; i<10; i++)
       size[i] = 1;
