@@ -408,6 +408,7 @@ void Interpreter::load_program( string name)
 
    for (int i = stack_bottom; i <= STORE_SIZE; i++)
       store[i] = -1;
+   program.close();
 }
 
 void Interpreter::run_program()

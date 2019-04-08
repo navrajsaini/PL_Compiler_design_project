@@ -42,6 +42,7 @@ int main ()
 
       Scanner scanTest (codefile, tokenfile);
       Admin compiler(codefile, tokenfile, scanTest);
+      compiler.tst = true;
       cout << "finished making the compiler..." << endl;
       int fin = compiler.scan();
       cout << "compile finished, output is: " << fin << endl;
@@ -71,7 +72,8 @@ int main ()
 	 outfile.open(tokenfile);
 	 infile.open("psudogen");
 	 a.secondPass();
-	 
+	 infile.close();
+	 outfile.close();
 	 cout << "------------------testing interpreter----------" << endl;
 	 Interpreter b(tokenfile, true);
       }
