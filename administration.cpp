@@ -123,7 +123,10 @@ string Admin::parserAsn(int value)
 {
 return view.symbolTable.giveLex(value);
 }
-//
+//functions to add information to the output files
+//to be used by assembler
+//the function calls are dependent on what the parser sees
+//the correct function is called based on that.
 void Admin::emit1(string OP)
 {
    outsource.open(codeGen, ios::app);
