@@ -423,18 +423,15 @@ void Parse::VarDefB()//variable definition for multiple itirations
 	    ent = bTable.find_all_level(index2);
 	    bool lVal = bTable.search(index2);
 	    sVal=lVal;
-	    //cout<<bTable.inScope; 
-	 }
-	 
+	    //cout<<bTable.inScope;
+	    en=1;
+	 }	 
 	 Const();
 	 if(!sVal)
 	 {
-	    scopeError("Error, Variable not declared in scope");
-	    en=1;
-	    bTable.inScope = 0;
+	    scopeError("Error, Variable not declared in scope");    
 	 }
-
-	 
+	 bTable.inScope = 0;
 	 if(en=1)
 	 {
 	    for(int i = 0; i < listDepth; i++)
@@ -454,9 +451,6 @@ void Parse::VarDefB()//variable definition for multiple itirations
 	 if(!checkDefList())
 	    scopeError("Ambiguous definition of array");
 	 levelOfCurrentBlock[currentLevel] = levelOfCurrentBlock[currentLevel] + (tmp - 1);
-	 
-	 //i may want to add a check if this val is a name and if so search for it.
-
 	 if(LHS=="]")
 	 {
 	    match();
