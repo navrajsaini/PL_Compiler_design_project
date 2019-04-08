@@ -205,7 +205,7 @@ TableEntry BlockTable::find_all_level (int index)
    inScope = false;
    //if the variable is not found in the current block level
    //search all the block levels up to the current one
-   for (int i = 0; i < blockLevel; i++)
+   for (int i = blockLevel; i >= 0; i--)
    {
       for (auto it = table[i].begin(); it != table[i].end(); ++it)
       {
