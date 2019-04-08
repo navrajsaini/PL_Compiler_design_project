@@ -221,6 +221,8 @@ void Parse::parseNow()
    NS=LHS;
    //cout<<endl<<LHS<<endl;
    Program();
+   for(int i = 0; i<10; i++)
+      valLength[i] = 0;
 }
 
 /*This is the start of the PL Grammar Parsing Stage.
