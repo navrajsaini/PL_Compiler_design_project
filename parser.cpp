@@ -269,6 +269,7 @@ void Parse::Program()
       {
 	 where="P";check();
 	 cout<<"YOU SUCCESSFULY PARSED, CONGRATS!!!!"<<endl;
+	 valLength[valLenPtr] = 0;
 	 
       }else
 	 errorReport();
@@ -705,12 +706,12 @@ void Parse::IfStat()//if statements
    match();
    int startL = newLabel(), doneL= newLabel(), pass1 = startL, pass2 = doneL;
    GarCmdList(pass1, pass2);
-   gen.emit2("DEFFADDR", startL);
+   gen.emit2("DEFADDR", startL);
    if(LHS=="fi")
    {
       gen.emit2("FI", ln[tokeNum][0]);
       match();
-      gen.emit2("DEFFADDR", doneL);
+      gen.emit2("DEFADDR", doneL);
    }else
       errorReport();
 }
@@ -720,13 +721,13 @@ void Parse::DoStat()//do statement
    int startL = newLabel(), loopL= newLabel(), pass1 = startL, pass2 = loopL;
    
    match();
-   gen.emit2("DEFFADDR", loopL);
+   gen.emit2("DEFADDR", loopL);
    GarCmdList(pass1, pass2);
    if(LHS=="od")
    {
       gen.emit2("OD", ln[tokeNum][0]);
       match();
-       gen.emit2("DEFFADDR", startL);
+       gen.emit2("DEFADDR", startL);
    }else
 	 errorReport();
 }
