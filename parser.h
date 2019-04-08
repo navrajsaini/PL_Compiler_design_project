@@ -97,8 +97,8 @@ class Parse
    void Num();
    void ProcName();
 
-
-bool ctd = 1, stopType = 0;
+   //used for aditional testing
+   bool ctd = 1, stopType = 0;
    
 //---------------------------------------------
 //Scope/Type
@@ -169,13 +169,13 @@ bool ctd = 1, stopType = 0;
    string where;
    bool isErr = 0;
 //These are the functions and the variables for the code gennoration phase.
-   Admin gen;
-   int newLabel();
-   int label = 0, ary = 0;
-   int displacement = 3;
-   int varLabel, startLabel, valLength[10], valLenPtr = 0;
-   int tempSizeRead = 0, tempSizeWrite = 0, tempSizeAsn = 0;
-   int levelOfCurrentBlock[10], currentLevel = 0, tpVl = 0;
+   Admin gen;// for the emit functions
+   int newLabel();// new lable incriment
+   int label = 0, ary = 0;// for array and new lavle incrimentation
+   int displacement = 3;// for calcualting displacment
+   int varLabel, startLabel, valLength[10], valLenPtr = 0;// all used for labeling and val length for the total number of variable in the scope
+   int tempSizeRead = 0, tempSizeWrite = 0, tempSizeAsn = 0;// used for temps in read, write, and asgn
+   int levelOfCurrentBlock[10], currentLevel = 0, tpVl = 0;//used for the current and other levels of the program
    
    //levelOfCurrentBlock[currentLevel]++;
 };

@@ -104,11 +104,11 @@ Hours spent on this assignment:
 
 ### Navraj
 
-I changed the define function in the blocktable to include the displacement for insertion and for the find function. Also added in functions to return the current blockLevel and which level a id is compared to the current level. find_all_level function was created for the purpose of finding a id from the block table and returning it's TableEntry. The rest was mostly working on the parser file which was done by Jordan. The test file was edited to include the Assemble and Interpreter testing as well.
+I changed the define function in the blocktable to include the displacement for insertion and for the find function. Also added in functions to return the current blockLevel and which level a id is compared to the current level. find_all_level function was created for the purpose of finding a id from the block table and returning it's TableEntry. The rest was mostly working on the parser file which was done by Jordan. The test file was edited to include the Assemble and Interpreter testing as well. I also added the emits and newlable fuctions.
 
 ### Jordan
 
-
+Worked on the parser files. worked throught code gen notes to get to the correct psudogen. It took a while to get through this. I realised that the prder of these lines have to be exact and once they were things worked fine. After that I included the emits for other functions. Working through all of the opperators was easy. the hard areas was the ifs and dos. sine there was no example psuedocode for them we could not clarify if they were correct. As of now, the example code works perfectly, but the plc full code implimentation does not. After spending lots of time debuging we decided to just put it inot the limitations.
 
 ### Files included:
 administration.cpp, admininstration.h, scanner.h, 
@@ -146,4 +146,4 @@ Hours spent on this assignment:
 
       Navraj: 25
    
-      Jordan: 
+      Jordan: 33
