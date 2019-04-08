@@ -19,7 +19,7 @@ int main ()
 	 "./testfiles/test1.txt", "./testfiles/test2.txt",
 	 "./testfiles/test3.txt", "./testfiles/test4.txt",
 	 "./testfiles/test5.txt", "./testfiles/test6.txt",
-	 "./testfiles/test7.txt", "./testfiles/testLang1.txt"};
+	 "./testfiles/test7.txt", "./testfiles/testLang.txt"};
 
    string tokenf[8] =
       {"./testfiles/test1.Out", "./testfiles/test2.Out",
@@ -36,8 +36,8 @@ int main ()
 	      << "There should not be any errorrs..."
 	      << endl;
       }
-      codefile = codef[7];
-      tokenfile = tokenf[7];
+      codefile = codef[i];
+      tokenfile = tokenf[i];
       cout << endl;
 
       Scanner scanTest (codefile, tokenfile);
