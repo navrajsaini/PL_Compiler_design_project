@@ -218,6 +218,8 @@ void Parse::parseNow()
    //printToken();
    //o();
    //LHS = token[tokeNum];
+   for(int i = 0; i<10; i++)
+      valLength[i] = 0;
    NS=LHS;
    //cout<<endl<<LHS<<endl;
    Program();
@@ -342,7 +344,7 @@ void Parse::Def()//definition function
    
    if(LHS=="const")
    {
-      //add one to the number of variables at the current block
+      //addone to the number of variables at the current block
       valLength[valLenPtr]++;
 
       //into const deff.
