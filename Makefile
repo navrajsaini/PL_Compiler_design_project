@@ -6,13 +6,15 @@ CCCFLAGS = -std=c++11
 
 # all is called a target, after the colon you have dependencies
 # ie. "the target all is dependent on the executables
-all : test plc
+all : test1 plc test
 
 # the target <excecutable1> is dependent on the list of dependencies
 # the line following  is the required executable (don't need to adjust it)
 # Note: executable lines, ie. $(CCC) ..., always begin with a tab.
 # $^ = this target
 # $@ = this/these dependencies
+test1: test1.o token.o symboltable.o administration.o scanner.o parser.o BlockTable.o Assembler.o interp.o
+	$(CCC) $(CCCFLAGS) $^ -o $@
 test: test.o token.o symboltable.o administration.o scanner.o parser.o BlockTable.o Assembler.o interp.o
 	$(CCC) $(CCCFLAGS) $^ -o $@
 plc: plc.o token.o symboltable.o administration.o scanner.o parser.o BlockTable.o Assembler.o interp.o
@@ -38,6 +40,7 @@ administration.o : administration.h
 token.o : token.h token.cpp
 symboltable.o : symboltable.cpp
 test.o : test.cpp
+test1.o : test1.cpp
 parser.o :parser.cpp
 BlockTable.o : BlockTable.h
 Assembler.o : Assembler.cpp
@@ -47,4 +50,4 @@ clean:
 	rm -f *.o *~ *% *# .#*
 
 clean-all: clean
-	rm -f test plc
+	rm -f test1 test plc

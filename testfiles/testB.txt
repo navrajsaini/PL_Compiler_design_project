@@ -1,0 +1,40 @@
+$Program
+begin
+	integer i, j, k;
+	integer array f[2];
+	proc p1
+	begin
+		integer i, l;
+		integer array a[2];
+		proc p11
+		begin
+			k := 2;
+		end;
+		proc p12
+		begin
+		end;
+		i := 1;
+	end;
+	proc p2
+	begin
+		integer m;
+		integer l;
+		proc p21
+		begin
+			Boolean b;
+			proc p211
+			begin
+				f[2] := 2;
+				call p1;
+			end;
+		end;
+		call p1;
+		call p1;	
+	end;
+	i := 3;
+	do k <i ->
+		k := i+1;
+	od;
+	call p1;
+	call p2;	
+end.
