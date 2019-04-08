@@ -420,6 +420,7 @@ void Parse::VarDefB()//variable definition for multiple itirations
 	 }else if(LHS=="id")
 	 {	   
 	    index2 = ln[tokeNum][1];
+	    ent = bTable.find_all_Level(index2);
 	    bool lVal = bTable.search(index2);
 	    sVal=lVal;
 	    //cout<<bTable.inScope; 
